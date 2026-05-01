@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIDC Contourline — Investidores</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── Brand tokens (contourline-dashboard/src/theme/brand.js) ─────────── */
+:root {
+  --dark:     #002845;
+  --mid:      #0170B9;
+  --light:    #0288D1;
+  --white:    #FFFFFF;
+  --bg:       #FAFAFA;
+  --gray:     #F3F4F6;
+  --gray2:    #E5E7EB;
+  --gray3:    #9CA3AF;
+  --gray4:    #6B7280;
+  --green:    #059669;
+  --green-bg: #ECFDF5;
+  --red:      #DC2626;
+  --red-bg:   #FEF2F2;
+  --amber:    #D97706;
+  --amber-bg: #FFFBEB;
+  --purple:   #7C3AED;
+
+  --shadow-card:       0 2px 8px rgba(0,40,69,0.08);
+  --shadow-hero-card:  0 8px 32px rgba(0,40,69,0.15);
+  --shadow-hover:      0 12px 40px rgba(0,40,69,0.18);
+  --gradient-hero:     linear-gradient(160deg, #002845 0%, #0170B9 60%, #0288D1 100%);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  min-height: 100vh;
+}
+
+/* ── Topbar ─────────────────────────────────────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px; padding: 9px 28px;
+  background: #002845;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 2px 12px rgba(0,20,50,0.35);
+}
+
+.topbar-logo { height: 26px; filter: brightness(0) invert(1); opacity: 0.88; }
+.topbar-logo-txt { color: #fff; font-size: 16px; font-weight: 800; letter-spacing: -0.5px; }
+
+.topbar-brand { display: flex; align-items: center; gap: 10px; }
+
+.topbar-brand-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18); padding: 3px 8px; border-radius: 5px;
+}
+
+.tab-toggle {
+  display: flex; border-radius: 8px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.tab-btn {
+  padding: 6px 16px; font-size: 12px; font-family: inherit;
+  background: transparent; color: rgba(255,255,255,0.5);
+  border: none; cursor: pointer; font-weight: 500;
+  transition: all 0.15s; white-space: nowrap;
+}
+.tab-btn.active { background: rgba(255,255,255,0.14); color: #fff; font-weight: 700; }
+.tab-btn:hover:not(.active) { color: rgba(255,255,255,0.85); }
+
+.topbar-right { display: flex; align-items: center; gap: 8px; }
+
+.lang-grp { display: flex; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
+.lang-btn {
+  padding: 5px 10px; font-size: 11px; font-weight: 600; font-family: inherit;
+  background: transparent; color: rgba(255,255,255,0.5); border: none; cursor: pointer;
+  transition: all 0.12s;
+}
+.lang-btn.active { background: rgba(255,255,255,0.18); color: #fff; }
+.lang-btn:hover:not(.active) { color: rgba(255,255,255,0.85); }
+
+.badge-conf {
+  font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px;
+  background: rgba(220,38,38,0.22); color: rgba(255,160,160,0.95);
+  border: 1px solid rgba(220,38,38,0.35);
+}
+
+.export-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 16px; font-size: 12px; font-weight: 600;
+  background: rgba(255,255,255,0.1); color: #fff;
+  border: 1px solid rgba(255,255,255,0.22); border-radius: 8px; cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
+}
+.export-btn:hover { background: rgba(255,255,255,0.2); }
+
+/* ── Main ───────────────────────────────────────────────────────────── */
+.main { max-width: 1200px; margin: 0 auto; padding: 28px 32px 64px; }
+
+/* ── Hero band ──────────────────────────────────────────────────────── */
+.hero {
+  background: var(--gradient-hero);
+  border-radius: 20px; padding: 44px 40px 80px;
+  position: relative; overflow: hidden;
+}
+.hero-orb1 {
+  position: absolute; top: -40%; right: -8%; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.hero-orb2 {
+  position: absolute; bottom: -50%; left: -5%; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(1,112,185,0.25) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; }
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.28);
+  color: #fff; padding: 6px 18px; border-radius: 30px;
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.hero-title  { font-size: 36px; font-weight: 900; letter-spacing: -1.5px; color: #fff; line-height: 1.15; }
+.hero-tagline { color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 6px; }
+
+/* ── KPI strip ──────────────────────────────────────────────────────── */
+.kpi-strip {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 20px; margin-top: -44px; position: relative; z-index: 2;
+}
+
+.kpi-card {
+  background: #fff; border-radius: 16px; padding: 20px 20px 16px;
+  box-shadow: var(--shadow-hero-card); border: 1px solid var(--gray2);
+  transition: all 0.3s; cursor: default;
+}
+.kpi-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,40,69,0.22); }
+
+.kpi-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px;
+  color: var(--gray4); font-weight: 600; margin-bottom: 10px;
+}
+
+.source-chip {
+  display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; padding: 2px 7px; border-radius: 4px; margin-bottom: 6px;
+}
+
+.kpi-value {
+  font-size: 22px; font-weight: 900; letter-spacing: -1px; white-space: nowrap; margin-bottom: 4px;
+}
+.kpi-note { font-size: 11px; color: var(--gray4); }
+
+/* ── Section ────────────────────────────────────────────────────────── */
+.section { margin-top: 36px; }
+.section-title { font-weight: 800; font-size: 16px; color: var(--dark); margin-bottom: 4px; }
+.section-sub   { font-size: 12px; color: var(--gray4); margin-bottom: 20px; }
+
+/* ── Cards ──────────────────────────────────────────────────────────── */
+.card { background: #fff; border-radius: 12px; box-shadow: var(--shadow-card); padding: 18px 20px; }
+.card-title { font-weight: 700; font-size: 14px; color: var(--dark); margin-bottom: 14px; }
+
+/* ── Cedente card ───────────────────────────────────────────────────── */
+.cedente-card {
+  background: var(--gradient-hero); border-radius: 12px;
+  padding: 22px 28px; color: #fff; margin-bottom: 20px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px; box-shadow: var(--shadow-hero-card);
+}
+.cedente-stats { display: flex; gap: 32px; flex-wrap: wrap; }
+.cedente-stat-label {
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 3px;
+}
+.cedente-stat-val { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+
+/* ── Grids ──────────────────────────────────────────────────────────── */
+.grid-2   { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.grid-3   { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill,minmax(180px,1fr)); gap: 12px; }
+
+/* ── Tables ─────────────────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; }
+thead tr { background: #F8FAFC; }
+th {
+  padding: 9px 12px; font-size: 11px; font-weight: 700; color: var(--gray4);
+  border-bottom: 2px solid var(--gray2); white-space: nowrap; text-align: left;
+}
+th.r { text-align: right; }
+td   { padding: 8px 12px; font-size: 12px; border-bottom: 1px solid var(--gray2); color: var(--dark); }
+td.r { text-align: right; }
+td.b { font-weight: 700; }
+tbody tr:nth-child(even) { background: #FAFBFC; }
+tfoot td {
+  padding: 9px 12px; font-size: 12px; font-weight: 800;
+  border-top: 2px solid var(--gray2); border-bottom: none; background: #F8FAFC;
+}
+
+/* ── Pills ──────────────────────────────────────────────────────────── */
+.pill { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; white-space: nowrap; }
+.pill-ok      { background: rgba(5,150,105,0.1);  color: var(--green);  border: 1px solid rgba(5,150,105,0.25);  }
+.pill-rm      { background: rgba(220,38,38,0.1);  color: var(--red);    border: 1px solid rgba(220,38,38,0.25);  }
+.pill-new     { background: rgba(1,112,185,0.1);  color: var(--mid);    border: 1px solid rgba(1,112,185,0.25);  }
+.pill-amber   { background: rgba(217,119,6,0.1);  color: var(--amber);  border: 1px solid rgba(217,119,6,0.25);  }
+
+/* ── Waterfall ──────────────────────────────────────────────────────── */
+.wfall-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--gray2); }
+.wfall-item:last-child { border-bottom: none; }
+.wfall-num {
+  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: #fff;
+}
+
+/* ── Criteria ───────────────────────────────────────────────────────── */
+.crit-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gray2); }
+.crit-item:last-child { border-bottom: none; }
+.crit-icon {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+}
+
+/* ── Participants ────────────────────────────────────────────────────── */
+.pcard { background: #fff; border-radius: 10px; border: 1px solid var(--gray2); padding: 14px 16px; box-shadow: var(--shadow-card); }
+.pcard-role   { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--gray4); margin-bottom: 4px; }
+.pcard-name   { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+.pcard-detail { font-size: 11px; color: var(--gray4); }
+
+/* ── Tranche card header ─────────────────────────────────────────────── */
+.tranche-head {
+  margin: -14px -16px 14px; padding: 14px 16px 12px;
+  border-radius: 10px 10px 0 0;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 1000px) { .kpi-strip { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 900px)  { .grid-2 { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr; } }
+@media (max-width: 640px)  {
+  .main { padding: 16px 16px 48px; }
+  .hero { padding: 28px 20px 60px; }
+  .hero-title { font-size: 26px; }
+  .kpi-strip { grid-template-columns: repeat(2,1fr); gap: 12px; }
+  .cedente-card { flex-direction: column; }
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────── */
+.doc-footer {
+  background: #001f35; color: rgba(255,255,255,0.45);
+  padding: 32px 40px; margin-top: 40px;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  flex-wrap: wrap; gap: 24px;
+}
+.doc-footer-logo { height: 22px; filter: brightness(0) invert(1); opacity: 0.45; display: block; margin-bottom: 14px; }
+.doc-footer p { font-size: 11px; line-height: 1.7; max-width: 580px; }
+.doc-footer strong { color: rgba(255,255,255,0.7); }
+.doc-footer-meta { text-align: right; flex-shrink: 0; font-size: 11px; line-height: 1.9; }
+.doc-footer-meta strong { color: rgba(255,255,255,0.65); font-size: 12px; }
+
+@media print {
+  .topbar { background: #002845 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .topbar-logo { filter: brightness(0) invert(1) !important; }
+  .kpi-strip { margin-top: 20px; }
+  .hero { padding-bottom: 40px; border-radius: 12px; }
+  .doc-footer { break-inside: avoid; }
+}
+
+/* ── Tab ────────────────────────────────────────────────────────────── */
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ── Análise & Riscos ────────────────────────────────────────────────── */
+.ts-disclaimer {
+  background: rgba(1,112,185,0.06); border: 1px solid rgba(1,112,185,0.2);
+  border-left: 4px solid var(--mid); border-radius: 0 10px 10px 0;
+  padding: 12px 16px; font-size: 11.5px; color: var(--dark); line-height: 1.7;
+  margin-bottom: 24px;
+}
+.ts-table-wrap { overflow-x: auto; border-radius: 12px; box-shadow: var(--shadow-card); }
+.ts-table { width: 100%; border-collapse: collapse; min-width: 860px; background: #fff; }
+.ts-table thead tr { background: var(--dark); }
+.ts-table thead th {
+  padding: 11px 14px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: rgba(255,255,255,0.8); text-align: left;
+  white-space: nowrap; border: none;
+}
+.ts-table thead th.r { text-align: right; }
+.ts-table tbody td {
+  padding: 11px 14px; font-size: 12px; color: var(--dark);
+  border-bottom: 1px solid var(--gray2); vertical-align: top;
+}
+.ts-table tbody tr:last-child td { border-bottom: none; }
+.ts-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+.ts-table .clause-tag {
+  display: inline-block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.8px;
+  color: var(--mid); background: rgba(1,112,185,0.08);
+  border: 1px solid rgba(1,112,185,0.2); padding: 2px 7px; border-radius: 4px;
+  white-space: nowrap; margin-top: 3px;
+}
+.ts-table .rationale { font-size: 11px; color: var(--gray4); line-height: 1.6; margin-top: 3px; }
+.ts-table .val-original { font-size: 12.5px; font-weight: 700; color: var(--gray4); text-decoration: line-through; }
+.ts-table .val-new { font-size: 12.5px; font-weight: 800; color: var(--dark); }
+.ts-table .val-new.green { color: var(--green); }
+.ts-table .val-new.blue  { color: var(--mid); }
+
+.status-tag {
+  display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 4px; white-space: nowrap;
+}
+.status-neg  { background: var(--green-bg); color: var(--green); border: 1px solid rgba(5,150,105,0.25); }
+.status-open { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(217,119,6,0.25); }
+.status-new  { background: rgba(1,112,185,0.1); color: var(--mid); border: 1px solid rgba(1,112,185,0.25); }
+
+/* Risk cards */
+.risk-section-header {
+  display: flex; align-items: center; gap: 16px;
+  margin: 40px 0 20px;
+}
+.risk-section-title { font-size: 18px; font-weight: 800; color: var(--dark); }
+.risk-section-line { flex: 1; height: 1px; background: var(--gray2); }
+
+.risk-card {
+  background: #fff; border-radius: 12px; overflow: hidden;
+  box-shadow: var(--shadow-card); margin-bottom: 18px;
+  border-left: 5px solid transparent;
+}
+.risk-card.risk-high   { border-left-color: var(--red); }
+.risk-card.risk-medium { border-left-color: var(--amber); }
+.risk-card.risk-low    { border-left-color: var(--green); }
+
+.risk-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 16px 20px 14px; gap: 12px;
+  border-bottom: 1px solid var(--gray2); flex-wrap: wrap;
+}
+.risk-head-left { flex: 1; }
+.risk-num {
+  font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gray4); margin-bottom: 3px;
+}
+.risk-title { font-size: 15px; font-weight: 800; color: var(--dark); margin-bottom: 2px; }
+.risk-subtitle { font-size: 11px; color: var(--gray4); line-height: 1.5; }
+.risk-head-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+
+.risk-badge {
+  font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px; white-space: nowrap;
+}
+.risk-badge.high   { background: var(--red-bg);   color: var(--red);   border: 1px solid rgba(220,38,38,0.25); }
+.risk-badge.medium { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(217,119,6,0.25); }
+.risk-badge.low    { background: var(--green-bg); color: var(--green); border: 1px solid rgba(5,150,105,0.25); }
+
+.risk-clause {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.6px;
+  color: var(--mid); background: rgba(1,112,185,0.08);
+  border: 1px solid rgba(1,112,185,0.2); padding: 3px 9px; border-radius: 4px;
+  text-align: right; line-height: 1.6;
+}
+
+.risk-body { padding: 18px 20px; }
+.risk-desc { font-size: 12.5px; color: var(--dark); line-height: 1.8; margin-bottom: 14px; }
+.risk-desc strong { color: var(--dark); font-weight: 700; }
+
+.risk-box {
+  border-radius: 8px; padding: 12px 16px; font-size: 12px; line-height: 1.7;
+  margin-top: 10px;
+}
+.risk-box-title { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+.risk-box.mitigation { background: var(--green-bg); border: 1px solid rgba(5,150,105,0.2); color: var(--dark); }
+.risk-box.mitigation .risk-box-title { color: var(--green); }
+.risk-box.open-point { background: var(--amber-bg); border: 1px solid rgba(217,119,6,0.2); color: var(--dark); }
+.risk-box.open-point .risk-box-title { color: var(--amber); }
+
+/* Investor class positioning */
+.investor-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 16px; }
+.inv-class-card { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-card); }
+.inv-class-head { padding: 16px 20px; color: #fff; }
+.inv-class-head h3 { font-size: 16px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 2px; }
+.inv-class-head p { font-size: 11px; opacity: 0.75; }
+.inv-class-body { background: #fff; padding: 16px 20px; border: 1px solid var(--gray2); border-top: none; border-radius: 0 0 12px 12px; }
+.inv-class-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--gray2); font-size: 12px; gap: 10px; }
+.inv-class-row:last-child { border-bottom: none; }
+.inv-class-row-l { color: var(--gray4); font-weight: 500; }
+.inv-class-row-v { font-weight: 700; color: var(--dark); text-align: right; }
+
+@media (max-width: 900px) { .investor-grid { grid-template-columns: 1fr; } }
+
+/* Clause revision tags inside open-point boxes */
+.clause-rev-list {
+  margin-top: 12px; padding-top: 10px;
+  border-top: 1px dashed rgba(217,119,6,0.35);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+}
+.clause-rev-label {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--amber); flex-shrink: 0; margin-right: 2px;
+}
+.clause-rev-tag {
+  font-size: 9.5px; font-weight: 700;
+  background: rgba(0,40,69,0.07); color: var(--dark);
+  border: 1px solid rgba(0,40,69,0.18); padding: 2px 9px; border-radius: 4px; white-space: nowrap;
+}
+.clause-rev-tag.new {
+  background: rgba(1,112,185,0.08); color: var(--mid); border-color: rgba(1,112,185,0.22);
+}
+
+/* ── Language ───────────────────────────────────────────────────────── */
+[data-en] { display: none; }
+body.en [data-pt] { display: none; }
+body.en [data-en] { display: inline; }
+body.en span[data-en] { display: inline; }
+body.en p [data-pt] { display: none; }
+body.en p [data-en] { display: inline; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ TOPBAR ════════════════════════════════════════════════ -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <img src="https://contourline.com.br/wp-content/webp-express/webp-images/uploads/2021/06/Logo-Contourline-Azul.png.webp"
+         alt="Contourline" class="topbar-logo" id="topbarLogo"
+         onerror="this.style.display='none';document.getElementById('topbarLogoTxt').style.display='block'">
+    <span id="topbarLogoTxt" class="topbar-logo-txt" style="display:none">CONTOURLINE</span>
+    <span class="topbar-brand-tag">FIDC · Investidores</span>
+  </div>
+
+  <div class="tab-toggle">
+    <button class="tab-btn active" onclick="setTab(0)">
+      <span data-pt>Sumário Executivo</span><span data-en>Executive Summary</span>
+    </button>
+    <button class="tab-btn" onclick="setTab(1)">
+      <span data-pt>Estrutura de Cotas</span><span data-en>Share Structure</span>
+    </button>
+    <button class="tab-btn" onclick="setTab(2)">
+      <span data-pt>Elegibilidade &amp; Proteções</span><span data-en>Eligibility &amp; Protections</span>
+    </button>
+    <button class="tab-btn" onclick="setTab(3)">
+      <span data-pt>Análise &amp; Riscos</span><span data-en>Analysis &amp; Risks</span>
+    </button>
+  </div>
+
+  <div class="topbar-right">
+    <div class="lang-grp">
+      <button class="lang-btn active" id="btnPT" onclick="setLang('pt')">PT</button>
+      <button class="lang-btn"        id="btnEN" onclick="setLang('en')">EN</button>
+    </div>
+    <span class="badge-conf">
+      <span data-pt>Confidencial</span><span data-en>Confidential</span>
+    </span>
+    <button class="export-btn" onclick="window.print()">
+      ↓ <span data-pt>Exportar PDF</span><span data-en>Export PDF</span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════ MAIN ══════════════════════════════════════════════════ -->
+<div class="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-orb1"></div>
+    <div class="hero-orb2"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span data-pt>Uso Restrito · Investidores Qualificados</span>
+        <span data-en>Restricted Use · Qualified Investors</span>
+      </div>
+      <h1 class="hero-title">FIDC Contourline</h1>
+      <p class="hero-tagline">
+        <span data-pt>Fundo de Investimento em Direitos Creditórios · Estrutura Sênior / Mezanino / Júnior · Resolução CVM 175</span>
+        <span data-en>Credit Rights Investment Fund · Senior / Mezzanine / Junior Structure · CVM Resolution 175</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- KPI strip -->
+  <div class="kpi-strip">
+    <div class="kpi-card">
+      <div class="kpi-label"><span data-pt>Patrimônio Líquido</span><span data-en>Net Asset Value</span></div>
+      <div class="source-chip" style="background:rgba(0,40,69,0.08);color:var(--dark);border:1px solid rgba(0,40,69,0.15)">
+        <span data-pt>Proposta CL</span><span data-en>CL Proposal</span>
+      </div>
+      <div class="kpi-value" style="color:var(--dark)">R$ 50M</div>
+      <div class="kpi-note"><span data-pt>Autorizado: R$ 500M</span><span data-en>Authorized: R$ 500M</span></div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label"><span data-pt>Cota Sênior</span><span data-en>Senior Share</span></div>
+      <div class="source-chip" style="background:rgba(1,112,185,0.1);color:var(--mid);border:1px solid rgba(1,112,185,0.2)">CDI + 4,5%</div>
+      <div class="kpi-value" style="color:var(--mid)">R$ 35M</div>
+      <div class="kpi-note">70% PL · <span data-pt>Sub. 30%</span><span data-en>Sub. 30%</span></div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">Mezanino</div>
+      <div class="source-chip" style="background:rgba(124,58,237,0.1);color:var(--purple);border:1px solid rgba(124,58,237,0.2)">CDI + 6,5%</div>
+      <div class="kpi-value" style="color:var(--purple)">R$ 5M</div>
+      <div class="kpi-note">10% PL · <span data-pt>Sub. 20%</span><span data-en>Sub. 20%</span></div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label"><span data-pt>Cota Júnior</span><span data-en>Junior Share</span></div>
+      <div class="source-chip" style="background:rgba(217,119,6,0.1);color:var(--amber);border:1px solid rgba(217,119,6,0.2)">Contourline</div>
+      <div class="kpi-value" style="color:var(--amber)">R$ 10M</div>
+      <div class="kpi-note">20% PL · First loss</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label"><span data-pt>Taxa Cessão Alvo</span><span data-en>Target Rate</span></div>
+      <div class="source-chip" style="background:rgba(5,150,105,0.1);color:var(--green);border:1px solid rgba(5,150,105,0.2)">ES 0,60%/mês</div>
+      <div class="kpi-value" style="color:var(--green)">1,80%/mês</div>
+      <div class="kpi-note">≈ 23,9% a.a.</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label"><span data-pt>Prazo Total</span><span data-en>Total Term</span></div>
+      <div class="source-chip" style="background:rgba(0,40,69,0.08);color:var(--dark);border:1px solid rgba(0,40,69,0.15)">
+        <span data-pt>Carteira Revolvente</span><span data-en>Revolving Portfolio</span>
+      </div>
+      <div class="kpi-value" style="color:var(--dark)">48 meses</div>
+      <div class="kpi-note"><span data-pt>12 carência · 36 amortização</span><span data-en>12 grace · 36 amortization</span></div>
+    </div>
+  </div>
+
+
+  <!-- ════════ TAB 0 — SUMÁRIO EXECUTIVO ═══════════════════════════ -->
+  <div class="tab-pane active" id="pane0">
+
+    <!-- Cedente -->
+    <div class="section">
+      <div class="cedente-card">
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.6);margin-bottom:4px">
+            <span data-pt>Cedente &amp; Agente de Cobrança</span><span data-en>Originator &amp; Collection Agent</span>
+          </div>
+          <div style="font-size:22px;font-weight:900;letter-spacing:-1px;color:#fff">Contourline Soluções em Saúde</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px">CNPJ 14.458.149/0004-76</div>
+        </div>
+        <div class="cedente-stats">
+          <div><div class="cedente-stat-label"><span data-pt>Faturamento</span><span data-en>Revenue</span></div><div class="cedente-stat-val">R$ 112M</div></div>
+          <div><div class="cedente-stat-label"><span data-pt>Anos no Mercado</span><span data-en>Years in Market</span></div><div class="cedente-stat-val">14+ anos</div></div>
+          <div><div class="cedente-stat-label"><span data-pt>Parcerias Globais</span><span data-en>Global Partnerships</span></div><div class="cedente-stat-val">3 marcas</div></div>
+          <div><div class="cedente-stat-label"><span data-pt>Sede</span><span data-en>HQ</span></div><div class="cedente-stat-val">Belo Horizonte · MG</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Capital Stack + Waterfall -->
+    <div class="grid-2">
+
+      <!-- Capital Stack -->
+      <div class="card">
+        <div class="card-title"><span data-pt>Estrutura de Capital</span><span data-en>Capital Structure</span></div>
+
+        <!-- Barras -->
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <!-- Sênior -->
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:100px;font-size:12px;font-weight:700;color:var(--mid);flex-shrink:0">
+              <span data-pt>Sênior</span><span data-en>Senior</span>
+            </div>
+            <div style="flex:1;background:var(--gray2);border-radius:99px;height:22px;overflow:hidden">
+              <div style="width:70%;height:100%;background:var(--mid);border-radius:99px;display:flex;align-items:center;padding-left:10px">
+                <span style="font-size:11px;color:#fff;font-weight:700">R$ 35M</span>
+              </div>
+            </div>
+            <span style="font-size:11px;font-weight:700;color:var(--mid);width:28px;text-align:right;flex-shrink:0">70%</span>
+          </div>
+          <!-- Mezanino -->
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:100px;font-size:12px;font-weight:700;color:var(--purple);flex-shrink:0">Mezanino</div>
+            <div style="flex:1;background:var(--gray2);border-radius:99px;height:22px;overflow:hidden;position:relative">
+              <div style="width:10%;height:100%;background:var(--purple);border-radius:99px;min-width:6px"></div>
+            </div>
+            <span style="font-size:11px;font-weight:700;color:var(--purple);width:28px;text-align:right;flex-shrink:0">10%</span>
+          </div>
+          <!-- Júnior -->
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:100px;font-size:12px;font-weight:700;color:var(--amber);flex-shrink:0">
+              <span data-pt>Júnior (CL)</span><span data-en>Junior (CL)</span>
+            </div>
+            <div style="flex:1;background:var(--gray2);border-radius:99px;height:22px;overflow:hidden">
+              <div style="width:20%;height:100%;background:var(--amber);border-radius:99px;display:flex;align-items:center;padding-left:8px">
+                <span style="font-size:11px;color:#fff;font-weight:700">R$10M</span>
+              </div>
+            </div>
+            <span style="font-size:11px;font-weight:700;color:var(--amber);width:28px;text-align:right;flex-shrink:0">20%</span>
+          </div>
+        </div>
+
+        <!-- Subordinação -->
+        <div style="padding-top:14px;border-top:1px solid var(--gray2)">
+          <div style="font-size:10px;font-weight:700;color:var(--dark);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">
+            <span data-pt>Subordinação Mínima</span><span data-en>Minimum Subordination</span>
+          </div>
+          <div style="display:flex;gap:10px">
+            <div style="flex:1;background:rgba(1,112,185,0.06);border:1px solid rgba(1,112,185,0.15);border-radius:8px;padding:10px 12px;text-align:center">
+              <div style="font-size:20px;font-weight:900;color:var(--mid);letter-spacing:-1px">30%</div>
+              <div style="font-size:10px;color:var(--gray4);font-weight:600;text-transform:uppercase;letter-spacing:0.06em"><span data-pt>p/ Sênior</span><span data-en>for Senior</span></div>
+              <div style="font-size:10px;color:var(--gray4)">Mez+Júnior = R$15M</div>
+            </div>
+            <div style="flex:1;background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.15);border-radius:8px;padding:10px 12px;text-align:center">
+              <div style="font-size:20px;font-weight:900;color:var(--purple);letter-spacing:-1px">20%</div>
+              <div style="font-size:10px;color:var(--gray4);font-weight:600;text-transform:uppercase;letter-spacing:0.06em"><span data-pt>p/ Mezanino</span><span data-en>for Mezz.</span></div>
+              <div style="font-size:10px;color:var(--gray4)">Júnior = R$10M</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Waterfall -->
+      <div class="card">
+        <div class="card-title"><span data-pt>Ordem de Pagamento (Waterfall)</span><span data-en>Payment Waterfall</span></div>
+        <div class="wfall-item">
+          <div class="wfall-num" style="background:var(--dark)">1</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)"><span data-pt>Despesas e Encargos</span><span data-en>Expenses &amp; Charges</span></div>
+            <div style="font-size:11px;color:var(--gray4);margin-top:2px"><span data-pt>Administração, custódia, auditoria, gestão (gross-up 16,76%)</span><span data-en>Administration, custody, audit, management (16.76% gross-up)</span></div>
+          </div>
+        </div>
+        <div class="wfall-item">
+          <div class="wfall-num" style="background:var(--mid)">2</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)"><span data-pt>Amortização + Rendimento Sênior</span><span data-en>Senior Amortization + Return</span></div>
+            <div style="font-size:11px;color:var(--gray4);margin-top:2px">CDI + 4,5% a.a. · R$ 35M · <span data-pt>Mês 13–48</span><span data-en>Month 13–48</span></div>
+          </div>
+        </div>
+        <div class="wfall-item">
+          <div class="wfall-num" style="background:var(--purple)">3</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)"><span data-pt>Amortização + Rendimento Mezanino</span><span data-en>Mezzanine Amortization + Return</span></div>
+            <div style="font-size:11px;color:var(--gray4);margin-top:2px">CDI + 6,5% a.a. · R$ 5M · <span data-pt>Mês 13–48</span><span data-en>Month 13–48</span></div>
+          </div>
+        </div>
+        <div class="wfall-item">
+          <div class="wfall-num" style="background:var(--amber)">4</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)"><span data-pt>Reserva de Liquidez</span><span data-en>Liquidity Reserve</span></div>
+            <div style="font-size:11px;color:var(--gray4);margin-top:2px"><span data-pt>Mínimo 1,00× próximo vencimento</span><span data-en>Minimum 1.00× next maturity</span></div>
+          </div>
+        </div>
+        <div class="wfall-item">
+          <div class="wfall-num" style="background:var(--green)">5</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)"><span data-pt>Resgate Cota Júnior (Contourline)</span><span data-en>Junior Share Redemption</span></div>
+            <div style="font-size:11px;color:var(--gray4);margin-top:2px">Excess spread 0,60%/mês + <span data-pt>retorno residual</span><span data-en>residual return</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Participantes -->
+    <div class="section">
+      <div class="section-title"><span data-pt>Participantes do Fundo</span><span data-en>Fund Participants</span></div>
+      <div class="section-sub"><span data-pt>Estrutura regulatória Resolução CVM 175</span><span data-en>CVM Resolution 175 regulatory structure</span></div>
+      <div class="grid-auto">
+        <div class="pcard">
+          <div class="pcard-role"><span data-pt>Cedente / Ag. Cobrança</span><span data-en>Originator / Collection</span></div>
+          <div class="pcard-name">Contourline</div>
+          <div class="pcard-detail">CNPJ 14.458.149/0004-76</div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-role"><span data-pt>Gestora</span><span data-en>Fund Manager</span></div>
+          <div class="pcard-name">SRM Empírica</div>
+          <div class="pcard-detail">Nova SRM Adm. de Recursos</div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-role"><span data-pt>Administrador / Custodiante</span><span data-en>Admin / Custodian</span></div>
+          <div class="pcard-name" style="color:var(--gray4)"><span data-pt>Em cotação</span><span data-en>In selection</span></div>
+          <div class="pcard-detail"><span data-pt>Contratação pendente</span><span data-en>Pending contracting</span></div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-role"><span data-pt>Auditor Independente</span><span data-en>Independent Auditor</span></div>
+          <div class="pcard-name">Grant Thornton</div>
+          <div class="pcard-detail"><span data-pt>Custo do fundo</span><span data-en>Fund cost</span></div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-role"><span data-pt>Assessor Legal</span><span data-en>Legal Advisor</span></div>
+          <div class="pcard-name"><span data-pt>A definir</span><span data-en>TBD</span></div>
+          <div class="pcard-detail" style="color:var(--mid)"><span data-pt>Custo da Contourline</span><span data-en>Contourline cost</span></div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-role"><span data-pt>Regulador</span><span data-en>Regulator</span></div>
+          <div class="pcard-name">CVM</div>
+          <div class="pcard-detail">Resolução CVM 175/2022</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pane0 -->
+
+
+  <!-- ════════ TAB 1 — ESTRUTURA DE COTAS ══════════════════════════ -->
+  <div class="tab-pane" id="pane1">
+
+    <div class="section">
+      <div class="section-title"><span data-pt>Cotas por Classe</span><span data-en>Shares by Class</span></div>
+      <div class="section-sub"><span data-pt>Estrutura proposta Contourline · R$ 50M total · Patrimônio autorizado R$ 500M</span><span data-en>Contourline proposed structure · R$ 50M total · Authorized capital R$ 500M</span></div>
+
+      <div class="grid-3">
+
+        <!-- Sênior -->
+        <div class="card" style="border: 2px solid var(--mid); padding:0; overflow:hidden;">
+          <div class="tranche-head" style="background:var(--mid)">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:2px"><span data-pt>Classe Sênior</span><span data-en>Senior Class</span></div>
+            <div style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px">R$ 35M</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.75)">70% PL</div>
+          </div>
+          <div style="padding:14px 16px">
+            <table>
+              <tbody>
+                <tr><td><span data-pt>Remuneração</span><span data-en>Return</span></td><td class="r b" style="color:var(--mid)">CDI + 4,5% a.a.</td></tr>
+                <tr><td><span data-pt>Subordinação mín.</span><span data-en>Min. subordination</span></td><td class="r b">30% PL</td></tr>
+                <tr><td><span data-pt>Amortização</span><span data-en>Amortization</span></td><td class="r"><span data-pt>Mensal · Mês 13–48</span><span data-en>Monthly · Month 13–48</span></td></tr>
+                <tr><td><span data-pt>Carência</span><span data-en>Grace period</span></td><td class="r">12 <span data-pt>meses</span><span data-en>months</span></td></tr>
+                <tr><td style="border-bottom:none"><span data-pt>Liquidez</span><span data-en>Liquidity</span></td><td class="r" style="border-bottom:none"><span data-pt>Mercado secundário</span><span data-en>Secondary market</span></td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top:12px;padding:8px 10px;background:rgba(1,112,185,0.06);border-radius:7px;font-size:11px;color:var(--mid)">
+              <span data-pt>Alternativa: CDI + 3,5% se necessário para viabilidade do fundo</span><span data-en>Alternative: CDI + 3.5% if required for fund viability</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mezanino -->
+        <div class="card" style="border: 2px solid var(--purple); padding:0; overflow:hidden;">
+          <div class="tranche-head" style="background:var(--purple)">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:2px">Classe Mezanino</div>
+            <div style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px">R$ 5M</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.75)">10% PL</div>
+          </div>
+          <div style="padding:14px 16px">
+            <table>
+              <tbody>
+                <tr><td><span data-pt>Remuneração</span><span data-en>Return</span></td><td class="r b" style="color:var(--purple)">CDI + 6,5% a.a.</td></tr>
+                <tr><td><span data-pt>Subordinação mín.</span><span data-en>Min. subordination</span></td><td class="r b">20% PL</td></tr>
+                <tr><td><span data-pt>Amortização</span><span data-en>Amortization</span></td><td class="r"><span data-pt>Mensal · Mês 13–48</span><span data-en>Monthly · Month 13–48</span></td></tr>
+                <tr><td><span data-pt>Carência</span><span data-en>Grace period</span></td><td class="r">12 <span data-pt>meses</span><span data-en>months</span></td></tr>
+                <tr><td style="border-bottom:none"><span data-pt>Liquidez</span><span data-en>Liquidity</span></td><td class="r" style="border-bottom:none"><span data-pt>Mercado secundário</span><span data-en>Secondary market</span></td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top:12px;padding:8px 10px;background:rgba(124,58,237,0.06);border-radius:7px;font-size:11px;color:var(--purple)">
+              <span data-pt>Alternativa: CDI + 5,5% se necessário para viabilidade do fundo</span><span data-en>Alternative: CDI + 5.5% if required for fund viability</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Júnior -->
+        <div class="card" style="border: 2px solid var(--amber); padding:0; overflow:hidden;">
+          <div class="tranche-head" style="background:var(--amber)">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.75);margin-bottom:2px"><span data-pt>Classe Júnior</span><span data-en>Junior Class</span></div>
+            <div style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px">R$ 10M</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.75)">20% PL</div>
+          </div>
+          <div style="padding:14px 16px">
+            <table>
+              <tbody>
+                <tr><td><span data-pt>Titular</span><span data-en>Holder</span></td><td class="r b">Contourline</td></tr>
+                <tr><td><span data-pt>Função</span><span data-en>Role</span></td><td class="r">First loss</td></tr>
+                <tr><td>Excess Spread</td><td class="r b" style="color:var(--amber)">0,60%/mês</td></tr>
+                <tr><td><span data-pt>Retorno adicional</span><span data-en>Additional return</span></td><td class="r"><span data-pt>Spread residual</span><span data-en>Residual spread</span></td></tr>
+                <tr><td style="border-bottom:none"><span data-pt>Resgate</span><span data-en>Redemption</span></td><td class="r" style="border-bottom:none"><span data-pt>Após Sênior + Mez.</span><span data-en>After Senior + Mezz.</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Taxa de Cessão + Amortização -->
+    <div class="grid-2" style="margin-top:20px">
+
+      <!-- Fórmula -->
+      <div class="card">
+        <div class="card-title"><span data-pt>Taxa Mínima de Cessão — Fórmula</span><span data-en>Minimum Assignment Rate — Formula</span></div>
+        <div style="background:var(--gray);border:1px solid var(--gray2);border-radius:10px;padding:16px 20px;font-family:'Courier New',monospace;font-size:12px;color:var(--dark);line-height:2">
+          Taxa_min = (1 + RCS)<sup>1/12</sup> × (1 + ES) − 1<br>
+          <span style="color:var(--gray3)">────────────────────────────────────</span><br>
+          RCS = Σ [(1+RC<sub>i</sub>) × (1+IDKA_pré_2A) − 1] × PC<sub>i</sub><br>
+          <span style="color:var(--gray3)">────────────────────────────────────</span><br>
+          RC_Sênior &nbsp;&nbsp;&nbsp;= CDI + 4,5%<br>
+          RC_Mezanino = CDI + 6,5%<br>
+          IDKA Pré 2A ≈ <span style="color:var(--mid);font-weight:700">14,0% a.a.</span><br>
+          ES &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <span style="color:var(--amber);font-weight:700">0,60%/mês</span>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:12px">
+          <div style="flex:1;background:var(--green-bg);border:1px solid rgba(5,150,105,0.25);border-radius:8px;padding:12px 14px;text-align:center">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--green);margin-bottom:4px"><span data-pt>Taxa Mínima Alvo</span><span data-en>Min. Target Rate</span></div>
+            <div style="font-size:22px;font-weight:900;color:var(--green);letter-spacing:-1px">≈ 1,80%</div>
+            <div style="font-size:10px;color:var(--green)"><span data-pt>ao mês</span><span data-en>per month</span></div>
+          </div>
+          <div style="flex:1;background:var(--amber-bg);border:1px solid rgba(217,119,6,0.25);border-radius:8px;padding:12px 14px;text-align:center">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--amber);margin-bottom:4px">Excess Spread</div>
+            <div style="font-size:22px;font-weight:900;color:var(--amber);letter-spacing:-1px">0,60%</div>
+            <div style="font-size:10px;color:var(--amber)"><span data-pt>ao mês</span><span data-en>per month</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amortização -->
+      <div class="card">
+        <div class="card-title"><span data-pt>Cronograma de Amortização</span><span data-en>Amortization Schedule</span></div>
+        <table>
+          <thead>
+            <tr>
+              <th><span data-pt>Período</span><span data-en>Period</span></th>
+              <th class="r"><span data-pt>Meses</span><span data-en>Months</span></th>
+              <th class="r"><span data-pt>Modalidade</span><span data-en>Type</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span data-pt>Carência (juros only)</span><span data-en>Grace (interest only)</span></td>
+              <td class="r">1 – 12</td>
+              <td class="r"><span class="pill pill-amber"><span data-pt>Só juros</span><span data-en>Interest only</span></span></td>
+            </tr>
+            <tr>
+              <td><span data-pt>Amortização linear</span><span data-en>Linear amortization</span></td>
+              <td class="r">13 – 48</td>
+              <td class="r"><span class="pill pill-ok"><span data-pt>Principal + juros</span><span data-en>Principal + interest</span></span></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr><td><span data-pt>Prazo Total</span><span data-en>Total Term</span></td><td class="r">48 meses</td><td></td></tr>
+          </tfoot>
+        </table>
+
+        <div style="margin-top:14px">
+          <div style="font-size:10px;font-weight:700;color:var(--gray4);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em"><span data-pt>Linha do Tempo</span><span data-en>Timeline</span></div>
+          <div style="background:var(--gray2);border-radius:99px;height:24px;display:flex;overflow:hidden">
+            <div style="width:25%;background:var(--amber);display:flex;align-items:center;justify-content:center">
+              <span style="font-size:10px;color:#fff;font-weight:700"><span data-pt>Carência 12m</span><span data-en>Grace 12m</span></span>
+            </div>
+            <div style="width:75%;background:var(--mid);display:flex;align-items:center;justify-content:center">
+              <span style="font-size:10px;color:#fff;font-weight:700"><span data-pt>Amortização 36m</span><span data-en>Amortization 36m</span></span>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:4px">
+            <span style="font-size:10px;color:var(--gray4)"><span data-pt>Mês 1</span><span data-en>Month 1</span></span>
+            <span style="font-size:10px;color:var(--gray4)">M13</span>
+            <span style="font-size:10px;color:var(--gray4)"><span data-pt>Mês 48</span><span data-en>Month 48</span></span>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;background:rgba(1,112,185,0.06);border:1px solid rgba(1,112,185,0.15);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--mid)">
+          <span data-pt>Carteira revolvente durante toda a vigência. Patrimônio autorizado R$ 500M permite crescimento via novas emissões sem reestruturação.</span>
+          <span data-en>Revolving portfolio throughout the fund's life. Authorized capital R$ 500M enables growth via new issuances without restructuring.</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pane1 -->
+
+
+  <!-- ════════ TAB 2 — ELEGIBILIDADE & PROTEÇÕES ════════════════════ -->
+  <div class="tab-pane" id="pane2">
+
+    <div class="grid-2" style="margin-top:36px">
+
+      <!-- Tipos de DC -->
+      <div class="card">
+        <div class="card-title"><span data-pt>Direitos Creditórios Elegíveis</span><span data-en>Eligible Credit Rights</span></div>
+
+        <div class="crit-item">
+          <div class="crit-icon" style="background:var(--green-bg);color:var(--green)">✓</div>
+          <div style="flex:1">
+            <div style="font-size:12px;font-weight:700;color:var(--dark)"><span data-pt>Compra e Venda com Financiamento</span><span data-en>Financed Purchase &amp; Sale</span></div>
+            <div style="font-size:11px;color:var(--gray4);margin-top:2px"><span data-pt>Alienação Fiduciária + Bloqueio Remoto</span><span data-en>Fiduciary Lien + Remote Block</span></div>
+          </div>
+          <span class="pill pill-ok"><span data-pt>Mantido</span><span data-en>Maintained</span></span>
+        </div>
+
+        <div class="crit-item" style="background:rgba(1,112,185,0.04);border-radius:8px;padding:10px 8px;border-bottom:none;margin-bottom:6px">
+          <div class="crit-icon" style="background:rgba(1,112,185,0.12);color:var(--mid)">+</div>
+          <div style="flex:1">
+            <div style="font-size:12px;font-weight:700;color:var(--mid)"><span data-pt>Arrendamento Mercantil Operacional</span><span data-en>Operating Lease (Leasing)</span></div>
+            <div style="font-size:11px;color:var(--gray4);margin-top:2px"><span data-pt>Bloqueio Remoto · Propriedade Contourline · Sem necessidade de AF</span><span data-en>Remote Block · Contourline ownership · No fiduciary lien needed</span></div>
+          </div>
+          <span class="pill pill-new"><span data-pt>Incluído</span><span data-en>Added</span></span>
+        </div>
+
+        <!-- Leasing vantagens -->
+        <div style="background:rgba(1,112,185,0.06);border:1px solid rgba(1,112,185,0.15);border-left:3px solid var(--mid);border-radius:0 8px 8px 0;padding:12px 14px;margin-top:8px">
+          <div style="font-size:11px;font-weight:700;color:var(--mid);margin-bottom:6px"><span data-pt>Por que leasing protege mais o fundo:</span><span data-en>Why leasing better protects the fund:</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div style="font-size:11px;color:var(--dark)">→ <span data-pt>Contourline retém propriedade → maior garantia real</span><span data-en>Contourline retains ownership → stronger collateral</span></div>
+            <div style="font-size:11px;color:var(--dark)">→ <span data-pt>Bloqueio remoto pleno sobre bem próprio da cedente</span><span data-en>Full remote block on originator's own asset</span></div>
+            <div style="font-size:11px;color:var(--dark)">→ <span data-pt>Justifica Excess Spread menor (0,60% vs. 0,75% original)</span><span data-en>Justifies lower Excess Spread (0.60% vs. original 0.75%)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Critérios -->
+      <div class="card">
+        <div class="card-title"><span data-pt>Critérios de Elegibilidade</span><span data-en>Eligibility Criteria</span></div>
+        <div class="crit-item">
+          <div class="crit-icon" style="background:var(--green-bg);color:var(--green)">✓</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--dark)"><span data-pt>Performado (equipamento entregue + valor definido)</span><span data-en>Performed (equipment delivered + value defined)</span></div></div>
+          <span class="pill pill-ok"><span data-pt>Mantido</span><span data-en>Maintained</span></span>
+        </div>
+        <div class="crit-item">
+          <div class="crit-icon" style="background:var(--green-bg);color:var(--green)">✓</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--dark)"><span data-pt>Sem renegociação prévia</span><span data-en>No prior renegotiation</span></div></div>
+          <span class="pill pill-ok"><span data-pt>Mantido</span><span data-en>Maintained</span></span>
+        </div>
+        <div class="crit-item">
+          <div class="crit-icon" style="background:var(--red-bg);color:var(--red)">✕</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--gray3);text-decoration:line-through"><span data-pt>30% do valor nominal já quitado</span><span data-en>30% nominal already paid</span></div></div>
+          <span class="pill pill-rm"><span data-pt>Removido</span><span data-en>Removed</span></span>
+        </div>
+        <div class="crit-item">
+          <div class="crit-icon" style="background:var(--red-bg);color:var(--red)">✕</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--gray3);text-decoration:line-through"><span data-pt>1ª parcela já liquidada</span><span data-en>1st installment already paid</span></div></div>
+          <span class="pill pill-rm"><span data-pt>Removido</span><span data-en>Removed</span></span>
+        </div>
+        <div class="crit-item">
+          <div class="crit-icon" style="background:var(--red-bg);color:var(--red)">✕</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--gray3);text-decoration:line-through"><span data-pt>Prazo de 30 dias p/ próxima parcela</span><span data-en>30-day rule for next installment</span></div></div>
+          <span class="pill pill-rm"><span data-pt>Removido</span><span data-en>Removed</span></span>
+        </div>
+        <div class="crit-item" style="border-bottom:none">
+          <div class="crit-icon" style="background:var(--red-bg);color:var(--red)">✕</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--gray3);text-decoration:line-through"><span data-pt>Restrição por tipo de contrato</span><span data-en>Contract type restriction</span></div></div>
+          <span class="pill pill-rm"><span data-pt>Removido</span><span data-en>Removed</span></span>
+        </div>
+
+        <!-- Carência -->
+        <div style="margin-top:10px;background:var(--green-bg);border:1px solid rgba(5,150,105,0.2);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--green)">
+          <span style="font-weight:700"><span data-pt>Carências:</span><span data-en>Grace periods:</span></span>
+          <span data-pt> até 90 dias de carência são permitidos. Contrato performado (equipamento entregue) é elegível independentemente do estágio de pagamento.</span>
+          <span data-en> up to 90-day grace periods are allowed. A performed contract (equipment delivered) is eligible regardless of payment stage.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Limites + Triggers -->
+    <div class="grid-2" style="margin-top:16px">
+
+      <!-- Limites de Concentração -->
+      <div class="card">
+        <div class="card-title"><span data-pt>Limites de Concentração</span><span data-en>Concentration Limits</span></div>
+        <table>
+          <thead>
+            <tr>
+              <th><span data-pt>Parâmetro</span><span data-en>Parameter</span></th>
+              <th class="r"><span data-pt>Limite</span><span data-en>Limit</span></th>
+              <th class="r"><span data-pt>Base</span><span data-en>Base</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span data-pt>Devedor único</span><span data-en>Single debtor</span></td><td class="r b">3%</td><td class="r" style="color:var(--gray4)"><span data-pt>% do PL</span><span data-en>% of NAV</span></td></tr>
+            <tr><td><span data-pt>Atraso &gt; 30 dias</span><span data-en>Overdue &gt; 30d</span></td><td class="r b" style="color:var(--amber)">8%</td><td class="r" style="color:var(--gray4)"><span data-pt>% carteira</span><span data-en>% portfolio</span></td></tr>
+            <tr><td><span data-pt>Atraso &gt; 90 dias</span><span data-en>Overdue &gt; 90d</span></td><td class="r b" style="color:var(--red)">4%</td><td class="r" style="color:var(--gray4)"><span data-pt>% carteira</span><span data-en>% portfolio</span></td></tr>
+            <tr><td><span data-pt>Renegociação mensal</span><span data-en>Monthly renegotiation</span></td><td class="r b" style="color:var(--red)">4%</td><td class="r" style="color:var(--gray4)"><span data-pt>% recebimentos</span><span data-en>% receipts</span></td></tr>
+            <tr><td><span data-pt>Renegociação acumulada</span><span data-en>Cumulative renegotiation</span></td><td class="r b" style="color:var(--amber)">10%</td><td class="r" style="color:var(--gray4)"><span data-pt>% carteira</span><span data-en>% portfolio</span></td></tr>
+            <tr><td style="border-bottom:none"><span data-pt>Reserva de Liquidez</span><span data-en>Liquidity Reserve</span></td><td class="r b" style="border-bottom:none">1,00×</td><td class="r" style="color:var(--gray4);border-bottom:none"><span data-pt>próx. vencimento</span><span data-en>next maturity</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Triggers -->
+      <div class="card">
+        <div class="card-title"><span data-pt>Eventos de Avaliação (Triggers)</span><span data-en>Evaluation Events (Triggers)</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:8px;background:var(--amber-bg);border:1px solid rgba(217,119,6,0.2)">
+            <span style="font-size:18px;font-weight:900;color:var(--amber);min-width:38px">8%</span>
+            <div style="font-size:12px;color:var(--dark)"><span data-pt>Inadimplência &gt; 30 dias atingir 8% da carteira</span><span data-en>Overdue &gt; 30d reaches 8% of portfolio</span></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:8px;background:var(--red-bg);border:1px solid rgba(220,38,38,0.2)">
+            <span style="font-size:18px;font-weight:900;color:var(--red);min-width:38px">4%</span>
+            <div style="font-size:12px;color:var(--dark)"><span data-pt>Inadimplência &gt; 90 dias atingir 4% da carteira</span><span data-en>Overdue &gt; 90d reaches 4% of portfolio</span></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:8px;background:var(--red-bg);border:1px solid rgba(220,38,38,0.2)">
+            <span style="font-size:18px;font-weight:900;color:var(--red);min-width:38px">4%</span>
+            <div style="font-size:12px;color:var(--dark)"><span data-pt>Renegociação mensal atingir 4% dos recebimentos</span><span data-en>Monthly renegotiation reaches 4% of receipts</span></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:8px;background:var(--amber-bg);border:1px solid rgba(217,119,6,0.2)">
+            <span style="font-size:18px;font-weight:900;color:var(--amber);min-width:38px">10%</span>
+            <div style="font-size:12px;color:var(--dark)"><span data-pt>Renegociação acumulada &gt; 10% da carteira</span><span data-en>Cumulative renegotiation &gt; 10% of portfolio</span></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:8px;background:var(--red-bg);border:1px solid rgba(220,38,38,0.2)">
+            <span style="font-size:18px;font-weight:900;color:var(--red);min-width:38px">&lt;1×</span>
+            <div style="font-size:12px;color:var(--dark)"><span data-pt>Reserva de Liquidez abaixo de 1,00×</span><span data-en>Liquidity Reserve falls below 1.00×</span></div>
+          </div>
+          <div style="font-size:10px;color:var(--gray4);margin-top:2px">
+            <span data-pt>* Ativam Assembleia Geral de Cotistas para deliberação</span><span data-en>* Activate Shareholders' Meeting for deliberation</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /pane2 -->
+
+
+  <!-- ════════ TAB 3 — ANÁLISE & RISCOS ══════════════════════════════ -->
+  <div class="tab-pane" id="pane3">
+
+    <!-- ─── BLOCO 1: COMPARATIVO TERM SHEET ─────────────────────────── -->
+    <div class="section">
+      <div class="section-title"><span data-pt>Proposta Inicial × Contraposição Contourline</span><span data-en>Initial Proposal × Contourline Counter-Proposal</span></div>
+      <div class="section-sub"><span data-pt>Documento base: Term Sheet FIDC_CONTOURLINE_23.04.2026 — SRM Empírica / Nova SRM Administração de Recursos</span><span data-en>Base document: Term Sheet FIDC_CONTOURLINE_23.04.2026 — SRM Empírica / Nova SRM Asset Management</span></div>
+
+      <div class="ts-disclaimer">
+        <strong>⚠ Nota sobre referências de cláusula:</strong> As referências <strong>§</strong> abaixo indicam a seção temática do term sheet de 23/04/2026. A numeração exata de cada cláusula deve ser verificada no documento original. Itens "Em Negociação" dependem de confirmação pela SRM Empírica antes da assinatura do Regulamento.
+      </div>
+
+      <div class="ts-table-wrap">
+        <table class="ts-table">
+          <thead>
+            <tr>
+              <th style="width:170px"><span data-pt>Item</span><span data-en>Item</span></th>
+              <th style="width:140px"><span data-pt>§ Cláusula TS</span><span data-en>§ TS Clause</span></th>
+              <th style="width:175px"><span data-pt>SRM Empírica (23/04)</span><span data-en>SRM Empírica (Apr/23)</span></th>
+              <th style="width:185px"><span data-pt>Contourline (Contraposição)</span><span data-en>Contourline (Counter)</span></th>
+              <th><span data-pt>Racional da Alteração</span><span data-en>Rationale for Change</span></th>
+              <th style="width:100px; text-align:center"><span data-pt>Status</span><span data-en>Status</span></th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td><strong><span data-pt>Volume Total do Fundo</span><span data-en>Total Fund Size</span></strong></td>
+              <td><span class="clause-tag">§ Estrutura e Patrimônio</span></td>
+              <td><span class="val-original">R$ 80.000.000</span></td>
+              <td><span class="val-new green">R$ 50.000.000</span></td>
+              <td>
+                <span data-pt>Fundo menor reduz o risco de originação insuficiente na fase inicial. A estrutura de patrimônio autorizado em R$ 500M permite crescer via novas emissões sem reestruturar o veículo — o tamanho ideal é aquele que a carteira elegível já existente consegue suportar com folga.</span>
+                <span data-en>Smaller fund reduces insufficient origination risk in the initial phase. The R$ 500M authorized structure allows growth via new issuances without restructuring — optimal size is what the existing eligible portfolio can comfortably support.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-neg"><span data-pt>Negociado</span><span data-en>Agreed</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Cota Sênior — Volume</span><span data-en>Senior Share — Volume</span></strong></td>
+              <td><span class="clause-tag">§ Classes de Cotas</span><br><span class="clause-tag">§ Emissão e Subscrição</span></td>
+              <td><span class="val-original">R$ 56M (70% PL)</span></td>
+              <td><span class="val-new blue">R$ 35M (70% PL)</span></td>
+              <td>
+                <span data-pt>Proporção mantida em 70% do PL — a subordinação de 30% (Mez + Júnior = R$ 15M) é preservada integralmente. A redução é proporcional à redução do fundo, sem impacto na proteção estrutural ao cotista sênior.</span>
+                <span data-en>Proportion maintained at 70% of NAV — 30% subordination (Mezz + Junior = R$ 15M) fully preserved. The reduction is proportional to the fund reduction, with no impact on structural protection for senior investors.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-neg"><span data-pt>Negociado</span><span data-en>Agreed</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Cota Sênior — Remuneração</span><span data-en>Senior Share — Return</span></strong></td>
+              <td><span class="clause-tag">§ Remuneração das Cotas</span></td>
+              <td><span class="val-original">CDI + 4,5% a.a.</span></td>
+              <td><span class="val-new blue">CDI + 4,5% a.a.<br><small style="font-weight:400;color:var(--gray4)">(flex CDI + 3,5% se necessário)</small></span></td>
+              <td>
+                <span data-pt>A taxa preferencial se mantém em CDI + 4,5%. A flexibilização para CDI + 3,5% é uma alavanca secundária acionável somente se o Excess Spread de 0,60% não for suficiente para viabilizar a taxa de cessão alvo de 1,80%/mês. A preferência é nunca acionar essa cláusula.</span>
+                <span data-en>Preferred rate remains at CDI + 4.5%. The CDI + 3.5% flexibility is a secondary lever activated only if the 0.60% Excess Spread is insufficient to support the 1.80%/month target assignment rate. Preference is to never activate this clause.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-open"><span data-pt>Em Negociação</span><span data-en>Negotiating</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Cota Mezanino — Volume e Remuneração</span><span data-en>Mezzanine — Volume &amp; Return</span></strong></td>
+              <td><span class="clause-tag">§ Classes de Cotas</span><br><span class="clause-tag">§ Remuneração das Cotas</span></td>
+              <td><span class="val-original">R$ 8M · CDI + 6,5%</span></td>
+              <td><span class="val-new" style="color:var(--purple)">R$ 5M · CDI + 6,5%<br><small style="font-weight:400;color:var(--gray4)">(flex CDI + 5,5%)</small></span></td>
+              <td>
+                <span data-pt>Mesma lógica proporcional do sênior. A subordinação de 20% (Júnior = R$ 10M) permanece inalterada. Atenção: a flexibilização para CDI + 5,5% reduz a compensação do cotista mezanino exatamente no cenário de maior pressão sobre o fundo — ponto de atenção para o investidor nesta classe.</span>
+                <span data-en>Same proportional logic as senior. 20% subordination (Junior = R$ 10M) unchanged. Note: CDI + 5.5% flexibility reduces mezzanine investor compensation precisely in scenarios of greater fund pressure — a key attention point for this class.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-open"><span data-pt>Em Negociação</span><span data-en>Negotiating</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Cota Júnior (First Loss)</span><span data-en>Junior Share (First Loss)</span></strong></td>
+              <td><span class="clause-tag">§ Classes de Cotas</span></td>
+              <td><span class="val-original">R$ 16M (20% PL)</span></td>
+              <td><span class="val-new" style="color:var(--amber)">R$ 10M (20% PL)</span></td>
+              <td>
+                <span data-pt>Redução de R$ 6M no capital imobilizado pela Contourline como cotista júnior, preservando integralmente a proporção de 20% do PL e o papel de first loss. O investidor júnior (Contourline) mantém o maior alinhamento de interesses com a qualidade da carteira.</span>
+                <span data-en>R$ 6M reduction in capital tied up by Contourline as junior investor, fully preserving the 20% NAV proportion and first-loss role. The junior investor (Contourline) maintains the strongest alignment of interests with portfolio quality.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-neg"><span data-pt>Negociado</span><span data-en>Agreed</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong>Excess Spread</strong></td>
+              <td><span class="clause-tag">§ Taxa de Cessão</span><br><span class="clause-tag">§ Remuneração das Cotas</span></td>
+              <td><span class="val-original">0,75%/mês</span></td>
+              <td><span class="val-new green">0,60%/mês</span></td>
+              <td>
+                <span data-pt>Principal alavanca para atingir a taxa de cessão alvo de 1,80%/mês. A redução de 0,15 p.p. é justificada pela inclusão do leasing operacional: quando a Contourline retém a propriedade do bem, a garantia real do fundo é superior à da compra e venda, reduzindo o prêmio de risco exigido pela gestora.</span>
+                <span data-en>Primary lever for reaching the 1.80%/month target assignment rate. The 0.15 p.p. reduction is justified by including operating leases: when Contourline retains asset ownership, the fund's collateral is superior to purchase/sale contracts, reducing the required risk premium.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-open"><span data-pt>Em Negociação</span><span data-en>Negotiating</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Critério: 30% Nominal Quitado</span><span data-en>Criteria: 30% Nominal Paid</span></strong></td>
+              <td><span class="clause-tag">§ Critérios de Elegibilidade</span></td>
+              <td><span class="val-original" style="font-size:11px"><span data-pt>Exigido — devedor deve ter pago ≥ 30% do valor original</span><span data-en>Required — debtor must have paid ≥ 30% of original value</span></span></td>
+              <td><span class="val-new green"><span data-pt>Removido</span><span data-en>Removed</span></span></td>
+              <td>
+                <span data-pt>Este critério impede a cessão de qualquer contrato nas fases iniciais, independentemente da qualidade do crédito. O critério de "performado" (equipamento entregue, valor definido) já garante a existência e liquidez do direito creditório. Exigir 30% quitado é redundante e trava a revolvência da carteira.</span>
+                <span data-en>This criterion prevents assignment of any contract in initial phases regardless of credit quality. The "performed" criterion (equipment delivered, value defined) already guarantees the credit right's existence and validity. Requiring 30% paid is redundant and blocks portfolio revolving.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-neg"><span data-pt>Negociado</span><span data-en>Agreed</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Critério: 1ª Parcela Liquidada</span><span data-en>Criteria: 1st Installment Paid</span></strong></td>
+              <td><span class="clause-tag">§ Critérios de Elegibilidade</span></td>
+              <td><span class="val-original" style="font-size:11px"><span data-pt>Exigida — 1ª parcela deve estar paga</span><span data-en>Required — 1st installment must be paid</span></span></td>
+              <td><span class="val-new green"><span data-pt>Removido</span><span data-en>Removed</span></span></td>
+              <td>
+                <span data-pt>Incompatível com a política comercial de carência de até 90 dias praticada pela Contourline. Em um contrato com carência, a 1ª parcela ainda não venceu — logo, jamais estará paga no momento da cessão. Este critério, na prática, vedava a cessão de contratos novos por até 3 meses após a assinatura.</span>
+                <span data-en>Incompatible with Contourline's up-to-90-day grace period commercial policy. In a grace period contract, the 1st installment hasn't matured — so it can never be paid at assignment time. This criterion effectively blocked assignment of new contracts for up to 3 months after signing.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-neg"><span data-pt>Negociado</span><span data-en>Agreed</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Critério: 30 dias p/ Próxima Parcela</span><span data-en>Criteria: 30-Day Rule</span></strong></td>
+              <td><span class="clause-tag">§ Critérios de Elegibilidade</span></td>
+              <td><span class="val-original" style="font-size:11px"><span data-pt>Exigido — próxima parcela com vencimento em ≥ 30 dias</span><span data-en>Required — next installment due in ≥ 30 days</span></span></td>
+              <td><span class="val-new green"><span data-pt>Removido</span><span data-en>Removed</span></span></td>
+              <td>
+                <span data-pt>Restrição desnecessária com a existência do bloqueio remoto sobre os equipamentos. A proteção real do fundo vem da capacidade de bloquear o equipamento do devedor inadimplente, não do prazo até o próximo vencimento. Este critério apenas reduzia a janela de cessão sem adicionar proteção efetiva.</span>
+                <span data-en>Unnecessary restriction given the remote block on equipment. The fund's real protection comes from the ability to remotely block the defaulting debtor's equipment, not from time to next maturity. This criterion only reduced the assignment window without adding effective protection.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-neg"><span data-pt>Negociado</span><span data-en>Agreed</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Critério: Tipo de Contrato</span><span data-en>Criteria: Contract Type</span></strong></td>
+              <td><span class="clause-tag">§ Tipos de Direitos Creditórios</span><br><span class="clause-tag">§ Critérios de Elegibilidade</span></td>
+              <td><span class="val-original" style="font-size:11px"><span data-pt>Restrito a Compra e Venda com AF</span><span data-en>Restricted to Purchase/Sale with fiduciary lien</span></span></td>
+              <td><span class="val-new blue"><span data-pt>Compra e Venda + Leasing Operacional</span><span data-en>Purchase/Sale + Operating Lease</span></span></td>
+              <td>
+                <span data-pt>A expansão para leasing operacional é estruturalmente relevante: no leasing, a Contourline retém a propriedade do bem durante toda a vigência do contrato. Isso oferece ao fundo uma garantia real mais sólida do que a alienação fiduciária na compra e venda, onde a propriedade já foi transferida ao devedor.</span>
+                <span data-en>Expanding to operating leases is structurally significant: in leasing, Contourline retains asset ownership throughout the contract. This provides the fund with stronger collateral than fiduciary lien in purchase/sale, where ownership has already been transferred to the debtor.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-new"><span data-pt>Incluído</span><span data-en>Added</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Carências até 90 Dias</span><span data-en>Grace Periods up to 90 Days</span></strong></td>
+              <td><span class="clause-tag">§ Critérios de Elegibilidade</span><br><span class="clause-tag">§ Performados / CVM 175</span></td>
+              <td><span class="val-original" style="font-size:11px"><span data-pt>Vedada — contrato deve ter pelo menos uma parcela vencida</span><span data-en>Prohibited — contract must have at least one matured installment</span></span></td>
+              <td><span class="val-new green"><span data-pt>Permitida — elegível se "performado" (equipamento entregue)</span><span data-en>Allowed — eligible if "performed" (equipment delivered)</span></span></td>
+              <td>
+                <span data-pt>A Resolução CVM 175 define "performado" como a existência e liquidez do direito creditório — não exige parcelas vencidas. Se o equipamento foi entregue e o valor está definido, o crédito existe e é válido para cessão. A vedação original impedia a cessão de contratos novos por até 90 dias, travando capital de giro crítico para a Contourline.</span>
+                <span data-en>CVM Resolution 175 defines "performed" as the credit right's existence and liquidity — not requiring matured installments. If equipment is delivered and value is defined, the credit exists and is valid for assignment. The original prohibition blocked new contract assignment for up to 90 days, tying up critical working capital.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-new"><span data-pt>Incluído</span><span data-en>Added</span></span></td>
+            </tr>
+
+            <tr>
+              <td><strong><span data-pt>Alienação Fiduciária (AF)</span><span data-en>Fiduciary Lien (AF)</span></strong></td>
+              <td><span class="clause-tag">§ Garantias</span><br><span class="clause-tag">§ Critérios de Elegibilidade</span></td>
+              <td><span class="val-original" style="font-size:11px"><span data-pt>Exigida para todos os contratos</span><span data-en>Required for all contracts</span></span></td>
+              <td><span class="val-new blue"><span data-pt>Mantida para CV · Não aplicável ao leasing</span><span data-en>Maintained for P&amp;S · Not applicable to leasing</span></span></td>
+              <td>
+                <span data-pt>A AF é juridicamente inadequada para contratos de leasing operacional: não se pode constituir alienação fiduciária sobre um bem que nunca saiu da propriedade do credor. No leasing, a proteção é direta — a Contourline simplesmente retoma o bem, sem necessidade de ação judicial de busca e apreensão.</span>
+                <span data-en>Fiduciary lien is legally inappropriate for operating leases: you cannot create a fiduciary lien over an asset that never left the creditor's ownership. In leasing, protection is direct — Contourline simply repossesses the asset without judicial recovery action.</span>
+              </td>
+              <td style="text-align:center"><span class="status-tag status-new"><span data-pt>Revisado</span><span data-en>Revised</span></span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- ─── BLOCO 2: MAPA DE RISCOS ──────────────────────────────────── -->
+    <div class="risk-section-header">
+      <div class="risk-section-title"><span data-pt>Mapa de Riscos — Análise por Risco Material</span><span data-en>Risk Map — Material Risk Analysis</span></div>
+      <div class="risk-section-line"></div>
+    </div>
+
+    <div class="ts-disclaimer" style="margin-bottom:28px">
+      <strong><span data-pt>Nota de metodologia:</span><span data-en>Methodology note:</span></strong>
+      <span data-pt> Os riscos abaixo são avaliados do ponto de vista do <strong>investidor externo</strong> (sênior e mezanino). Riscos genéricos de mercado não foram incluídos — o foco é nos riscos <em>específicos</em> desta estrutura que requerem avaliação e, em alguns casos, alterações contratuais antes da assinatura.</span>
+      <span data-en> The risks below are assessed from the <strong>external investor's perspective</strong> (senior and mezzanine). Generic market risks are excluded — the focus is on risks <em>specific</em> to this structure that require evaluation and, in some cases, contractual changes before signing.</span>
+    </div>
+
+
+    <!-- R1 — Triplo Papel -->
+    <div class="risk-card risk-high">
+      <div class="risk-head">
+        <div class="risk-head-left">
+          <div class="risk-num"><span data-pt>Risco</span><span data-en>Risk</span> 01</div>
+          <div class="risk-title"><span data-pt>Triplo Papel da Contourline — Cedente, Agente de Cobrança e Cotista Júnior</span><span data-en>Contourline's Triple Role — Originator, Collection Agent and Junior Investor</span></div>
+          <div class="risk-subtitle"><span data-pt>Conflito estrutural de interesses em cenário de distress financeiro do cedente</span><span data-en>Structural conflict of interest in a financial distress scenario of the originator</span></div>
+        </div>
+        <div class="risk-head-right">
+          <span class="risk-badge high"><span data-pt>Alto</span><span data-en>High</span></span>
+          <div class="risk-clause">§ <span data-pt>Agente de Cobrança</span><span data-en>Collection Agent</span><br>§ <span data-pt>Conflitos de Interesse</span><span data-en>Conflicts of Interest</span><br>§ <span data-pt>Substituição de Prestadores</span><span data-en>Service Provider Replacement</span></div>
+        </div>
+      </div>
+      <div class="risk-body">
+        <p class="risk-desc">
+          <span data-pt>A Contourline acumula simultaneamente três funções no fundo: é a <strong>cedente</strong> (origina e vende os direitos creditórios), o <strong>agente de cobrança</strong> (responsável por cobrar os devedores e repassar os recebimentos ao fundo) e o <strong>cotista júnior</strong> (detém a cota de first loss, última a ser remunerada e primeira a absorver perdas). Em condições normais, esse triplo papel cria um forte alinhamento de incentivos — a Contourline perde primeiro se a carteira deteriorar. O problema emerge em um cenário de <strong>distress financeiro do próprio cedente</strong>: se a Contourline enfrentar dificuldades operacionais ou de caixa, ela pode — intencionalmente ou não — reduzir a eficiência da cobrança, atrasar repasses, priorizar a recuperação de créditos para si mesma ou simplesmente não ter capacidade operacional para executar a cobrança com a qualidade necessária. E é exatamente nesse momento que o fundo mais precisa de uma cobrança ativa. O risco é que o cedente e o agente de cobrança falhem ao mesmo tempo, pelo mesmo motivo.</span>
+          <span data-en>Contourline simultaneously holds three roles in the fund: it is the <strong>originator</strong> (originates and sells credit rights), the <strong>collection agent</strong> (responsible for collecting from debtors and passing receipts to the fund), and the <strong>junior investor</strong> (holds the first-loss share, last to be paid and first to absorb losses). Under normal conditions, this triple role creates strong alignment of incentives — Contourline loses first if the portfolio deteriorates. The problem emerges in a <strong>financial distress scenario of the originator itself</strong>: if Contourline faces operational or cash difficulties, it may — intentionally or not — reduce collection efficiency, delay remittances, prioritize recovering credits for itself, or simply lack the operational capacity to execute collections with the required quality. And this is precisely when the fund most needs active collection. The risk is that the originator and collection agent fail simultaneously, for the same reason.</span>
+        </p>
+        <div class="risk-box mitigation">
+          <div class="risk-box-title">✓ <span data-pt>Mitigantes Existentes</span><span data-en>Existing Mitigants</span></div>
+          <span data-pt>A SRM Empírica, como gestora independente, monitora os recebimentos e pode acionar os mecanismos de avaliação. O bloqueio remoto sobre os equipamentos pode ser exercido diretamente pela gestora (§ Eventos de Avaliação), sem depender da ação da Contourline. A cota júnior em poder da Contourline (R$ 10M) representa um capital em risco real que desincentiva comportamentos oportunistas.</span>
+          <span data-en>SRM Empírica, as independent fund manager, monitors receipts and can trigger evaluation mechanisms. Remote equipment block can be exercised directly by the manager (§ Evaluation Events) without depending on Contourline's action. Contourline's junior share (R$ 10M) represents real capital at risk that discourages opportunistic behavior.</span>
+        </div>
+        <div class="risk-box open-point" style="margin-top:8px">
+          <div class="risk-box-title">⚠ <span data-pt>Ponto em Aberto — Requer Cláusula Específica</span><span data-en>Open Point — Requires Specific Clause</span></div>
+          <span data-pt>O term sheet (§ Agente de Cobrança e § Substituição de Prestadores) deve prever explicitamente: <strong>(i)</strong> as condições objetivas que obrigam a substituição do agente de cobrança (inadimplência do próprio cedente, pedido de recuperação judicial, descumprimento de SLA de repasse); <strong>(ii)</strong> o prazo máximo para efetuar a substituição (sugerimos 30 dias corridos); e <strong>(iii)</strong> a identificação prévia de um agente substituto homologado pela gestora. Sem essa cláusula, a substituição depende de deliberação em AGC — um processo que pode levar meses em situações de crise.</span>
+          <span data-en>The term sheet (§ Collection Agent and § Service Provider Replacement) must explicitly provide: <strong>(i)</strong> objective conditions mandating collection agent replacement (originator's own default, judicial recovery filing, remittance SLA breach); <strong>(ii)</strong> maximum timeline for replacement (we suggest 30 calendar days); and <strong>(iii)</strong> prior identification of a substitute agent approved by the manager. Without this clause, replacement depends on an AGC — a process that can take months in crisis situations.</span>
+          <div class="clause-rev-list">
+            <span class="clause-rev-label" data-pt="Cláusulas a revisar no TS:" data-en="Clauses to revise in TS:">Cláusulas a revisar no TS:</span>
+            <span class="clause-rev-tag">§ Agente de Cobrança</span>
+            <span class="clause-rev-tag">§ Conflitos de Interesse</span>
+            <span class="clause-rev-tag">§ Substituição de Prestadores de Serviço</span>
+            <span class="clause-rev-tag new">+ Incluir: condições objetivas + prazo 30d + agente substituto pré-aprovado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- R2 — Dupla Novidade -->
+    <div class="risk-card risk-high">
+      <div class="risk-head">
+        <div class="risk-head-left">
+          <div class="risk-num"><span data-pt>Risco</span><span data-en>Risk</span> 02</div>
+          <div class="risk-title"><span data-pt>Dupla Novidade Simultânea — Leasing Operacional + Carências até 90 Dias</span><span data-en>Simultaneous Double Novelty — Operating Leases + Grace Periods up to 90 Days</span></div>
+          <div class="risk-subtitle"><span data-pt>Dois produtos novos incluídos sem histórico de performance para análise</span><span data-en>Two new products included without performance history for analysis</span></div>
+        </div>
+        <div class="risk-head-right">
+          <span class="risk-badge high"><span data-pt>Alto</span><span data-en>High</span></span>
+          <div class="risk-clause">§ <span data-pt>Tipos de Direitos Creditórios</span><span data-en>Credit Right Types</span><br>§ <span data-pt>Critérios de Elegibilidade</span><span data-en>Eligibility Criteria</span><br>§ <span data-pt>Performados / CVM 175</span><span data-en>Performed / CVM 175</span></div>
+        </div>
+      </div>
+      <div class="risk-body">
+        <p class="risk-desc">
+          <span data-pt>A Contourline está iniciando as operações de leasing operacional — o que significa que, no momento da estruturação do fundo, <strong>não existe histórico de performance desta carteira</strong>. Ao mesmo tempo, a permissão de carências de até 90 dias também é uma novidade operacional: contratos com carência longa apresentam comportamento de inadimplência diferente dos contratos com pagamento imediato, pois o devedor que ainda não pagou nenhuma parcela tem uma relação psicológica e financeira distinta com a dívida. Introduzir ambas as variáveis ao mesmo tempo aumenta o <strong>risco de modelo</strong>: as premissas de inadimplência e pré-pagamento utilizadas na estruturação podem não refletir a realidade da carteira que efetivamente entrará no fundo. Se a performance real for pior do que o modelado, as cotas mezanino e sênior podem ser impactadas antes que os triggers reajam.</span>
+          <span data-en>Contourline is just beginning operating lease operations — meaning that, at the time of fund structuring, <strong>no performance history exists for this portfolio</strong>. Simultaneously, allowing grace periods up to 90 days is also an operational novelty: long-grace contracts exhibit different default behavior than immediate-payment contracts, since debtors who haven't yet paid any installment have a psychologically and financially different relationship with the debt. Introducing both variables simultaneously increases <strong>model risk</strong>: the default and prepayment assumptions used in structuring may not reflect the actual portfolio entering the fund. If actual performance is worse than modeled, mezzanine and senior shares may be impacted before triggers react.</span>
+        </p>
+        <div class="risk-box mitigation">
+          <div class="risk-box-title">✓ <span data-pt>Mitigantes Existentes</span><span data-en>Existing Mitigants</span></div>
+          <span data-pt>No leasing, a Contourline retém a propriedade do bem — em caso de inadimplência, a retomada é direta e sem ação judicial, reduzindo o custo e o prazo de recuperação. O bloqueio remoto pode ser acionado imediatamente. A subordinação de 30% cria uma margem de absorção de perdas expressiva antes de qualquer impacto ao sênior.</span>
+          <span data-en>In leasing, Contourline retains asset ownership — in case of default, repossession is direct and without judicial action, reducing recovery cost and time. Remote block can be activated immediately. The 30% subordination creates substantial loss absorption margin before any senior impact.</span>
+        </div>
+        <div class="risk-box open-point" style="margin-top:8px">
+          <div class="risk-box-title">⚠ <span data-pt>Ponto em Aberto — Requer Cláusula Específica</span><span data-en>Open Point — Requires Specific Clause</span></div>
+          <span data-pt>O term sheet (§ Critérios de Elegibilidade) deve incluir <strong>limites de concentração específicos para a fase de ramp-up</strong>: sugerimos que, nos primeiros 12 meses de operação, contratos de leasing não ultrapassem 30% do PL e contratos com carência superior a 60 dias não ultrapassem 25% do PL. Esse balizamento protege o fundo enquanto se consolida o histórico de performance das novas carteiras, criando espaço para calibrar os modelos antes de atingir concentrações mais altas.</span>
+          <span data-en>The term sheet (§ Eligibility Criteria) should include <strong>specific concentration limits for the ramp-up phase</strong>: we suggest that in the first 12 months of operation, leasing contracts do not exceed 30% of NAV and contracts with grace periods exceeding 60 days do not exceed 25% of NAV. This guardrail protects the fund while performance history consolidates for new portfolios, allowing model calibration before reaching higher concentrations.</span>
+          <div class="clause-rev-list">
+            <span class="clause-rev-label" data-pt="Cláusulas a revisar no TS:" data-en="Clauses to revise in TS:">Cláusulas a revisar no TS:</span>
+            <span class="clause-rev-tag">§ Critérios de Elegibilidade</span>
+            <span class="clause-rev-tag">§ Tipos de Direitos Creditórios</span>
+            <span class="clause-rev-tag new">+ Incluir: limites de concentração leasing ≤ 30% PL e carência &gt; 60d ≤ 25% PL nos primeiros 12 meses</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- R3 — Originação -->
+    <div class="risk-card risk-medium" style="border-left-color:var(--red)">
+      <div class="risk-head">
+        <div class="risk-head-left">
+          <div class="risk-num"><span data-pt>Risco</span><span data-en>Risk</span> 03</div>
+          <div class="risk-title"><span data-pt>Originação Insuficiente — Sustentabilidade da Carteira Revolvente</span><span data-en>Insufficient Origination — Revolving Portfolio Sustainability</span></div>
+          <div class="risk-subtitle"><span data-pt>O fundo precisa de fluxo contínuo de novos contratos para manter o PL e remunerar as cotas seniores</span><span data-en>The fund requires continuous flow of new contracts to maintain NAV and pay senior returns</span></div>
+        </div>
+        <div class="risk-head-right">
+          <span class="risk-badge high"><span data-pt>Alto</span><span data-en>High</span></span>
+          <div class="risk-clause">§ <span data-pt>Revolvência da Carteira</span><span data-en>Portfolio Revolving</span><br>§ <span data-pt>Patrimônio Mínimo</span><span data-en>Minimum NAV</span><br>§ <span data-pt>Eventos de Avaliação</span><span data-en>Evaluation Events</span></div>
+        </div>
+      </div>
+      <div class="risk-body">
+        <p class="risk-desc">
+          <span data-pt>Este é um fundo com <strong>carteira revolvente</strong>: os recursos recebidos dos devedores (amortizações + juros) são reinvestidos em novos direitos creditórios durante o período de carência do fundo (meses 1 a 12) e, a partir do mês 13, parte vai para a amortização das cotas e o restante segue sendo reinvestido. Para que o fundo funcione como projetado, a Contourline precisa gerar <strong>novos contratos elegíveis em volume suficiente e de forma contínua</strong>. Com um PL de R$ 50M e taxa de cessão alvo de 1,80%/mês, a carteira gira aproximadamente 1,80% por mês — o que significa que, a cada mês, são necessários cerca de R$ 900K em novos contratos elegíveis apenas para repor o que foi amortizado, antes mesmo de contabilizar o crescimento. Com faturamento de R$ 112M/ano (~R$ 9,3M/mês), o potencial existe — mas faturamento não é igual a carteira elegível. Contratos que não passam nos critérios de elegibilidade, inadimplências e contratos já cedidos reduzem o pool disponível. O term sheet atual <strong>não prevê comprometimento mínimo de originação</strong> pela Contourline — o que significa que, se a geração de contratos cair, o fundo pode ficar com PL abaixo do necessário para remunerar adequadamente as cotas.</span>
+          <span data-en>This is a fund with a <strong>revolving portfolio</strong>: proceeds received from debtors (amortizations + interest) are reinvested in new credit rights during the fund's grace period (months 1–12) and, from month 13, a portion goes toward share amortization while the rest continues to be reinvested. For the fund to operate as projected, Contourline needs to generate <strong>new eligible contracts in sufficient volume, continuously</strong>. With R$ 50M NAV and a 1.80%/month target assignment rate, the portfolio turns approximately 1.80% per month — meaning each month requires approximately R$ 900K in new eligible contracts just to replace what was amortized, before accounting for growth. With R$ 112M/year revenue (~R$ 9.3M/month), the potential exists — but revenue does not equal eligible portfolio. Contracts failing eligibility criteria, defaults, and already-assigned contracts reduce the available pool. The current term sheet <strong>does not include a minimum origination commitment</strong> by Contourline — meaning if contract generation falls, the fund may have NAV insufficient to adequately remunerate shares.</span>
+        </p>
+        <div class="risk-box mitigation">
+          <div class="risk-box-title">✓ <span data-pt>Mitigantes Existentes</span><span data-en>Existing Mitigants</span></div>
+          <span data-pt>Base de faturamento de R$ 112M/ano representa cobertura de ~2,2× o PL do fundo em contratos potencialmente cedíveis por ano. A inclusão do leasing adiciona uma segunda fonte de originação. O período de carência de 12 meses do fundo cria uma reserva de tempo para consolidar a carteira antes do início das amortizações.</span>
+          <span data-en>R$ 112M/year revenue base represents ~2.2× the fund's annual NAV in potentially assignable contracts. Including leasing adds a second origination source. The fund's 12-month grace period creates a time buffer to consolidate the portfolio before amortizations begin.</span>
+        </div>
+        <div class="risk-box open-point" style="margin-top:8px">
+          <div class="risk-box-title">⚠ <span data-pt>Ponto em Aberto — Requer Cláusula Específica</span><span data-en>Open Point — Requires Specific Clause</span></div>
+          <span data-pt>O term sheet (§ Revolvência e § Eventos de Avaliação) deve incluir: <strong>(i)</strong> um <strong>covenant de originação mínima mensal</strong> (sugerimos R$ 1,5M/mês nos primeiros 12 meses); <strong>(ii)</strong> um <strong>índice de cobertura de carteira</strong> (carteira elegível ÷ PL ≥ 1,1×) como evento de avaliação; e <strong>(iii)</strong> a obrigação de a Contourline fornecer um <strong>relatório mensal de pipeline de originação</strong> com projeção para os próximos 3 meses. Sem esses mecanismos, o investidor fica sem antecipação suficiente para agir antes que o problema se materialize.</span>
+          <span data-en>The term sheet (§ Revolving and § Evaluation Events) should include: <strong>(i)</strong> a <strong>minimum monthly origination covenant</strong> (we suggest R$ 1.5M/month in the first 12 months); <strong>(ii)</strong> a <strong>portfolio coverage ratio</strong> (eligible portfolio ÷ NAV ≥ 1.1×) as an evaluation event; and <strong>(iii)</strong> Contourline's obligation to provide a <strong>monthly origination pipeline report</strong> with a 3-month forward projection. Without these mechanisms, investors lack sufficient advance notice to act before the problem materializes.</span>
+          <div class="clause-rev-list">
+            <span class="clause-rev-label" data-pt="Cláusulas a revisar no TS:" data-en="Clauses to revise in TS:">Cláusulas a revisar no TS:</span>
+            <span class="clause-rev-tag">§ Revolvência da Carteira</span>
+            <span class="clause-rev-tag">§ Eventos de Avaliação</span>
+            <span class="clause-rev-tag">§ Relatórios e Informações ao Cotista</span>
+            <span class="clause-rev-tag new">+ Incluir: covenant originação mínima R$ 1,5M/mês · índice cobertura ≥ 1,1× · pipeline trimestral</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- R4 — Liquidez -->
+    <div class="risk-card risk-medium">
+      <div class="risk-head">
+        <div class="risk-head-left">
+          <div class="risk-num"><span data-pt>Risco</span><span data-en>Risk</span> 04</div>
+          <div class="risk-title"><span data-pt>Liquidez Reduzida das Cotas — Especialmente o Mezanino</span><span data-en>Reduced Share Liquidity — Especially Mezzanine</span></div>
+          <div class="risk-subtitle"><span data-pt>Investidor comprometido por 48 meses com mercado secundário de FIDC ainda incipiente no Brasil</span><span data-en>Investor committed for 48 months in a still-incipient Brazilian FIDC secondary market</span></div>
+        </div>
+        <div class="risk-head-right">
+          <span class="risk-badge medium"><span data-pt>Médio</span><span data-en>Medium</span></span>
+          <div class="risk-clause">§ <span data-pt>Amortização e Resgate</span><span data-en>Amortization and Redemption</span><br>§ <span data-pt>Resgate Antecipado</span><span data-en>Early Redemption</span><br>§ <span data-pt>Mercado Secundário</span><span data-en>Secondary Market</span></div>
+        </div>
+      </div>
+      <div class="risk-body">
+        <p class="risk-desc">
+          <span data-pt>A estrutura proposta é de <strong>48 meses com 12 de carência</strong>. Do ponto de vista do investidor sênior, isso significa que nos primeiros 12 meses ele recebe apenas juros (sem devolução de principal) e a amortização linear começa no mês 13. Para o cotista mezanino, a estrutura é idêntica — mas o CDI + 6,5% (ou CDI + 5,5% na cláusula de flexibilidade) precisa compensar não apenas o risco de crédito adicional, mas também a iliquidez por 48 meses. O mercado secundário de FIDCs no Brasil, embora crescente, ainda é restrito para fundos menores e cotas mezanino — na prática, o investidor deve considerar que <strong>não haverá saída antes do prazo sem desconto significativo</strong>. O term sheet não menciona direito de resgate antecipado ou mecanismo de liquidez de saída para cotistas que precisem sair antes do vencimento.</span>
+          <span data-en>The proposed structure is <strong>48 months with 12-month grace period</strong>. From the senior investor's perspective, this means the first 12 months receive only interest (no principal return) and linear amortization begins in month 13. For the mezzanine investor, the structure is identical — but CDI + 6.5% (or CDI + 5.5% under the flexibility clause) needs to compensate not only for additional credit risk, but also for 48-month illiquidity. Brazil's FIDC secondary market, while growing, remains restricted for smaller funds and mezzanine shares — in practice, investors should consider that <strong>there will be no exit before maturity without significant discount</strong>. The term sheet does not mention early redemption rights or exit liquidity mechanisms for investors needing to exit early.</span>
+        </p>
+        <div class="risk-box mitigation">
+          <div class="risk-box-title">✓ <span data-pt>Mitigantes Existentes</span><span data-en>Existing Mitigants</span></div>
+          <span data-pt>A estrutura de amortização linear mensal a partir do mês 13 cria fluxo previsível e progressivo de retorno do capital. O patrimônio autorizado de R$ 500M abre a possibilidade de novas emissões que podem criar liquidez para cotistas existentes por meio de troca de cotas. Os spreads CDI + 4,5% (sênior) e CDI + 6,5% (mezanino) já embutem um prêmio de iliquidez.</span>
+          <span data-en>The linear monthly amortization structure from month 13 creates predictable and progressive capital return flow. The R$ 500M authorized capital opens the possibility of new issuances that can create liquidity for existing investors through share exchanges. CDI + 4.5% (senior) and CDI + 6.5% (mezzanine) spreads already embed an illiquidity premium.</span>
+        </div>
+        <div class="risk-box open-point" style="margin-top:8px">
+          <div class="risk-box-title">⚠ <span data-pt>Ponto em Aberto — Recomendação de Disclosure</span><span data-en>Open Point — Disclosure Recommendation</span></div>
+          <span data-pt>O term sheet (§ Amortização e Resgate) deve deixar explícito para o cotista mezanino que <strong>não existe mecanismo de saída antecipada garantida</strong> e que o investimento deve ser considerado ilíquido pelo prazo integral. A transparência sobre este ponto é especialmente importante dada a flexibilização para CDI + 5,5%: o investidor precisa saber, antes de entrar, que pode receber uma remuneração menor por um ativo ilíquido de 48 meses.</span>
+          <span data-en>The term sheet (§ Amortization and Redemption) must make explicit to the mezzanine investor that <strong>no guaranteed early exit mechanism exists</strong> and that the investment should be considered illiquid for the full term. Transparency on this point is especially important given the CDI + 5.5% flexibility: investors need to know, before committing, that they may receive lower compensation for a 48-month illiquid asset.</span>
+          <div class="clause-rev-list">
+            <span class="clause-rev-label" data-pt="Cláusulas a revisar no TS:" data-en="Clauses to revise in TS:">Cláusulas a revisar no TS:</span>
+            <span class="clause-rev-tag">§ Amortização e Resgate</span>
+            <span class="clause-rev-tag">§ Resgate Antecipado</span>
+            <span class="clause-rev-tag new">+ Incluir: disclosure explícito de iliquidez para cotista mezanino · condicionar flex. CDI+5,5% a prazo ou evento objetivo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- R5 — Concentração Setorial -->
+    <div class="risk-card risk-medium">
+      <div class="risk-head">
+        <div class="risk-head-left">
+          <div class="risk-num"><span data-pt>Risco</span><span data-en>Risk</span> 05</div>
+          <div class="risk-title"><span data-pt>Concentração em Cedente Único e Setor de Estética Médica</span><span data-en>Single Originator and Medical Aesthetics Sector Concentration</span></div>
+          <div class="risk-subtitle"><span data-pt>100% dos direitos creditórios originados por uma única empresa em um único segmento de mercado</span><span data-en>100% of credit rights originated by a single company in a single market segment</span></div>
+        </div>
+        <div class="risk-head-right">
+          <span class="risk-badge medium"><span data-pt>Médio</span><span data-en>Medium</span></span>
+          <div class="risk-clause">§ <span data-pt>Limites de Concentração</span><span data-en>Concentration Limits</span><br>§ <span data-pt>Critérios de Elegibilidade</span><span data-en>Eligibility Criteria</span><br>§ <span data-pt>Diversificação da Carteira</span><span data-en>Portfolio Diversification</span></div>
+        </div>
+      </div>
+      <div class="risk-body">
+        <p class="risk-desc">
+          <span data-pt>Por definição, este é um FIDC monocedente — todos os contratos vêm da Contourline. Isso significa que <strong>qualquer problema na Contourline impacta simultaneamente a qualidade da carteira e a capacidade de originação</strong>. Além disso, a carteira é altamente concentrada no segmento de estética médica de alta performance (Lumenis, principalmente), que é um nicho de mercado com dinâmica própria: dependente de inadimplência dos clientes finais (clínicas e médicos), dos ciclos de adoção de novas tecnologias e da competição com outros fornecedores de equipamentos. Uma recessão econômica que reduza o consumo de estética médica afeta simultaneamente o volume de novos contratos (originação menor) e a capacidade de pagamento dos devedores existentes (inadimplência maior). O limite de 3% por devedor individual é adequado para diversificar o risco de contraparte, mas não diversifica o risco setorial.</span>
+          <span data-en>By definition, this is a single-originator FIDC — all contracts come from Contourline. This means <strong>any problem at Contourline simultaneously impacts portfolio quality and origination capacity</strong>. Additionally, the portfolio is highly concentrated in the high-performance medical aesthetics segment (primarily Lumenis), a niche market with its own dynamics: dependent on end-client default rates (clinics and physicians), technology adoption cycles, and competition from other equipment suppliers. An economic recession reducing medical aesthetics consumption simultaneously affects new contract volume (lower origination) and existing debtor payment capacity (higher default). The 3% per-debtor limit adequately diversifies counterparty risk but does not diversify sector risk.</span>
+        </p>
+        <div class="risk-box mitigation">
+          <div class="risk-box-title">✓ <span data-pt>Mitigantes Existentes</span><span data-en>Existing Mitigants</span></div>
+          <span data-pt>O setor de saúde e estética médica demonstrou historicamente resiliência em ciclos econômicos adversos — a demanda por procedimentos estéticos tem crescido consistentemente mesmo em períodos de retração do PIB. Os equipamentos têm valor de revenda no mercado secundário, o que limita o prejuízo em caso de inadimplência com execução de garantia. O limite de 3% por devedor garante dispersão mínima de 34+ devedores para comprometer a cota sênior.</span>
+          <span data-en>The healthcare and medical aesthetics sector has historically demonstrated resilience in adverse economic cycles — demand for aesthetic procedures has grown consistently even during GDP contraction periods. Equipment has resale value in the secondary market, limiting losses in default scenarios with collateral execution. The 3% per-debtor limit guarantees minimum dispersion of 34+ debtors to compromise the senior share.</span>
+        </div>
+        <div class="risk-box open-point" style="margin-top:8px">
+          <div class="risk-box-title">⚠ <span data-pt>Ponto em Aberto — Recomendação</span><span data-en>Open Point — Recommendation</span></div>
+          <span data-pt>Considerar a inclusão nos § Limites de Concentração de um <strong>limite por marca/fornecedor de equipamento</strong> (ex: contratos lastreados em equipamentos Lumenis não ultrapassarem 60% do PL), protegendo o fundo de uma eventual perda de exclusividade ou descontinuação de produtos por parte de um único fabricante. Adicionalmente, uma cláusula de <strong>diversificação geográfica mínima</strong> (ex: máximo de 40% em um único estado) reduziria o impacto de eventos regionais adversos.</span>
+          <span data-en>Consider including in § Concentration Limits a <strong>per-brand/equipment-supplier limit</strong> (e.g., contracts backed by Lumenis equipment not exceeding 60% of NAV), protecting the fund from a potential loss of exclusivity or product discontinuation by a single manufacturer. Additionally, a <strong>minimum geographic diversification</strong> clause (e.g., maximum 40% in a single state) would reduce the impact of adverse regional events.</span>
+          <div class="clause-rev-list">
+            <span class="clause-rev-label" data-pt="Cláusulas a revisar no TS:" data-en="Clauses to revise in TS:">Cláusulas a revisar no TS:</span>
+            <span class="clause-rev-tag">§ Limites de Concentração</span>
+            <span class="clause-rev-tag new">+ Incluir: limite por marca/fornecedor (Lumenis ≤ 60% PL) · limite geográfico (≤ 40% por estado)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- R6 — Mezanino Fino -->
+    <div class="risk-card risk-medium">
+      <div class="risk-head">
+        <div class="risk-head-left">
+          <div class="risk-num"><span data-pt>Risco</span><span data-en>Risk</span> 06</div>
+          <div class="risk-title"><span data-pt>Mezanino Fino — Compensação pelo Risco Assumido</span><span data-en>Thin Mezzanine — Compensation for Risk Assumed</span></div>
+          <div class="risk-subtitle"><span data-pt>R$ 5M de buffer entre júnior e sênior, com cláusula de flexibilização que reduz a remuneração no pior momento</span><span data-en>R$ 5M buffer between junior and senior, with a flexibility clause that reduces return at the worst moment</span></div>
+        </div>
+        <div class="risk-head-right">
+          <span class="risk-badge medium"><span data-pt>Médio</span><span data-en>Medium</span></span>
+          <div class="risk-clause">§ <span data-pt>Classes de Cotas — Mezanino</span><span data-en>Share Classes — Mezzanine</span><br>§ <span data-pt>Subordinação Mínima</span><span data-en>Minimum Subordination</span><br>§ <span data-pt>Remuneração das Cotas</span><span data-en>Share Remuneration</span></div>
+        </div>
+      </div>
+      <div class="risk-body">
+        <p class="risk-desc">
+          <span data-pt>A cota mezanino representa 10% do PL (R$ 5M) e está posicionada entre o júnior (first loss, R$ 10M) e o sênior (R$ 35M). Em termos práticos, o mezanino começa a absorver perdas quando a inadimplência acumulada supera R$ 10M — ou seja, quando 20% da carteira total se tornar irrecuperável. Embora esse limiar pareça alto, a cota mezanino representa apenas R$ 5M de proteção antes que o sênior seja impactado. Em um cenário de deterioração rápida (ex: evento setorial ou default de grandes devedores), o mezanino pode ser absorvido integralmente em poucos meses. A preocupação estrutural é a <strong>cláusula de flexibilização para CDI + 5,5%</strong>: ela reduz a remuneração do cotista mezanino exatamente nas circunstâncias em que o fundo está sob pressão — ou seja, o investidor assume mais risco e recebe menos, na mesma situação.</span>
+          <span data-en>The mezzanine share represents 10% of NAV (R$ 5M) and is positioned between junior (first loss, R$ 10M) and senior (R$ 35M). In practical terms, mezzanine begins absorbing losses when cumulative default exceeds R$ 10M — meaning when 20% of the total portfolio becomes unrecoverable. While this threshold seems high, the mezzanine represents only R$ 5M of protection before senior is impacted. In a rapid deterioration scenario (e.g., a sector event or large debtor defaults), the mezzanine can be fully absorbed within a few months. The structural concern is the <strong>CDI + 5.5% flexibility clause</strong>: it reduces mezzanine investor compensation precisely when the fund is under pressure — meaning the investor takes on more risk and receives less, in the same situation.</span>
+        </p>
+        <div class="risk-box mitigation">
+          <div class="risk-box-title">✓ <span data-pt>Mitigantes Existentes</span><span data-en>Existing Mitigants</span></div>
+          <span data-pt>A combinação de triggers de avaliação (8% inadimplência &gt; 30 dias, 4% inadimplência &gt; 90 dias) com o bloqueio remoto e a subordinação de 30% para o sênior cria múltiplas camadas de proteção antes que o mezanino seja integralmente consumido. A taxa CDI + 6,5% na estrutura preferencial remunera adequadamente o risco de crédito incremental em relação ao sênior.</span>
+          <span data-en>The combination of evaluation triggers (8% default &gt; 30 days, 4% default &gt; 90 days) with remote block and 30% senior subordination creates multiple protection layers before mezzanine is fully consumed. The CDI + 6.5% rate under the preferred structure adequately compensates for incremental credit risk relative to senior.</span>
+        </div>
+        <div class="risk-box open-point" style="margin-top:8px">
+          <div class="risk-box-title">⚠ <span data-pt>Ponto em Aberto — Requer Revisão da Cláusula</span><span data-en>Open Point — Clause Revision Required</span></div>
+          <span data-pt>A cláusula de flexibilização (§ Remuneração das Cotas — Mezanino) deve ter suas <strong>condições de ativação claramente definidas</strong> e, idealmente, <strong>vinculadas a um horizonte temporal limitado</strong> (ex: vigorante apenas nos primeiros 6 meses, como estímulo à formação do fundo). Aplicar CDI + 5,5% ao longo de toda a vigência do fundo, sem condição objetiva de reversão para CDI + 6,5%, significa que o cotista mezanino pode nunca receber a remuneração original — o que coloca em questão a adequação da remuneração ao risco assumido por toda a duração do investimento.</span>
+          <span data-en>The flexibility clause (§ Share Remuneration — Mezzanine) should have its <strong>activation conditions clearly defined</strong> and, ideally, <strong>linked to a limited time horizon</strong> (e.g., applicable only in the first 6 months, as a fund formation incentive). Applying CDI + 5.5% throughout the fund's full life, without objective conditions for reverting to CDI + 6.5%, means the mezzanine investor may never receive the original remuneration — which questions whether compensation is adequate for the risk assumed over the full investment duration.</span>
+          <div class="clause-rev-list">
+            <span class="clause-rev-label" data-pt="Cláusulas a revisar no TS:" data-en="Clauses to revise in TS:">Cláusulas a revisar no TS:</span>
+            <span class="clause-rev-tag">§ Remuneração das Cotas — Mezanino</span>
+            <span class="clause-rev-tag new">+ Revisar: definir condição objetiva de ativação do CDI+5,5% · prazo máximo da flexibilização · condição de reversão automática para CDI+6,5%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- R7 — Triggers Reativos -->
+    <div class="risk-card risk-medium">
+      <div class="risk-head">
+        <div class="risk-head-left">
+          <div class="risk-num"><span data-pt>Risco</span><span data-en>Risk</span> 07</div>
+          <div class="risk-title"><span data-pt>Triggers Reativos — Ação Dependente de Assembleia Geral</span><span data-en>Reactive Triggers — Action Dependent on Shareholders' Meeting</span></div>
+          <div class="risk-subtitle"><span data-pt>Os mecanismos de proteção são acionados após o problema aparecer, e a remediação ainda depende de deliberação coletiva</span><span data-en>Protection mechanisms are triggered after the problem appears, and remediation still depends on collective deliberation</span></div>
+        </div>
+        <div class="risk-head-right">
+          <span class="risk-badge medium"><span data-pt>Médio</span><span data-en>Medium</span></span>
+          <div class="risk-clause">§ <span data-pt>Eventos de Avaliação</span><span data-en>Evaluation Events</span><br>§ <span data-pt>Assembleia Geral de Cotistas</span><span data-en>Shareholders' General Meeting</span><br>§ <span data-pt>Liquidação Antecipada</span><span data-en>Early Liquidation</span></div>
+        </div>
+      </div>
+      <div class="risk-body">
+        <p class="risk-desc">
+          <span data-pt>Os eventos de avaliação previstos (8% de inadimplência &gt; 30 dias, 4% &gt; 90 dias, renegociação mensal &gt; 4%, renegociação acumulada &gt; 10%, reserva de liquidez &lt; 1×) são métricas de <strong>constatação de deterioração</strong>, não de prevenção. Quando um desses gatilhos é acionado, o processo previsto é a convocação de uma Assembleia Geral de Cotistas (AGC) para deliberação — que, dependendo do quorum e da coordenação entre cotistas, pode levar semanas a meses para produzir uma decisão e ainda mais tempo para a implementação. Em carteiras de crédito em deterioração, o tempo é o fator mais crítico: cada semana sem ação corretiva pode representar recuperações adicionais perdidas. A ausência de <strong>mecanismos automáticos de remediação</strong> — que não dependam de AGC — é a lacuna mais relevante no desenho atual de triggers.</span>
+          <span data-en>The evaluation events provided (8% default &gt; 30 days, 4% &gt; 90 days, monthly renegotiation &gt; 4%, cumulative renegotiation &gt; 10%, liquidity reserve &lt; 1×) are metrics of <strong>deterioration detection</strong>, not prevention. When one of these triggers fires, the prescribed process is calling a General Shareholders' Meeting (AGC) for deliberation — which, depending on quorum and coordination among investors, can take weeks to months to produce a decision and even longer to implement. In deteriorating credit portfolios, time is the most critical factor: each week without corrective action can represent additional lost recoveries. The absence of <strong>automatic remediation mechanisms</strong> — independent of an AGC — is the most relevant gap in the current trigger design.</span>
+        </p>
+        <div class="risk-box mitigation">
+          <div class="risk-box-title">✓ <span data-pt>Mitigantes Existentes</span><span data-en>Existing Mitigants</span></div>
+          <span data-pt>A gestora SRM Empírica tem prerrogativa de gestão ativa e pode acionar o bloqueio remoto de equipamentos independentemente de AGC. A combinação de múltiplos gatilhos com limiares progressivos (30 dias antes dos 90 dias) cria uma janela de alerta antecipado. A auditoria trimestral pela Grant Thornton fornece visibilidade externa da qualidade da carteira.</span>
+          <span data-en>SRM Empírica as fund manager has active management prerogative and can activate equipment remote blocks independently of an AGC. The combination of multiple triggers with progressive thresholds (30-day before 90-day) creates an early warning window. Quarterly Grant Thornton auditing provides external visibility of portfolio quality.</span>
+        </div>
+        <div class="risk-box open-point" style="margin-top:8px">
+          <div class="risk-box-title">⚠ <span data-pt>Ponto em Aberto — Requer Cláusula Específica</span><span data-en>Open Point — Requires Specific Clause</span></div>
+          <span data-pt>O term sheet (§ Eventos de Avaliação) deve incluir <strong>dois níveis de alerta</strong>: <em>Amarelo</em> (50% do limiar de trigger) — obriga relatório extraordinário da gestora em 5 dias úteis sem AGC; e <em>Vermelho</em> (trigger atingido) — aciona bloqueio automático de novas cessões pela gestora até a AGC deliberar. Adicionalmente, para o evento de "Reserva de Liquidez &lt; 1×", deve haver um <strong>mecanismo automático de reforço de caixa</strong> (ex: stop de amortização da cota júnior) sem necessidade de deliberação, dado o caráter urgente desse evento.</span>
+          <span data-en>The term sheet (§ Evaluation Events) should include <strong>two alert levels</strong>: <em>Yellow</em> (50% of trigger threshold) — mandates extraordinary manager report within 5 business days without AGC; and <em>Red</em> (trigger reached) — activates automatic cessation block by manager until AGC deliberates. Additionally, for the "Liquidity Reserve &lt; 1×" event, there should be an <strong>automatic cash reinforcement mechanism</strong> (e.g., junior share amortization stop) without requiring deliberation, given the urgent nature of this event.</span>
+          <div class="clause-rev-list">
+            <span class="clause-rev-label" data-pt="Cláusulas a revisar no TS:" data-en="Clauses to revise in TS:">Cláusulas a revisar no TS:</span>
+            <span class="clause-rev-tag">§ Eventos de Avaliação</span>
+            <span class="clause-rev-tag">§ Assembleia Geral de Cotistas</span>
+            <span class="clause-rev-tag">§ Amortização — Cota Júnior</span>
+            <span class="clause-rev-tag new">+ Incluir: 2 níveis de alerta (amarelo 50% / vermelho 100%) · stop automático de cessões · stop automático amortização júnior se liquidez &lt; 1×</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- R8 — Regulatório -->
+    <div class="risk-card risk-low">
+      <div class="risk-head">
+        <div class="risk-head-left">
+          <div class="risk-num"><span data-pt>Risco</span><span data-en>Risk</span> 08</div>
+          <div class="risk-title"><span data-pt>Interpretação Regulatória — Leasing "Performado" sob CVM 175</span><span data-en>Regulatory Interpretation — "Performed" Leasing under CVM 175</span></div>
+          <div class="risk-subtitle"><span data-pt>Framework relativamente novo com jurisprudência administrativa ainda em formação</span><span data-en>Relatively new framework with administrative case law still developing</span></div>
+        </div>
+        <div class="risk-head-right">
+          <span class="risk-badge low"><span data-pt>Baixo</span><span data-en>Low</span></span>
+          <div class="risk-clause">§ <span data-pt>Tipos de Direitos Creditórios</span><span data-en>Credit Right Types</span><br>§ <span data-pt>Critérios de Elegibilidade</span><span data-en>Eligibility Criteria</span><br><span style="font-size:9px;color:var(--mid)">Res. CVM 175/2022 · Art. 2º</span></div>
+        </div>
+      </div>
+      <div class="risk-body">
+        <p class="risk-desc">
+          <span data-pt>A Resolução CVM 175/2022 exige que os direitos creditórios cedidos ao FIDC sejam <strong>"performados"</strong> — isto é, que a prestação que lhes deu origem já tenha sido cumprida. Para contratos de compra e venda, a interpretação é clara: entrega do equipamento + nota fiscal = performado. Para o <strong>leasing operacional</strong>, a questão é mais sutil: cada parcela mensal do leasing pode ser interpretada como uma obrigação de desempenho separada (disponibilidade continuada do bem pelo locador). Se a CVM ou o auditor do fundo adotar esse entendimento, apenas a parcela corrente do leasing seria considerada "performada", o que mudaria radicalmente a estrutura de cessão e a precificação dos direitos creditórios de leasing. Esse risco é classificado como <strong>baixo</strong> porque a Contourline mantém a propriedade do bem durante toda a vigência — o que é, por si só, evidência de performance contínua — mas é um ponto que requer formalização jurídica antes da primeira cessão.</span>
+          <span data-en>CVM Resolution 175/2022 requires that credit rights assigned to FIDCs be <strong>"performed"</strong> — meaning the originating obligation has already been fulfilled. For purchase/sale contracts, the interpretation is clear: equipment delivery + invoice = performed. For <strong>operating leases</strong>, the question is more subtle: each monthly lease installment can be interpreted as a separate performance obligation (continued asset availability by the lessor). If the CVM or fund auditor adopts this interpretation, only the current lease installment would be considered "performed," radically changing the assignment structure and pricing of leasing credit rights. This risk is classified as <strong>low</strong> because Contourline retains asset ownership throughout the term — which is itself evidence of continuous performance — but requires legal formalization before the first assignment.</span>
+        </p>
+        <div class="risk-box mitigation">
+          <div class="risk-box-title">✓ <span data-pt>Mitigantes Existentes</span><span data-en>Existing Mitigants</span></div>
+          <span data-pt>A propriedade contínua do bem pela Contourline durante o leasing é o argumento jurídico mais sólido para caracterizar o contrato como performado desde a entrega do equipamento. A documentação de entrega + aceite pelo locatário estabelece o marco de performance de forma objetiva e auditável.</span>
+          <span data-en>Contourline's continuous asset ownership during the lease is the strongest legal argument for characterizing the contract as performed from equipment delivery. Delivery documentation + lessee acceptance objectively and auditably establishes the performance milestone.</span>
+        </div>
+        <div class="risk-box open-point" style="margin-top:8px">
+          <div class="risk-box-title">⚠ <span data-pt>Ponto em Aberto — Ação Preventiva Necessária</span><span data-en>Open Point — Preventive Action Required</span></div>
+          <span data-pt>Antes da primeira cessão de contratos de leasing, o Assessor Legal do fundo deve emitir um <strong>parecer formal</strong> confirmando a interpretação de "performado" para o leasing operacional à luz da CVM 175/2022, com cópia para a administradora e a gestora. Esse parecer deve integrar o Regulamento do fundo (§ Tipos de Direitos Creditórios) como anexo vinculante. A ausência desse documento coloca o fundo sob risco de questionamento posterior da elegibilidade de toda a carteira de leasing.</span>
+          <span data-en>Before the first leasing contract assignment, the fund's Legal Advisor must issue a <strong>formal legal opinion</strong> confirming the "performed" interpretation for operating leases under CVM 175/2022, copied to the administrator and manager. This opinion should be incorporated into the Fund Regulations (§ Credit Right Types) as a binding annex. Absence of this document exposes the fund to subsequent eligibility challenges for the entire leasing portfolio.</span>
+          <div class="clause-rev-list">
+            <span class="clause-rev-label" data-pt="Cláusulas a revisar no TS:" data-en="Clauses to revise in TS:">Cláusulas a revisar no TS:</span>
+            <span class="clause-rev-tag">§ Tipos de Direitos Creditórios</span>
+            <span class="clause-rev-tag">§ Critérios de Elegibilidade</span>
+            <span class="clause-rev-tag new">+ Incluir: parecer jurídico como Anexo vinculante · definição explícita de "performado" para leasing operacional</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ─── BLOCO 3: POSIÇÃO POR CLASSE ──────────────────────────────── -->
+    <div class="risk-section-header" style="margin-top:44px">
+      <div class="risk-section-title"><span data-pt>O Que Cada Classe de Cotista Precisa Saber</span><span data-en>What Each Share Class Needs to Know</span></div>
+      <div class="risk-section-line"></div>
+    </div>
+
+    <div class="investor-grid">
+      <!-- Sênior -->
+      <div class="inv-class-card">
+        <div class="inv-class-head" style="background:var(--mid)">
+          <h3><span data-pt>Cotista Sênior</span><span data-en>Senior Investor</span></h3>
+          <p>CDI + 4,5% · R$ 35M · 70% PL · <span data-pt>Sub. 30%</span><span data-en>Sub. 30%</span></p>
+        </div>
+        <div class="inv-class-body">
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Proteção de capital</span><span data-en>Capital protection</span></span>
+            <span class="inv-class-row-v" style="color:var(--green)"><span data-pt>R$ 15M de subordinação</span><span data-en>R$ 15M subordination</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Prioridade no waterfall</span><span data-en>Waterfall priority</span></span>
+            <span class="inv-class-row-v"><span data-pt>2ª (após despesas)</span><span data-en>2nd (after expenses)</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Risco principal</span><span data-en>Main risk</span></span>
+            <span class="inv-class-row-v" style="color:var(--amber)"><span data-pt>Originação insuficiente</span><span data-en>Insufficient origination</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Cláusula a negociar</span><span data-en>Clause to negotiate</span></span>
+            <span class="inv-class-row-v" style="color:var(--mid);font-size:11px">§ <span data-pt>Revolvência + covenant de originação mínima</span><span data-en>Revolving + min. origination covenant</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Flex. de remuneração</span><span data-en>Return flexibility</span></span>
+            <span class="inv-class-row-v" style="color:var(--amber)">CDI+3,5% <span data-pt>(possível)</span><span data-en>(possible)</span></span>
+          </div>
+          <div class="inv-class-row" style="border-bottom:none">
+            <span class="inv-class-row-l"><span data-pt>Nota de liquidez</span><span data-en>Liquidity note</span></span>
+            <span class="inv-class-row-v"><span data-pt>Amortização M13–M48</span><span data-en>Amortization M13–M48</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mezanino -->
+      <div class="inv-class-card">
+        <div class="inv-class-head" style="background:var(--purple)">
+          <h3>Mezanino</h3>
+          <p>CDI + 6,5% · R$ 5M · 10% PL · <span data-pt>Sub. 20%</span><span data-en>Sub. 20%</span></p>
+        </div>
+        <div class="inv-class-body">
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Proteção de capital</span><span data-en>Capital protection</span></span>
+            <span class="inv-class-row-v" style="color:var(--amber)"><span data-pt>R$ 10M (júnior apenas)</span><span data-en>R$ 10M (junior only)</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Prioridade no waterfall</span><span data-en>Waterfall priority</span></span>
+            <span class="inv-class-row-v"><span data-pt>3ª (após sênior)</span><span data-en>3rd (after senior)</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Risco principal</span><span data-en>Main risk</span></span>
+            <span class="inv-class-row-v" style="color:var(--red)"><span data-pt>Iliquidez 48M + flex.</span><span data-en>48M illiquidity + flex.</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Cláusula a negociar</span><span data-en>Clause to negotiate</span></span>
+            <span class="inv-class-row-v" style="color:var(--mid);font-size:11px">§ <span data-pt>Condições ativação da flex. CDI+5,5%</span><span data-en>CDI+5.5% activation conditions</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Flex. de remuneração</span><span data-en>Return flexibility</span></span>
+            <span class="inv-class-row-v" style="color:var(--red)">CDI+5,5% <span data-pt>(sem condição definida)</span><span data-en>(no defined condition)</span></span>
+          </div>
+          <div class="inv-class-row" style="border-bottom:none">
+            <span class="inv-class-row-l"><span data-pt>Nota de liquidez</span><span data-en>Liquidity note</span></span>
+            <span class="inv-class-row-v" style="color:var(--red)"><span data-pt>Ilíquido — sem saída antecipada</span><span data-en>Illiquid — no early exit</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Júnior (Contourline) -->
+      <div class="inv-class-card">
+        <div class="inv-class-head" style="background:var(--amber)">
+          <h3><span data-pt>Cotista Júnior</span><span data-en>Junior Investor</span></h3>
+          <p><span data-pt>Excess Spread 0,60%/mês · R$ 10M · 20% PL · Contourline</span><span data-en>Excess Spread 0.60%/month · R$ 10M · 20% NAV · Contourline</span></p>
+        </div>
+        <div class="inv-class-body">
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Proteção de capital</span><span data-en>Capital protection</span></span>
+            <span class="inv-class-row-v" style="color:var(--red)"><span data-pt>Nenhuma — first loss</span><span data-en>None — first loss</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Prioridade no waterfall</span><span data-en>Waterfall priority</span></span>
+            <span class="inv-class-row-v"><span data-pt>Última (após sênior e mez.)</span><span data-en>Last (after senior and mezz.)</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Risco principal</span><span data-en>Main risk</span></span>
+            <span class="inv-class-row-v" style="color:var(--red)"><span data-pt>Perda total em distress</span><span data-en>Total loss in distress</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Upside potencial</span><span data-en>Potential upside</span></span>
+            <span class="inv-class-row-v" style="color:var(--green)"><span data-pt>Excess Spread + spread residual</span><span data-en>Excess Spread + residual spread</span></span>
+          </div>
+          <div class="inv-class-row">
+            <span class="inv-class-row-l"><span data-pt>Papel estratégico</span><span data-en>Strategic role</span></span>
+            <span class="inv-class-row-v" style="font-size:11px"><span data-pt>Alinhamento de incentivos com fundo</span><span data-en>Incentive alignment with fund</span></span>
+          </div>
+          <div class="inv-class-row" style="border-bottom:none">
+            <span class="inv-class-row-l"><span data-pt>Cláusula crítica</span><span data-en>Critical clause</span></span>
+            <span class="inv-class-row-v" style="color:var(--mid);font-size:11px">§ <span data-pt>Substituição Agente Cobrança</span><span data-en>Collection Agent Replacement</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pane3 -->
+
+
+</div><!-- /main -->
+
+<!-- ═══════════ FOOTER ════════════════════════════════════════════════ -->
+<footer class="doc-footer">
+  <div>
+    <img src="https://contourline.com.br/wp-content/webp-express/webp-images/uploads/2021/06/Logo-Contourline-Azul.png.webp"
+         alt="Contourline" class="doc-footer-logo"
+         onerror="this.style.display='none'">
+    <p>
+      <strong data-pt="Aviso Legal:" data-en="Legal Notice:">Aviso Legal:</strong>
+      <span data-pt> Este documento é de uso restrito e confidencial, destinado exclusivamente a investidores qualificados nos termos da Resolução CVM 30/2021 e CVM 175/2022. As informações aqui contidas são de natureza preliminar, estão sujeitas a alterações e não constituem oferta pública de distribuição de valores mobiliários. A reprodução ou divulgação a terceiros não autorizados é expressamente vedada.</span>
+      <span data-en> This document is confidential and restricted, intended solely for qualified investors as defined under CVM Resolutions 30/2021 and 175/2022. Information herein is preliminary, subject to change and does not constitute a public offering of securities. Reproduction or disclosure to unauthorized parties is strictly prohibited.</span>
+    </p>
+  </div>
+  <div class="doc-footer-meta">
+    <strong>FIDC Contourline</strong><br>
+    <span data-pt>Versão</span><span data-en>Version</span> 1.0 · <span data-pt>Abril</span><span data-en>April</span> 2026<br>
+    © 2026 Contourline Soluções em Saúde<br>
+    <span style="font-size:10px;color:rgba(255,255,255,0.3)">Resolução CVM 175/2022</span>
+  </div>
+</footer>
+
+<script>
+  function setTab(i) {
+    document.querySelectorAll('.tab-pane').forEach(function(p, j) { p.classList.toggle('active', i === j) })
+    document.querySelectorAll('.tab-btn').forEach(function(b, j) { b.classList.toggle('active', i === j) })
+  }
+  function setLang(lang) {
+    document.body.classList.toggle('en', lang === 'en')
+    document.getElementById('btnPT').classList.toggle('active', lang === 'pt')
+    document.getElementById('btnEN').classList.toggle('active', lang === 'en')
+  }
+</script>
+</body>
+</html>

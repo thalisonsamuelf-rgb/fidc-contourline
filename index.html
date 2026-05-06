@@ -449,6 +449,9 @@ body.en p [data-en] { display: inline; }
     <button class="tab-btn" onclick="setTab(3)">
       <span data-pt>Análise &amp; Riscos</span><span data-en>Analysis &amp; Risks</span>
     </button>
+    <button class="tab-btn" onclick="setTab(4)" style="border-left:2px solid rgba(255,255,255,0.25)">
+      <span data-pt>💰 Viabilidade CFO</span><span data-en>💰 CFO Viability</span>
+    </button>
   </div>
 
   <div class="topbar-right">
@@ -1612,6 +1615,1064 @@ body.en p [data-en] { display: inline; }
     </div>
 
   </div><!-- /pane3 -->
+
+
+  <!-- ════════ TAB 4 — VIABILIDADE CFO ══════════════════════════════ -->
+  <div class="tab-pane" id="pane4">
+
+    <!-- STYLE OVERRIDES for CFO tab -->
+    <style>
+      .cfo-section { margin-top: 36px; }
+      .cfo-section-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+      .cfo-section-num {
+        min-width:32px; height:32px; background:var(--dark); color:#fff;
+        border-radius:8px; display:flex; align-items:center; justify-content:center;
+        font-size:13px; font-weight:800;
+      }
+      .cfo-section-title { font-size:16px; font-weight:800; color:var(--dark); }
+      .cfo-section-sub   { font-size:12px; color:var(--gray4); margin-top:2px; }
+
+      .cfo-kpi-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+      @media(max-width:900px){ .cfo-kpi-grid{ grid-template-columns:repeat(3,1fr); } }
+
+      .cfo-kpi {
+        background:#fff; border-radius:12px; padding:16px 18px;
+        box-shadow:var(--shadow-card); border:1px solid var(--gray2);
+        border-top:3px solid var(--mid);
+      }
+      .cfo-kpi-lbl  { font-size:10px; text-transform:uppercase; letter-spacing:1.2px; color:var(--gray4); font-weight:600; margin-bottom:8px; }
+      .cfo-kpi-val  { font-size:22px; font-weight:900; letter-spacing:-1px; color:var(--dark); }
+      .cfo-kpi-note { font-size:11px; color:var(--gray4); margin-top:4px; }
+      .cfo-kpi.green { border-top-color:var(--green); }
+      .cfo-kpi.amber { border-top-color:var(--amber); }
+      .cfo-kpi.red   { border-top-color:var(--red); }
+      .cfo-kpi.purple{ border-top-color:var(--purple); }
+
+      .cfo-table { width:100%; border-collapse:collapse; font-size:13px; }
+      .cfo-table th { padding:9px 12px; font-size:11px; font-weight:700; color:var(--gray4); border-bottom:2px solid var(--gray2); background:#F8FAFC; text-align:left; white-space:nowrap; }
+      .cfo-table td { padding:8px 12px; border-bottom:1px solid var(--gray2); vertical-align:top; }
+      .cfo-table tr:last-child td { border-bottom:none; }
+      .cfo-table tr.total td { background:#F3F4F6; font-weight:700; }
+      .cfo-table tr.highlight td { background:rgba(5,150,105,0.06); }
+      .cfo-table .r { text-align:right; }
+      .cfo-table .b { font-weight:700; }
+      .cfo-table .green { color:var(--green); font-weight:700; }
+      .cfo-table .red   { color:var(--red); }
+      .cfo-table .amber { color:var(--amber); font-weight:600; }
+      .cfo-table .mid   { color:var(--mid); font-weight:700; }
+
+      .cfo-card { background:#fff; border-radius:12px; box-shadow:var(--shadow-card); padding:20px 24px; border:1px solid var(--gray2); }
+      .cfo-card-title { font-size:14px; font-weight:700; color:var(--dark); margin-bottom:14px; }
+
+      .cfo-alert {
+        border-radius:10px; padding:14px 18px; display:flex; gap:12px; align-items:flex-start;
+        margin-bottom:10px; font-size:13px; line-height:1.55;
+      }
+      .cfo-alert.red    { background:var(--red-bg);   border:1px solid rgba(220,38,38,0.25);   color:#991B1B; }
+      .cfo-alert.amber  { background:var(--amber-bg); border:1px solid rgba(217,119,6,0.25);   color:#92400E; }
+      .cfo-alert.green  { background:var(--green-bg); border:1px solid rgba(5,150,105,0.25);   color:#065F46; }
+      .cfo-alert.blue   { background:#EFF6FF;         border:1px solid rgba(59,130,246,0.25);  color:#1E40AF; }
+      .cfo-alert.purple { background:#F5F3FF;         border:1px solid rgba(124,58,237,0.25);  color:#5B21B6; }
+      .cfo-alert-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+      .cfo-alert strong { font-weight:700; display:block; margin-bottom:3px; }
+
+      .scenario-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+      .scenario-card { border-radius:12px; padding:20px; border:2px solid; }
+      .scenario-card.cons { border-color:#FCA5A5; background:#FEF2F2; }
+      .scenario-card.base { border-color:#93C5FD; background:#EFF6FF; }
+      .scenario-card.agg  { border-color:#6EE7B7; background:#ECFDF5; }
+      .scenario-title { font-size:14px; font-weight:800; margin-bottom:14px; }
+      .scenario-row { display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-bottom:1px solid rgba(0,0,0,0.06); font-size:12px; }
+      .scenario-row:last-child { border-bottom:none; }
+      .scenario-row-label { color:#374151; }
+      .scenario-row-value { font-weight:700; }
+
+      .waterfall-bar { display:flex; align-items:stretch; border-radius:8px; overflow:hidden; height:36px; margin:12px 0; }
+      .wf-seg { display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; letter-spacing:0.5px; text-align:center; min-width:40px; }
+
+      .dre-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:0; }
+      .dre-row { display:contents; }
+      .dre-cell { padding:8px 14px; border-bottom:1px solid var(--gray2); font-size:13px; display:flex; align-items:center; }
+      .dre-cell.header { background:#F8FAFC; font-weight:700; font-size:11px; text-transform:uppercase; color:var(--gray4); letter-spacing:0.8px; border-bottom:2px solid var(--gray2); }
+      .dre-cell.subtotal { background:#F3F4F6; font-weight:700; }
+      .dre-cell.total { background:var(--dark); color:#fff; font-weight:800; font-size:14px; }
+      .dre-cell.r { justify-content:flex-end; }
+      .dre-cell.positive { color:var(--green); font-weight:700; }
+      .dre-cell.negative { color:var(--red); }
+      .dre-cell.delta-pos { color:var(--green); font-weight:700; }
+      .dre-cell.delta-neg { color:var(--red); }
+
+      .conclusion-box {
+        background: linear-gradient(135deg, #002845 0%, #0170B9 100%);
+        border-radius:16px; padding:32px 36px; color:#fff; margin-top:36px;
+      }
+      .conclusion-title { font-size:20px; font-weight:900; letter-spacing:-0.5px; margin-bottom:8px; }
+      .conclusion-sub   { color:rgba(255,255,255,0.65); font-size:13px; margin-bottom:24px; }
+      .conclusion-grid  { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+      @media(max-width:900px){ .conclusion-grid{ grid-template-columns:repeat(2,1fr); } }
+      .conclusion-item { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.18); border-radius:12px; padding:18px; }
+      .conclusion-item-lbl { font-size:10px; text-transform:uppercase; letter-spacing:1.2px; color:rgba(255,255,255,0.6); font-weight:600; margin-bottom:8px; }
+      .conclusion-item-val { font-size:18px; font-weight:900; color:#fff; margin-bottom:4px; }
+      .conclusion-item-note{ font-size:11px; color:rgba(255,255,255,0.7); }
+
+      .pill {
+        display:inline-block; padding:2px 9px; border-radius:20px; font-size:10px; font-weight:700;
+        text-transform:uppercase; letter-spacing:0.8px;
+      }
+      .pill.green  { background:var(--green-bg); color:var(--green); border:1px solid rgba(5,150,105,0.3); }
+      .pill.red    { background:var(--red-bg);   color:var(--red);   border:1px solid rgba(220,38,38,0.3); }
+      .pill.amber  { background:var(--amber-bg); color:var(--amber); border:1px solid rgba(217,119,6,0.3); }
+      .pill.blue   { background:#DBEAFE; color:#1D4ED8; border:1px solid rgba(37,99,235,0.3); }
+    </style>
+
+    <!-- ─── HERO STRIP ──────────────────────────────────────────────── -->
+    <div style="background:linear-gradient(135deg,#002845 0%,#0170B9 60%,#0288D1 100%);border-radius:16px;padding:28px 36px;color:#fff;margin-bottom:28px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-30%;right:-5%;width:350px;height:350px;background:radial-gradient(circle,rgba(255,255,255,0.05)0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
+      <div style="position:relative;z-index:1;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:6px;">💰 Kaizer — CFO Contourline · Maio 2026</div>
+        <div style="font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1.2;">Análise de Viabilidade Econômico-Financeira, Tributária &amp; Societária</div>
+        <div style="color:rgba(255,255,255,0.65);font-size:13px;margin-top:6px;">FIDC Contourline · R$ 50M · 48 meses · CDI 13,15% · Cessão 1,80%/mês · Modelagem v3</div>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+          <span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;">Lucro Real</span>
+          <span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;">CPC 48 / IFRS 9</span>
+          <span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;">Legislação Atual</span>
+          <span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;">Análise PF + PJ</span>
+          <span style="background:rgba(220,38,38,0.25);border:1px solid rgba(220,38,38,0.4);color:rgba(255,180,180,0.95);padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;">CONFIDENCIAL</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 01. SUMÁRIO EXECUTIVO                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">01</div>
+        <div>
+          <div class="cfo-section-title">Sumário Executivo</div>
+          <div class="cfo-section-sub">Principais métricas da estrutura FIDC — Proposta Contourline · Base: CDI 13,15% a.a.</div>
+        </div>
+      </div>
+
+      <div class="cfo-kpi-grid">
+        <div class="cfo-kpi green">
+          <div class="cfo-kpi-lbl">Ganho Líquido PJ+PF / Ano</div>
+          <div class="cfo-kpi-val" style="color:var(--green)">R$ 931K</div>
+          <div class="cfo-kpi-note">Benefício anual consolidado vs. banco</div>
+        </div>
+        <div class="cfo-kpi">
+          <div class="cfo-kpi-lbl">Custo All-In Líquido</div>
+          <div class="cfo-kpi-val">14,75%</div>
+          <div class="cfo-kpi-note">a.a. · vs banco CDI+5% = 18,15%</div>
+        </div>
+        <div class="cfo-kpi green">
+          <div class="cfo-kpi-lbl">Tax Shield Anual</div>
+          <div class="cfo-kpi-val" style="color:var(--green)">R$ 2,20M</div>
+          <div class="cfo-kpi-note">IRPJ+CSLL 34% sobre deságio</div>
+        </div>
+        <div class="cfo-kpi amber">
+          <div class="cfo-kpi-lbl">TIR Cota Júnior (est.)</div>
+          <div class="cfo-kpi-val" style="color:var(--amber)">~13%</div>
+          <div class="cfo-kpi-note">a.a. · pré-IR · excl. spread residual</div>
+        </div>
+        <div class="cfo-kpi purple">
+          <div class="cfo-kpi-lbl">Tax Arbitrage PF (4 anos)</div>
+          <div class="cfo-kpi-val" style="color:var(--purple)">R$ 548K</div>
+          <div class="cfo-kpi-note">Excess spread a 15% vs 34% corporativo</div>
+        </div>
+        <div class="cfo-kpi green">
+          <div class="cfo-kpi-lbl">Capital Liberado</div>
+          <div class="cfo-kpi-val" style="color:var(--green)">R$ 6M</div>
+          <div class="cfo-kpi-note">Júnior R$16M → R$10M vs proposta SRM</div>
+        </div>
+        <div class="cfo-kpi">
+          <div class="cfo-kpi-lbl">Spread Líquido do Fundo</div>
+          <div class="cfo-kpi-val">7,68%</div>
+          <div class="cfo-kpi-note">a.a. · taxa cessão − all-in bruto</div>
+        </div>
+        <div class="cfo-kpi amber">
+          <div class="cfo-kpi-lbl">Economia Over Banco (4 anos)</div>
+          <div class="cfo-kpi-val" style="color:var(--amber)">R$ 3,7M</div>
+          <div class="cfo-kpi-note">Ganho total consolidado PJ+PF</div>
+        </div>
+        <div class="cfo-kpi red">
+          <div class="cfo-kpi-lbl">Risco Principal</div>
+          <div class="cfo-kpi-val" style="font-size:13px;color:var(--red)">Triplo Papel</div>
+          <div class="cfo-kpi-note">Cedente + Agente + Cotista Júnior</div>
+        </div>
+        <div class="cfo-kpi">
+          <div class="cfo-kpi-lbl">Retorno Júnior ao PF</div>
+          <div class="cfo-kpi-val">R$ 612K</div>
+          <div class="cfo-kpi-note">líquido / ano · IR 15% (prazo &gt; 2 anos)</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;padding:14px 20px;background:#F0FDF4;border:1px solid rgba(5,150,105,0.3);border-radius:10px;font-size:13px;color:#065F46;">
+        <strong>Veredito CFO:</strong> O FIDC gera eficiência real. O custo de funding cai de 18,15% (banco) para 14,75% a.a. (líquido), o tax shield é robusto (R$ 2,20M/ano) e a estrutura via FIDC entrega ao sócio PF um rendimento de R$ 612K/ano com alíquota de apenas 15% (IR regressivo longo prazo), versus 34% se o mesmo valor ficasse retido na empresa. Ganho consolidado estimado: <strong>R$ 931K/ano · R$ 3,7M em 4 anos</strong>. Condicionado à implementação correta das salvaguardas jurídicas e fiscais.
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 02. IMPACTO FINANCEIRO DA CESSÃO                               -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">02</div>
+        <div>
+          <div class="cfo-section-title">Impacto Financeiro da Cessão</div>
+          <div class="cfo-section-sub">Custo de capital, spread, TIR e WACC · Portfolio revolvente: R$ 40M médio</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+
+        <!-- Custo de Capital Comparativo -->
+        <div class="cfo-card">
+          <div class="cfo-card-title">Custo de Capital Comparativo (% a.a.)</div>
+          <table class="cfo-table">
+            <thead><tr><th>Fonte de Capital</th><th class="r">Taxa Nominal</th><th class="r">After-Tax 34%</th><th class="r">Custo R$/ano¹</th></tr></thead>
+            <tbody>
+              <tr><td>Capital Próprio (WACC pré-FIDC)</td><td class="r amber">~22–25%</td><td class="r">n/a</td><td class="r amber">~R$ 8,8M</td></tr>
+              <tr><td>Crédito Bancário (CDI + 5,0%)</td><td class="r">18,15%</td><td class="r">11,98%</td><td class="r">R$ 7,26M</td></tr>
+              <tr class="highlight"><td><strong>FIDC — All-In Bruto</strong></td><td class="r mid"><strong>16,19%</strong></td><td class="r mid"><strong>10,69%</strong></td><td class="r mid"><strong>R$ 6,48M</strong></td></tr>
+              <tr class="highlight"><td><strong>FIDC — All-In Líquido (c/ júnior)</strong></td><td class="r green"><strong>14,75%</strong></td><td class="r green"><strong>9,74%</strong></td><td class="r green"><strong>R$ 5,90M</strong></td></tr>
+              <tr class="total"><td colspan="2">Economia FIDC vs. Banco (after-tax)</td><td class="r">2,25 p.p.</td><td class="r green">R$ 899K/ano</td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ Calculado sobre R$ 40M médio revolvente · CDI = 13,15% a.a.</div>
+        </div>
+
+        <!-- Decomposição do Spread do Fundo -->
+        <div class="cfo-card">
+          <div class="cfo-card-title">Decomposição do Spread do Fundo</div>
+          <div style="margin-bottom:8px;font-size:12px;color:var(--gray4)">Taxa de Cessão 1,80%/mês = 23,87% a.a. sobre R$ 40M revolvente</div>
+          <!-- Waterfall bar -->
+          <div class="waterfall-bar">
+            <div class="wf-seg" style="background:var(--mid);flex:3.5">Sênior<br>CDI+4,5%</div>
+            <div class="wf-seg" style="background:var(--purple);flex:1">Mez<br>+6,5%</div>
+            <div class="wf-seg" style="background:#4B5563;flex:0.9">Ops<br>16,76%</div>
+            <div class="wf-seg" style="background:var(--amber);flex:0.7">ES<br>0,60%</div>
+            <div class="wf-seg" style="background:var(--green);flex:0.9">Res.<br>spread</div>
+          </div>
+          <table class="cfo-table" style="margin-top:10px;">
+            <thead><tr><th>Componente</th><th class="r">% a.a.</th><th class="r">R$/ano (R$40M)</th></tr></thead>
+            <tbody>
+              <tr><td>Remuneração Sênior (CDI+4,5%)</td><td class="r">17,65%</td><td class="r">R$ 6,18M</td></tr>
+              <tr><td>Remuneração Mezanino (CDI+6,5%)</td><td class="r">19,65%</td><td class="r">R$ 0,98M</td></tr>
+              <tr><td>Custos Operacionais (gross-up 16,76%)</td><td class="r">2,34%</td><td class="r">R$ 0,93M</td></tr>
+              <tr><td>Excess Spread → Cota Júnior PF</td><td class="r amber">7,20%²</td><td class="r amber">R$ 0,72M</td></tr>
+              <tr><td>Spread Residual (buffer + júnior)</td><td class="r green">~3,0%</td><td class="r green">~R$ 1,20M</td></tr>
+              <tr class="total"><td>Taxa de Cessão Total</td><td class="r">23,87%</td><td class="r">R$ 9,55M</td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">² Excess Spread de 0,60%/mês aplicado sobre R$ 10M cota júnior</div>
+        </div>
+
+      </div>
+
+      <!-- WACC, TIR, Spread -->
+      <div class="grid-3" style="margin-top:16px;">
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">WACC Consolidado — Antes e Depois</div>
+          <table class="cfo-table">
+            <thead><tr><th>Estrutura</th><th class="r">WACC</th></tr></thead>
+            <tbody>
+              <tr><td>Pré-FIDC (banco + PL)</td><td class="r amber">~20–22% a.a.</td></tr>
+              <tr class="highlight"><td><strong>Pós-FIDC (FIDC + PL)</strong></td><td class="r green"><strong>~17–19% a.a.</strong></td></tr>
+              <tr><td>Redução estimada</td><td class="r green">2–3 p.p.</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:12px;padding:10px;background:var(--green-bg);border-radius:8px;font-size:12px;color:#065F46;">
+            <strong>Impacto EBITDA:</strong> Neutro — FIDC impacta apenas a linha financeira abaixo do EBIT.
+          </div>
+        </div>
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">TIR da Cota Júnior (Contourline)</div>
+          <table class="cfo-table">
+            <thead><tr><th>Componente</th><th class="r">Valor/Ano</th></tr></thead>
+            <tbody>
+              <tr><td>Investimento inicial</td><td class="r red">(R$ 10.000K)</td></tr>
+              <tr><td>Excess Spread (0,60%/mês)</td><td class="r">R$ 720K</td></tr>
+              <tr><td>Spread residual estimado</td><td class="r">R$ 480K</td></tr>
+              <tr><td>Retorno de principal (mês 48)</td><td class="r">R$ 10.000K</td></tr>
+              <tr class="total"><td>TIR estimada (pré-IR PF)</td><td class="r amber">~13% a.a.</td></tr>
+              <tr><td>TIR líquida PF (15% IR)</td><td class="r amber">~11,1% a.a.</td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">Pressupõe spread residual médio R$ 40K/mês e recuperação integral do principal</div>
+        </div>
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">Efeito no Resultado Financeiro</div>
+          <table class="cfo-table">
+            <thead><tr><th>Item</th><th class="r">Sem FIDC</th><th class="r">Com FIDC</th></tr></thead>
+            <tbody>
+              <tr><td>Desp. Financeira (banco)</td><td class="r red">(R$ 7,26M)</td><td class="r">—</td></tr>
+              <tr><td>Desp. FIDC (all-in bruto)</td><td class="r">—</td><td class="r red">(R$ 6,48M)</td></tr>
+              <tr><td>Receita Financeira</td><td class="r">R$ 1,00M</td><td class="r">R$ 0,50M</td></tr>
+              <tr class="total"><td>Resultado Financeiro</td><td class="r red">(R$ 6,26M)</td><td class="r amber">(R$ 5,98M)</td></tr>
+              <tr class="highlight"><td>Melhora</td><td class="r" colspan="2"><span class="green">+R$ 284K/ano</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 03. DRE PROJETADA COMPARATIVA                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">03</div>
+        <div>
+          <div class="cfo-section-title">DRE Projetada — Antes × Depois do FIDC</div>
+          <div class="cfo-section-sub">Projeção anual · Faturamento R$ 112M · EBITDA ~20,5% · Lucro Real · CDI 13,15%</div>
+        </div>
+      </div>
+
+      <div class="cfo-card">
+        <div style="display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:0;border:1px solid var(--gray2);border-radius:10px;overflow:hidden;">
+          <!-- Header -->
+          <div class="dre-cell header">Demonstração de Resultado</div>
+          <div class="dre-cell header r">Sem FIDC</div>
+          <div class="dre-cell header r">Com FIDC</div>
+          <div class="dre-cell header r">Δ</div>
+          <!-- Receita -->
+          <div class="dre-cell"><strong>Receita Líquida</strong></div>
+          <div class="dre-cell r">R$ 112,0M</div>
+          <div class="dre-cell r">R$ 112,0M</div>
+          <div class="dre-cell r">—</div>
+          <!-- CMV -->
+          <div class="dre-cell">CMV</div>
+          <div class="dre-cell r red">(R$ 69,4M)</div>
+          <div class="dre-cell r red">(R$ 69,4M)</div>
+          <div class="dre-cell r">—</div>
+          <!-- Lucro Bruto -->
+          <div class="dre-cell subtotal"><strong>Lucro Bruto</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 42,6M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 42,6M</strong></div>
+          <div class="dre-cell subtotal r">—</div>
+          <!-- SG&A -->
+          <div class="dre-cell">Despesas SG&amp;A</div>
+          <div class="dre-cell r red">(R$ 19,6M)</div>
+          <div class="dre-cell r red">(R$ 19,6M)</div>
+          <div class="dre-cell r">—</div>
+          <!-- EBITDA -->
+          <div class="dre-cell subtotal"><strong>EBITDA</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 23,0M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 23,0M</strong></div>
+          <div class="dre-cell subtotal r">—</div>
+          <!-- D&A -->
+          <div class="dre-cell">Depreciação &amp; Amortização</div>
+          <div class="dre-cell r red">(R$ 2,8M)</div>
+          <div class="dre-cell r red">(R$ 2,8M)</div>
+          <div class="dre-cell r">—</div>
+          <!-- EBIT -->
+          <div class="dre-cell subtotal"><strong>EBIT</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 20,2M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 20,2M</strong></div>
+          <div class="dre-cell subtotal r">—</div>
+          <!-- Fin -->
+          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Receita Financeira</div>
+          <div class="dre-cell r" style="font-size:12px;">R$ 1,00M</div>
+          <div class="dre-cell r" style="font-size:12px;">R$ 0,50M</div>
+          <div class="dre-cell r delta-neg" style="font-size:12px;">(R$ 0,50M)</div>
+          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Desp. Financeira Bancária</div>
+          <div class="dre-cell r red" style="font-size:12px;">(R$ 7,26M)</div>
+          <div class="dre-cell r" style="font-size:12px;">—</div>
+          <div class="dre-cell r delta-pos" style="font-size:12px;">+R$ 7,26M</div>
+          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Deságio FIDC (all-in bruto)</div>
+          <div class="dre-cell r" style="font-size:12px;">—</div>
+          <div class="dre-cell r red" style="font-size:12px;">(R$ 6,48M)</div>
+          <div class="dre-cell r delta-neg" style="font-size:12px;">(R$ 6,48M)</div>
+          <!-- EBT -->
+          <div class="dre-cell subtotal"><strong>EBT (Lucro antes do IR)</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 13,94M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 14,22M</strong></div>
+          <div class="dre-cell subtotal r delta-pos"><strong>+R$ 284K</strong></div>
+          <!-- IRPJ+CSLL -->
+          <div class="dre-cell">IRPJ + CSLL (34%)</div>
+          <div class="dre-cell r red">(R$ 4,74M)</div>
+          <div class="dre-cell r red">(R$ 4,84M)</div>
+          <div class="dre-cell r delta-neg">(R$ 0,10M)</div>
+          <!-- LL -->
+          <div class="dre-cell total"><strong>Lucro Líquido</strong></div>
+          <div class="dre-cell total r"><strong>R$ 9,20M</strong></div>
+          <div class="dre-cell total r"><strong>R$ 9,38M</strong></div>
+          <div class="dre-cell total r" style="color:#6EE7B7;"><strong>+R$ 181K</strong></div>
+          <!-- PF -->
+          <div class="dre-cell" style="background:#F0FDF4;"><strong>+ Retorno Júnior PF (net 15% IR)</strong></div>
+          <div class="dre-cell r" style="background:#F0FDF4;">—</div>
+          <div class="dre-cell r" style="background:#F0FDF4;color:var(--green);font-weight:700;">+R$ 612K</div>
+          <div class="dre-cell r" style="background:#F0FDF4;color:var(--green);font-weight:700;">+R$ 612K</div>
+          <!-- Total -->
+          <div class="dre-cell" style="background:#ECFDF5;font-weight:800;color:#065F46;">CAIXA CONSOLIDADO PJ + PF</div>
+          <div class="dre-cell r" style="background:#ECFDF5;font-weight:800;">R$ 9,20M</div>
+          <div class="dre-cell r" style="background:#ECFDF5;font-weight:800;color:var(--green);">R$ 9,99M</div>
+          <div class="dre-cell r" style="background:#ECFDF5;font-weight:800;color:var(--green);">+R$ 793K</div>
+        </div>
+        <div style="font-size:11px;color:var(--gray4);margin-top:10px;line-height:1.6;">
+          <strong>Premissas:</strong> CMV 62% · SG&amp;A 17,5% · D&amp;A R$ 2,8M · CDI 13,15% · Banco CDI+5% sobre R$ 40M · FIDC all-in bruto 16,19% sobre R$ 40M · Retorno júnior PF deduzido de 15% IR na fonte · Dividendos da empresa assumidos isentos (regime atual) · EBITDA inalterado (FIDC é item abaixo do EBIT)
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 04. REFLEXOS CONTÁBEIS — CPC 48 / IFRS 9                      -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">04</div>
+        <div>
+          <div class="cfo-section-title">Reflexos Contábeis — CPC 48 / IFRS 9</div>
+          <div class="cfo-section-sub">Tratamento da cessão, impacto no balanço, DRE e covenants bancários</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">Tratamento Contábil da Cessão (CPC 48)</div>
+          <table class="cfo-table">
+            <thead><tr><th>Critério</th><th>Status</th><th>Impacto</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Transferência substancial de riscos</strong></td>
+                <td><span class="pill amber">Verificar</span></td>
+                <td style="font-size:12px;">Depende do contrato de cessão e retenção da cota júnior (first loss)</td>
+              </tr>
+              <tr>
+                <td><strong>Desreconhecimento ("True Sale")</strong></td>
+                <td><span class="pill amber">Parcial</span></td>
+                <td style="font-size:12px;">Contourline retém 20% via júnior: risco de manutenção do ativo no balanço pelo "envolvimento continuado"</td>
+              </tr>
+              <tr>
+                <td><strong>CPC 48, Seção 3.2</strong></td>
+                <td><span class="pill red">ATENÇÃO</span></td>
+                <td style="font-size:12px;">Se não há transferência substancial de riscos → reconhecer obrigação garantida (colateral). Recebíveis permanecem no ativo + passivo igual ao caixa recebido</td>
+              </tr>
+              <tr>
+                <td><strong>Deságio (perda na cessão)</strong></td>
+                <td><span class="pill green">Deductível</span></td>
+                <td style="font-size:12px;">Reconhecido como resultado financeiro. Dedutível no Lucro Real (IN RFB 1.911/2019)</td>
+              </tr>
+              <tr>
+                <td><strong>Cota Júnior no Ativo</strong></td>
+                <td><span class="pill blue">Necessário</span></td>
+                <td style="font-size:12px;">R$ 10M reconhecido como "Instrumento Financeiro — Participação em FIDC" pelo custo amortizado ou valor justo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">Impacto no Balanço Patrimonial</div>
+          <table class="cfo-table">
+            <thead><tr><th>Conta</th><th class="r">Cenário A (True Sale)</th><th class="r">Cenário B (Garantido)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Ativo — Caixa</strong></td><td class="r green">+R$ 40M</td><td class="r green">+R$ 40M</td></tr>
+              <tr><td>Ativo — Clientes/Recebíveis</td><td class="r red">−R$ 40M</td><td class="r amber">Mantido¹</td></tr>
+              <tr><td>Ativo — Cota Júnior FIDC</td><td class="r">+R$ 10M</td><td class="r">+R$ 10M</td></tr>
+              <tr><td><strong>Passivo — Obrigação garantida</strong></td><td class="r">—</td><td class="r red">+R$ 40M</td></tr>
+              <tr><td>PL — Prejuízo na cessão</td><td class="r red">−Deságio</td><td class="r">—</td></tr>
+              <tr class="total"><td>Alavancagem (Dívida/EBITDA)</td><td class="r green">Melhora</td><td class="r amber">Neutro</td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ No cenário B, os recebíveis permanecem no ativo como garantia da obrigação<br><strong>Recomendação:</strong> Obter parecer jurídico sobre enquadramento como True Sale antes da primeira cessão</div>
+
+          <div style="margin-top:14px;">
+            <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:8px;">Impacto em Covenants Bancários</div>
+            <div class="cfo-alert amber"><div class="cfo-alert-icon">⚠️</div><div><strong>Índice de Alavancagem (Dívida/EBITDA)</strong>Cenário True Sale: melhora significativamente (−R$ 40M em dívida). Cenário colateral: neutro. Verificar se covenants atuais contemplam off-balance sheet structures.</div></div>
+            <div class="cfo-alert blue"><div class="cfo-alert-icon">ℹ️</div><div><strong>Current Ratio / Liquidez Corrente</strong>Conversão de recebíveis (não corrente) em caixa (corrente) melhora o índice de liquidez imediata em ~35-40%.</div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Fluxo de Caixa -->
+      <div class="cfo-card" style="margin-top:16px;">
+        <div class="cfo-card-title">Reflexo no Fluxo de Caixa (DFC — Método Indireto)</div>
+        <div class="grid-3">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">FCO — Atividades Operacionais</div>
+            <div class="cfo-alert green" style="font-size:12px;padding:10px 14px;"><div class="cfo-alert-icon">✅</div><div>Cessão dos recebíveis (True Sale): entrada de R$ 40M no FCO no período de cessão. Meses subsequentes: FCO menor (recebíveis já cedidos, não entram novamente).</div></div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">FCI — Atividades de Investimento</div>
+            <div class="cfo-alert blue" style="font-size:12px;padding:10px 14px;"><div class="cfo-alert-icon">ℹ️</div><div>Aquisição da cota júnior: saída de −R$ 10M no FCI. Retorno do principal no mês 48: entrada de +R$ 10M no FCI.</div></div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">FCF — Atividades de Financiamento</div>
+            <div class="cfo-alert green" style="font-size:12px;padding:10px 14px;"><div class="cfo-alert-icon">✅</div><div>Sem captação de dívida bancária (FIDC substitui linha de crédito): FCF neutro. Deságio pago é despesa financeira no FCO.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 05. EFICIÊNCIA TRIBUTÁRIA — COMPANHIA (PJ)                     -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">05</div>
+        <div>
+          <div class="cfo-section-title">Eficiência Tributária — Companhia (PJ)</div>
+          <div class="cfo-section-sub">Tax shield, Lucro Real, PIS/COFINS e comparativo tributário sem/com FIDC</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">Tax Shield — IRPJ + CSLL (Lucro Real)</div>
+          <table class="cfo-table">
+            <thead><tr><th>Item</th><th class="r">Sem FIDC</th><th class="r">Com FIDC</th></tr></thead>
+            <tbody>
+              <tr><td>EBT (Lucro antes do IR)</td><td class="r">R$ 13,94M</td><td class="r">R$ 14,22M</td></tr>
+              <tr><td>Base de Cálculo (Lucro Real)</td><td class="r">R$ 13,94M</td><td class="r">R$ 14,22M</td></tr>
+              <tr><td>IRPJ Base (15%)</td><td class="r red">(R$ 2,09M)</td><td class="r red">(R$ 2,13M)</td></tr>
+              <tr><td>IRPJ Adicional (10% sobre &gt; R$240K)</td><td class="r red">(R$ 1,37M)</td><td class="r red">(R$ 1,40M)</td></tr>
+              <tr><td>CSLL (9%)</td><td class="r red">(R$ 1,25M)</td><td class="r red">(R$ 1,28M)</td></tr>
+              <tr class="total"><td>Total IRPJ+CSLL (34%)</td><td class="r red">(R$ 4,74M)</td><td class="r red">(R$ 4,84M)</td></tr>
+              <tr class="highlight"><td><strong>Tax Shield sobre Desp. Financeira</strong></td><td class="r green"><strong>R$ 2,47M</strong></td><td class="r mid"><strong>R$ 2,20M</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="cfo-alert blue" style="margin-top:12px;font-size:12px;padding:10px 14px;">
+            <div class="cfo-alert-icon">ℹ️</div>
+            <div><strong>Nota importante:</strong> O FIDC gera MENOS tax shield que o banco (R$ 2,20M vs R$ 2,47M) porque o custo de funding é menor — isso é POSITIVO. Menor imposto = maior lucro = mais valor para o acionista.</div>
+          </div>
+        </div>
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">PIS/COFINS e Outras Contribuições</div>
+          <table class="cfo-table">
+            <thead><tr><th>Tributo</th><th>Base</th><th class="r">Sem FIDC</th><th class="r">Com FIDC</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>PIS (1,65% — regime não cumulativo)</td>
+                <td style="font-size:11px;">Receita líquida</td>
+                <td class="r red">(R$ 1,85M)</td>
+                <td class="r red">(R$ 1,85M)</td>
+              </tr>
+              <tr>
+                <td>COFINS (7,60% — regime não cumulativo)</td>
+                <td style="font-size:11px;">Receita líquida</td>
+                <td class="r red">(R$ 8,51M)</td>
+                <td class="r red">(R$ 8,51M)</td>
+              </tr>
+              <tr>
+                <td><strong>Crédito PIS/COFINS sobre deságio</strong></td>
+                <td style="font-size:11px;">Despesa financeira</td>
+                <td class="r">—</td>
+                <td class="r green">+R$ 597K¹</td>
+              </tr>
+              <tr class="highlight">
+                <td><strong>Benefício Líquido PIS/COFINS</strong></td>
+                <td>—</td>
+                <td class="r">—</td>
+                <td class="r green"><strong>+R$ 597K</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ PIS 1,65% + COFINS 7,60% = 9,25% sobre deságio R$ 6,48M = R$ 599K · Sujeito a vedações específicas — consultar tributarista</div>
+
+          <div style="margin-top:14px;padding:12px 16px;background:#FFF7ED;border:1px solid rgba(217,119,6,0.3);border-radius:8px;font-size:12px;color:#92400E;">
+            <strong>⚠️ Atenção PIS/COFINS:</strong> O creditamento sobre perdas/deságio em cessão de recebíveis é objeto de contencioso. Recomenda-se consulta formal ao tributarista antes de apropriar créditos.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Comparativo tributário total -->
+      <div class="cfo-card" style="margin-top:16px;">
+        <div class="cfo-card-title">Comparativo Tributário Total — Carga Efetiva</div>
+        <table class="cfo-table">
+          <thead><tr><th>Tributo</th><th class="r">Sem FIDC</th><th class="r">Com FIDC</th><th class="r">Δ</th><th>Observação</th></tr></thead>
+          <tbody>
+            <tr><td>IRPJ + CSLL</td><td class="r red">(R$ 4,74M)</td><td class="r red">(R$ 4,84M)</td><td class="r delta-neg">−R$ 100K</td><td style="font-size:12px;">Maior EBT = mais IR (sinal positivo)</td></tr>
+            <tr><td>PIS + COFINS</td><td class="r red">(R$ 10,36M)</td><td class="r red">(R$ 9,76M)</td><td class="r delta-pos">+R$ 597K</td><td style="font-size:12px;">Crédito sobre deságio (sujeito a validação)</td></tr>
+            <tr class="total"><td><strong>Carga Tributária Total</strong></td><td class="r"><strong>(R$ 15,10M)</strong></td><td class="r"><strong>(R$ 14,60M)</strong></td><td class="r green"><strong>+R$ 497K</strong></td><td><strong>Economia estimada anual</strong></td></tr>
+            <tr class="highlight"><td colspan="2"><strong>Alíquota Efetiva sobre Receita</strong></td><td class="r green">−0,44 p.p.</td><td colspan="2" style="font-size:12px;">De 13,48% para 13,04% sobre R$ 112M</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 06. TRIBUTAÇÃO SÓCIOS PF                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">06</div>
+        <div>
+          <div class="cfo-section-title">Tributação dos Sócios Pessoas Físicas</div>
+          <div class="cfo-section-sub">Rendimento de cotas vs. dividendos vs. JCP · Fluxo de caixa líquido PF · Simulação reforma tributária</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">Comparativo de Modalidades de Rendimento PF</div>
+          <table class="cfo-table">
+            <thead><tr><th>Modalidade</th><th class="r">Alíquota IR</th><th class="r">R$ 720K bruto → líquido</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Dividendos — regime atual</td>
+                <td class="r green">0%</td>
+                <td class="r green">R$ 720K</td>
+                <td><span class="pill green">Vigente</span></td>
+              </tr>
+              <tr>
+                <td>JCP (Juros sobre Capital Próprio)</td>
+                <td class="r">15% IRRF</td>
+                <td class="r">R$ 612K</td>
+                <td><span class="pill green">Vigente</span></td>
+              </tr>
+              <tr class="highlight">
+                <td><strong>FIDC — Rendimento Longo Prazo (&gt;720 dias)</strong></td>
+                <td class="r mid"><strong>15% IRRF</strong></td>
+                <td class="r mid"><strong>R$ 612K</strong></td>
+                <td><span class="pill blue">Vigente</span></td>
+              </tr>
+              <tr>
+                <td>FIDC — 361–720 dias</td>
+                <td class="r amber">17,5% IRRF</td>
+                <td class="r amber">R$ 594K</td>
+                <td><span class="pill amber">Prazo 2 anos</span></td>
+              </tr>
+              <tr>
+                <td>FIDC — 181–360 dias</td>
+                <td class="r red">20% IRRF</td>
+                <td class="r red">R$ 576K</td>
+                <td><span class="pill red">Curto prazo</span></td>
+              </tr>
+              <tr>
+                <td>Dividendos — pós reforma (est.)</td>
+                <td class="r amber">15–20% IRRF</td>
+                <td class="r amber">R$ 576K–R$ 612K</td>
+                <td><span class="pill red">Risco reforma</span></td>
+              </tr>
+              <tr>
+                <td>Via empresa (34%) + dividendo isento</td>
+                <td class="r red">34% corporativo</td>
+                <td class="r red">R$ 475K¹</td>
+                <td><span class="pill amber">Indireto</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ Para gerar R$ 720K de dividendo, a empresa precisa de R$ 1.091K pré-tax (34% = R$ 371K). Via FIDC, o mesmo valor chega ao PF com impacto de apenas R$ 108K (15%). Economia: R$ 263K/ano.</div>
+        </div>
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">Fluxo de Caixa Líquido Sócios PF — Anual</div>
+          <table class="cfo-table">
+            <thead><tr><th>Componente</th><th class="r">Sem FIDC</th><th class="r">Com FIDC</th></tr></thead>
+            <tbody>
+              <tr><td>Lucro Líquido da Empresa</td><td class="r">R$ 9,20M</td><td class="r">R$ 9,38M</td></tr>
+              <tr><td>Dividendos distribuídos (regime atual)</td><td class="r">R$ 9,20M</td><td class="r">R$ 9,38M</td></tr>
+              <tr><td>IR sobre dividendos (atual: 0%)</td><td class="r">—</td><td class="r">—</td></tr>
+              <tr><td><strong>Retorno Cota Júnior (bruto)</strong></td><td class="r">—</td><td class="r">R$ 720K</td></tr>
+              <tr><td>IR sobre retorno FIDC (15%)</td><td class="r">—</td><td class="r red">(R$ 108K)</td></tr>
+              <tr class="highlight"><td><strong>Total Líquido PF</strong></td><td class="r"><strong>R$ 9,20M</strong></td><td class="r green"><strong>R$ 9,99M</strong></td></tr>
+              <tr><td colspan="3" style="font-size:11px;color:var(--gray4);padding-top:8px;border-bottom:none;"><em>Simulação com reforma (15% dividendos):</em></td></tr>
+              <tr><td>Dividendos após reforma (85%)</td><td class="r amber">R$ 7,82M</td><td class="r amber">R$ 7,97M</td></tr>
+              <tr><td>FIDC rendimento (15% IR)</td><td class="r">—</td><td class="r">R$ 612K</td></tr>
+              <tr class="highlight"><td><strong>Total Líquido PF (pós reforma)</strong></td><td class="r"><strong>R$ 7,82M</strong></td><td class="r green"><strong>R$ 8,58M</strong></td></tr>
+              <tr><td>Benefício FIDC pós reforma</td><td class="r" colspan="2" style="color:var(--green);font-weight:700;text-align:right;">+R$ 763K/ano</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="cfo-alert purple" style="margin-top:16px;">
+        <div class="cfo-alert-icon">🎯</div>
+        <div>
+          <strong>Tax Arbitrage PF — Síntese:</strong>
+          O fundo FIDC (prazo 48 meses) qualifica para a menor alíquota do IR regressivo (15%). O excess spread de R$ 720K/ano chega ao sócio PF com carga fiscal de apenas 15% (R$ 108K de IR), versus 34% se o mesmo valor ficasse tributado na pessoa jurídica antes de ser distribuído como dividendo (R$ 371K de IR). <strong>Ganho tributário do excess spread: R$ 263K/ano · R$ 1,05M em 4 anos.</strong>
+          Esse benefício se torna ainda mais relevante em um cenário de reforma tributária que tribute dividendos a 15-20%.
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 07. CENÁRIOS — CONSERVADOR / BASE / AGRESSIVO                  -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">07</div>
+        <div>
+          <div class="cfo-section-title">Simulações e Cenários</div>
+          <div class="cfo-section-sub">Variáveis: CDI, inadimplência, overcollateral, taxa cessão, volume, prazo médio, stress de default</div>
+        </div>
+      </div>
+
+      <div class="scenario-grid">
+
+        <!-- CONSERVADOR -->
+        <div class="scenario-card cons">
+          <div class="scenario-title" style="color:#DC2626;">🔴 Conservador</div>
+          <div class="scenario-row"><span class="scenario-row-label">CDI</span><span class="scenario-row-value" style="color:#DC2626;">14,50% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Taxa Cessão</span><span class="scenario-row-value">1,95%/mês</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Inadimplência &gt;90d</span><span class="scenario-row-value" style="color:#DC2626;">5,5% (próx. trigger)</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Overcollateral</span><span class="scenario-row-value">35% (stress)</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Volume Revolving</span><span class="scenario-row-value">R$ 30M</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Excess Spread retido</span><span class="scenario-row-value" style="color:#DC2626;">0,20%/mês</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">All-In Cost Líquido</span><span class="scenario-row-value">~17,5% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">TIR Cota Júnior</span><span class="scenario-row-value" style="color:#DC2626;">6–8% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Tax Shield Anual</span><span class="scenario-row-value">R$ 1,5M</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Ganho Consolid. PJ+PF</span><span class="scenario-row-value" style="color:#DC2626;">R$ 280K/ano</span></div>
+          <div style="margin-top:12px;padding:10px;background:rgba(220,38,38,0.08);border-radius:8px;font-size:11px;color:#7F1D1D;">
+            <strong>Risco:</strong> Inadimplência corrói o excess spread. TIR júnior abaixo do CDI. Sênior protegido mas mezanino em risco. Originação insuficiente (R$ 30M) pode acionar covenant.
+          </div>
+        </div>
+
+        <!-- BASE -->
+        <div class="scenario-card base">
+          <div class="scenario-title" style="color:#1D4ED8;">🔵 Base (Referência)</div>
+          <div class="scenario-row"><span class="scenario-row-label">CDI</span><span class="scenario-row-value">13,15% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Taxa Cessão</span><span class="scenario-row-value">1,80%/mês ✓</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Inadimplência &gt;90d</span><span class="scenario-row-value">3,0%</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Overcollateral</span><span class="scenario-row-value">30% (mínimo)</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Volume Revolving</span><span class="scenario-row-value">R$ 40M</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Excess Spread retido</span><span class="scenario-row-value" style="color:#1D4ED8;">0,60%/mês</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">All-In Cost Líquido</span><span class="scenario-row-value">14,75% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">TIR Cota Júnior</span><span class="scenario-row-value" style="color:#1D4ED8;">~13% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Tax Shield Anual</span><span class="scenario-row-value">R$ 2,20M</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Ganho Consolid. PJ+PF</span><span class="scenario-row-value" style="color:#1D4ED8;">R$ 931K/ano</span></div>
+          <div style="margin-top:12px;padding:10px;background:rgba(37,99,235,0.08);border-radius:8px;font-size:11px;color:#1E3A5F;">
+            <strong>Base:</strong> Estrutura viável. Custo FIDC menor que banco após tax shield. PF recebe rendimento com 15% IR. EBITDA inalterado. Ganho consolidado positivo.
+          </div>
+        </div>
+
+        <!-- AGRESSIVO -->
+        <div class="scenario-card agg">
+          <div class="scenario-title" style="color:#059669;">🟢 Agressivo</div>
+          <div class="scenario-row"><span class="scenario-row-label">CDI</span><span class="scenario-row-value" style="color:#059669;">10,50% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Taxa Cessão</span><span class="scenario-row-value">1,62%/mês</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Inadimplência &gt;90d</span><span class="scenario-row-value" style="color:#059669;">1,5%</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Overcollateral</span><span class="scenario-row-value">30%</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Volume Revolving</span><span class="scenario-row-value">R$ 50M (PL total)</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Excess Spread retido</span><span class="scenario-row-value" style="color:#059669;">0,75%/mês</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">All-In Cost Líquido</span><span class="scenario-row-value" style="color:#059669;">~11,5% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">TIR Cota Júnior</span><span class="scenario-row-value" style="color:#059669;">18–22% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Tax Shield Anual</span><span class="scenario-row-value">R$ 2,90M</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Ganho Consolid. PJ+PF</span><span class="scenario-row-value" style="color:#059669;">R$ 1,85M/ano</span></div>
+          <div style="margin-top:12px;padding:10px;background:rgba(5,150,105,0.08);border-radius:8px;font-size:11px;color:#064E3B;">
+            <strong>Upside:</strong> Queda de CDI amplia spread. Baixa inadimplência maximiza retorno júnior. TIR júnior supera custo de capital próprio. Patrimônio Autorizado de R$ 500M permite scale.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sensibilidade -->
+      <div class="cfo-card" style="margin-top:20px;">
+        <div class="cfo-card-title">Sensibilidade — Ganho Consolidado PJ+PF vs Inadimplência e CDI</div>
+        <table class="cfo-table">
+          <thead>
+            <tr>
+              <th rowspan="2" style="vertical-align:middle;">Inadimpl. &gt;90d</th>
+              <th class="r" colspan="3" style="text-align:center;border-bottom:1px solid var(--gray2);">CDI a.a.</th>
+            </tr>
+            <tr>
+              <th class="r">10,50%</th>
+              <th class="r">13,15%</th>
+              <th class="r">14,50%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>1,5%</strong></td><td class="r green">R$ 1,85M</td><td class="r green">R$ 1,32M</td><td class="r green">R$ 890K</td></tr>
+            <tr><td><strong>3,0%</strong></td><td class="r green">R$ 1,42M</td><td class="r mid">R$ 931K</td><td class="r amber">R$ 490K</td></tr>
+            <tr><td><strong>5,5%</strong></td><td class="r amber">R$ 640K</td><td class="r amber">R$ 280K</td><td class="r red">R$ (120K)</td></tr>
+            <tr><td><strong>7,0% (stress)</strong></td><td class="r red">R$ (80K)</td><td class="r red">R$ (420K)</td><td class="r red">R$ (840K)</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:11px;color:var(--gray4);margin-top:8px;">
+          Células vermelhas indicam cenários onde o FIDC é menos vantajoso que manter crédito bancário.
+          A inadimplência de 7% excede o trigger de avaliação (8% over-30 / 4% over-90) — acionaria AGC.
+          Valores em R$ anuais consolidados PJ + PF.
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 08. ESTRUTURA PATRIMONIAL & SOCIETÁRIA                         -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">08</div>
+        <div>
+          <div class="cfo-section-title">Estrutura Patrimonial &amp; Societária</div>
+          <div class="cfo-section-sub">Reinvestimento dos ganhos do fundo · Distribuição disfarçada · Holding · Riscos regulatórios CVM / Receita Federal</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">Fluxo: PF recebe → Reinveste na Empresa</div>
+          <!-- Diagrama simplificado -->
+          <div style="background:var(--gray);border-radius:10px;padding:20px;font-size:12px;line-height:1.8;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <div style="background:var(--dark);color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;white-space:nowrap;">Contourline PJ</div>
+              <div style="color:var(--gray4);">→ cede recebíveis (1,80%/mês)</div>
+              <div style="background:var(--mid);color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;white-space:nowrap;">FIDC</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <div style="background:var(--mid);color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;white-space:nowrap;">FIDC</div>
+              <div style="color:var(--gray4);">→ distribui excess spread + residual</div>
+              <div style="background:var(--amber);color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;white-space:nowrap;">Sócios PF</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="background:var(--amber);color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;white-space:nowrap;">Sócios PF</div>
+              <div style="color:var(--red);">→ aumento de capital / mútuo?</div>
+              <div style="background:var(--dark);color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;white-space:nowrap;">Contourline PJ</div>
+            </div>
+            <div style="margin-top:12px;padding:10px;background:rgba(220,38,38,0.1);border-radius:6px;color:#7F1D1D;font-size:11px;">
+              ⚠️ O loop PF → PJ é o ponto de maior risco tributário. A Receita Federal pode questionar se a movimentação é artificial (distribuição disfarçada).
+            </div>
+          </div>
+
+          <div style="margin-top:14px;">
+            <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--dark);">Modalidades de Reinvestimento (do menos para o mais arriscado)</div>
+            <table class="cfo-table">
+              <thead><tr><th>#</th><th>Modalidade</th><th>Risco Fiscal</th><th>Observação</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td><strong>Aumento de Capital — dinheiro novo</strong></td><td><span class="pill green">Baixo</span></td><td style="font-size:11px;">PF aporta recursos próprios (oriundos do FIDC). Formalizar DARF e boletim de subscrição.</td></tr>
+                <tr><td>2</td><td>Mútuo entre sócio e empresa</td><td><span class="pill amber">Médio</span></td><td style="font-size:11px;">Admissível se com taxa de mercado (≥ CDI) e contrato registrado. Risco de juros omitidos.</td></tr>
+                <tr><td>3</td><td>Integralização via cessão de direitos</td><td><span class="pill amber">Médio</span></td><td style="font-size:11px;">PF cede cotas do FIDC para a empresa. Exige laudo de avaliação e DARF ganho de capital.</td></tr>
+                <tr><td>4</td><td>Distribuição FIDC + recompra de AV</td><td><span class="pill red">Alto</span></td><td style="font-size:11px;">Caracteriza planejamento tributário agressivo se frequente e sistemático.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">Riscos Tributários &amp; Regulatórios</div>
+
+          <div class="cfo-alert red">
+            <div class="cfo-alert-icon">🚨</div>
+            <div>
+              <strong>Distribuição Disfarçada de Lucros (DDL) — Art. 464 RIR/2018</strong>
+              Se o preço de cessão de recebíveis para o FIDC for inferior ao valor de mercado (partes relacionadas), a Receita Federal pode requalificar o deságio como distribuição disfarçada. Exigência: taxa de cessão lastreada em critérios de mercado documentados.
+            </div>
+          </div>
+
+          <div class="cfo-alert red">
+            <div class="cfo-alert-icon">🚨</div>
+            <div>
+              <strong>Partes Relacionadas (CVM 175 + IFRS 15)</strong>
+              Empresa cedente + cotista júnior = relacionadas. O regulamento do FIDC DEVE explicitar regras de partes relacionadas e preços de cessão arm's length. Ausência de cláusula aumenta risco regulatório perante CVM.
+            </div>
+          </div>
+
+          <div class="cfo-alert amber">
+            <div class="cfo-alert-icon">⚠️</div>
+            <div>
+              <strong>Planejamento Tributário Agressivo (MP 66/2002 / Lei 12.973/2014)</strong>
+              O ciclo contínuo FIDC → rendimento PF → aporte PJ pode ser enquadrado como falta de propósito negocial (business purpose test). Documentar sempre: necessidade de capital de giro, melhorias operacionais, reinvestimento produtivo.
+            </div>
+          </div>
+
+          <div class="cfo-alert amber">
+            <div class="cfo-alert-icon">⚠️</div>
+            <div>
+              <strong>Subcapitalização (Thin Capitalization — Lei 12.249/2010)</strong>
+              Se sócios aportarem via mútuo (empréstimo PF → PJ), a taxa de juros deve ser ≥ SELIC para ser dedutível na PJ. Mútuo abaixo de SELIC = adição ao Lucro Real.
+            </div>
+          </div>
+
+          <div class="cfo-alert blue">
+            <div class="cfo-alert-icon">ℹ️</div>
+            <div>
+              <strong>Estrutura Recomendada — Holding Patrimonial</strong>
+              Inserir uma holding PF entre os sócios e a cota júnior do FIDC pode otimizar a gestão patrimonial, facilitar a sucessão e permitir compensação de resultados. Exige planejamento com tributarista e advogado societário. Custo de estruturação estimado: R$ 30–50K (constituição) + R$ 8–15K/ano (manutenção).
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 09. ALERTAS FISCAIS & JURÍDICOS                                -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">09</div>
+        <div>
+          <div class="cfo-section-title">Alertas Fiscais, Jurídicos &amp; Regulatórios</div>
+          <div class="cfo-section-sub">Pontos críticos identificados — verificar antes da primeira cessão</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div class="cfo-alert red"><div class="cfo-alert-icon">🚨</div><div><strong>Taxa de Cessão — Arm's Length</strong><br>A taxa de 1,80%/mês deve ser documentada como compatível com o mercado de recebíveis. Recomenda-se laudo de empresa independente ou benchmarking de operações comparáveis. Risco: Receita Federal questionar deságio como artificialmente alto para gerar mais despesa dedutível.</div></div>
+          <div class="cfo-alert red"><div class="cfo-alert-icon">🚨</div><div><strong>True Sale — Parecer Jurídico Obrigatório</strong><br>Antes da primeira cessão, obter parecer jurídico que confirme a transferência substancial de riscos (CPC 48). Sem isso, os recebíveis permanecem no balanço junto com a dívida — eliminando o benefício de alavancagem da estrutura.</div></div>
+          <div class="cfo-alert red"><div class="cfo-alert-icon">🚨</div><div><strong>Cláusula de Substituição do Agente de Cobrança</strong><br>Contourline é cedente + agente de cobrança + cotista júnior. Em caso de distress, a ausência de cláusula objetiva de substituição (30 dias máximos + agente substituto pré-aprovado) pode travar o fundo. CVM pode questionar conflito de interesses.</div></div>
+          <div class="cfo-alert amber"><div class="cfo-alert-icon">⚠️</div><div><strong>Leasing Operacional — Regulatório CVM 175</strong><br>Arrendamento Mercantil Operacional como direito creditório elegível ainda não tem jurisprudência consolidada sob a CVM 175. Obter parecer jurídico específico antes de incluir na carteira. Risco de questionamento sobre "performado".</div></div>
+        </div>
+        <div>
+          <div class="cfo-alert amber"><div class="cfo-alert-icon">⚠️</div><div><strong>Covenant de Originação Mínima</strong><br>O modelo exige ~R$ 900K/mês em novos contratos elegíveis (R$ 40M revolving / 44 meses úteis). Sem covenant contratual de originação mínima, o fundo pode entrar em pré-amortização acelerada. Recomendado: R$ 1,5M/mês mínimo com razão de cobertura ≥ 1,1×.</div></div>
+          <div class="cfo-alert amber"><div class="cfo-alert-icon">⚠️</div><div><strong>IRRF sobre Rendimentos do FIDC — IN RFB 1.585/2015</strong><br>O IRRF de 15% incide na fonte sobre rendimentos de FIDC (prazo &gt; 720 dias). O fundo opera como substituto tributário — verificar se o administrador/gestor SRM está preparado para o DARF automático. Erro na retenção = responsabilidade solidária do cotista.</div></div>
+          <div class="cfo-alert blue"><div class="cfo-alert-icon">ℹ️</div><div><strong>Eventual Reforma Tributária de Dividendos</strong><br>PL em discussão no Congresso prevê tributação de dividendos a 15-20% para 2026+. Se aprovada, o FIDC passa a ter tratamento equivalente ao dividendo, reduzindo mas não eliminando o benefício (o FIDC antecipa a tributação na fonte, simplificando declaração do IR da PF).</div></div>
+          <div class="cfo-alert blue"><div class="cfo-alert-icon">ℹ️</div><div><strong>Concentração Setorial — Lumenis</strong><br>Sem limite por fornecedor no regulamento atual. Se Lumenis representa &gt; 60% das cessões, o fundo tem risco setorial elevado. Recomendado: limite Lumenis ≤ 60% PL + limite geográfico ≤ 40% por estado nos primeiros 12 meses de operação.</div></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 10. PAYBACK, TIR, VPL — ANÁLISE DE RETORNO                    -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="cfo-section">
+      <div class="cfo-section-header">
+        <div class="cfo-section-num">10</div>
+        <div>
+          <div class="cfo-section-title">Indicadores de Retorno — Payback, TIR, VPL</div>
+          <div class="cfo-section-sub">Do ponto de vista da Contourline como investidora na cota júnior e cedente dos recebíveis</div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">VPL da Estrutura (4 anos)</div>
+          <table class="cfo-table">
+            <thead><tr><th>Item</th><th class="r">Valor</th></tr></thead>
+            <tbody>
+              <tr><td>Investimento inicial (júnior)</td><td class="r red">(R$ 10.000K)</td></tr>
+              <tr><td>Ganho anual consolidado PJ+PF (4×)</td><td class="r green">R$ 931K × 4 = R$ 3.724K</td></tr>
+              <tr><td>Retorno do principal (mês 48)</td><td class="r green">R$ 10.000K</td></tr>
+              <tr><td>Taxa de desconto (WACC pré-FIDC)</td><td class="r">21%</td></tr>
+              <tr class="total"><td>VPL estimado</td><td class="r green">R$ 1.920K</td></tr>
+              <tr><td>VPL/Investimento</td><td class="r green">+19,2%</td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">VPL positivo confirma criação de valor acima do custo de capital. Sensível ao WACC e à recuperação do principal.</div>
+        </div>
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">Payback do Investimento</div>
+          <table class="cfo-table">
+            <thead><tr><th>Ano</th><th class="r">Fluxo Acum. PJ+PF</th><th class="r">Capital Recuperado</th></tr></thead>
+            <tbody>
+              <tr><td>Ano 1</td><td class="r">R$ 931K</td><td class="r red">9,3%</td></tr>
+              <tr><td>Ano 2</td><td class="r">R$ 1.862K</td><td class="r amber">18,6%</td></tr>
+              <tr><td>Ano 3</td><td class="r">R$ 2.793K</td><td class="r amber">27,9%</td></tr>
+              <tr><td>Ano 4</td><td class="r">R$ 3.724K</td><td class="r amber">37,2%</td></tr>
+              <tr><td>Mês 48 (+ principal)</td><td class="r">R$ 13.724K</td><td class="r green">137,2%</td></tr>
+              <tr class="total"><td>Payback Simples</td><td class="r green" colspan="2">Mês 48 (recuperação integral + ROI 37%)</td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">O payback depende da recuperação do principal da cota júnior no mês 48. O ganho incremental PJ+PF de R$ 931K/ano é constante ao longo dos 4 anos.</div>
+        </div>
+
+        <div class="cfo-card">
+          <div class="cfo-card-title">TIR Consolidada da Operação</div>
+          <table class="cfo-table">
+            <thead><tr><th>Componente</th><th class="r">TIR a.a.</th></tr></thead>
+            <tbody>
+              <tr><td>TIR Cota Júnior (excess spread + residual)</td><td class="r amber">~13%</td></tr>
+              <tr><td>TIR after-tax PF (15% IR)</td><td class="r">~11,1%</td></tr>
+              <tr><td>Benefício custo de capital (ganho PJ)</td><td class="r green">+R$ 319K/ano</td></tr>
+              <tr><td>TIR Incremental Total (PJ + cota júnior)</td><td class="r green">~16-18%</td></tr>
+              <tr class="total"><td>vs. WACC pré-FIDC</td><td class="r green">Supera (~21%)</td></tr>
+            </tbody>
+          </table>
+          <div class="cfo-alert green" style="margin-top:10px;font-size:12px;padding:10px 14px;">
+            <div class="cfo-alert-icon">✅</div>
+            <div><strong>TIR incremental ≈ 16–18% supera o WACC</strong> somente quando somamos o benefício de custo de capital da empresa ao retorno da cota júnior. A cota júnior isolada (~13% a.a. pré-IR) é inferior ao CDI — o valor está na estrutura consolidada.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 11. CONCLUSÕES & RECOMENDAÇÕES                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="conclusion-box">
+      <div class="conclusion-title">11. Conclusões &amp; Recomendações — CFO Kaizer</div>
+      <div class="conclusion-sub">Análise consolidada PJ + PF · Cenário Base · CDI 13,15% a.a. · Legislação atual</div>
+
+      <div class="conclusion-grid">
+
+        <div class="conclusion-item">
+          <div class="conclusion-item-lbl">O FIDC gera eficiência tributária real?</div>
+          <div class="conclusion-item-val" style="color:#6EE7B7;">✅ SIM</div>
+          <div class="conclusion-item-note">Tax shield de R$ 2,20M/ano + arbitragem PF a 15% vs. 34% corporativo. Benefício total ~R$ 497K/ano em tributos.</div>
+        </div>
+
+        <div class="conclusion-item">
+          <div class="conclusion-item-lbl">O ganho econômico supera o custo?</div>
+          <div class="conclusion-item-val" style="color:#6EE7B7;">✅ SIM</div>
+          <div class="conclusion-item-note">Custo FIDC all-in (14,75%) &lt; banco (18,15%). Ganho PJ+PF de R$ 931K/ano. VPL positivo de R$ 1,92M.</div>
+        </div>
+
+        <div class="conclusion-item">
+          <div class="conclusion-item-lbl">Ganho líquido consolidado 4 anos</div>
+          <div class="conclusion-item-val" style="color:#FCD34D;">R$ 3,7M</div>
+          <div class="conclusion-item-note">PJ: R$ 1,3M (custo menor + tax). PF: R$ 2,4M (júnior + arbitragem). Capital liberado: R$ 6M.</div>
+        </div>
+
+        <div class="conclusion-item">
+          <div class="conclusion-item-lbl">Qual estrutura mais eficiente?</div>
+          <div class="conclusion-item-val" style="font-size:14px;color:#93C5FD;">FIDC + Holding PF</div>
+          <div class="conclusion-item-note">Holding entre sócios e cota júnior otimiza sucessão e reinvestimento. Mais segura que PF direto para aporte de volta à empresa.</div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:12px;padding:18px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.6);margin-bottom:10px;">✅ Pontos Favoráveis</div>
+          <ul style="font-size:12px;color:rgba(255,255,255,0.85);padding-left:16px;line-height:2;">
+            <li>Custo de funding 3,4 p.p. menor que banco (all-in líquido)</li>
+            <li>Rendimento PF a 15% IR vs. 34% corporativo — tax arbitrage real</li>
+            <li>R$ 6M de capital de giro liberado vs. proposta SRM</li>
+            <li>Critérios de elegibilidade expandidos (leasing + carências 90d)</li>
+            <li>Proteção via bloqueio remoto + CL proprietária no leasing</li>
+            <li>Patrimônio Autorizado R$ 500M: plataforma de crescimento</li>
+            <li>EBITDA inalterado — melhora indicadores operacionais</li>
+          </ul>
+        </div>
+        <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:12px;padding:18px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.6);margin-bottom:10px;">🚨 Condições para Implementação</div>
+          <ul style="font-size:12px;color:rgba(255,255,255,0.85);padding-left:16px;line-height:2;">
+            <li><strong>1. Parecer jurídico</strong> de True Sale (CPC 48) antes da 1ª cessão</li>
+            <li><strong>2. Laudo arm's length</strong> da taxa de cessão 1,80%/mês</li>
+            <li><strong>3. Cláusula de substituição</strong> do Agente de Cobrança no regulamento</li>
+            <li><strong>4. Covenant de originação mínima</strong> R$ 1,5M/mês no contrato</li>
+            <li><strong>5. Parecer CVM 175</strong> sobre elegibilidade do leasing operacional</li>
+            <li><strong>6. Estrutura holding PF</strong> para reinvestimento seguro na empresa</li>
+            <li><strong>7. Documentação propósito negocial</strong> de cada aporte PF → PJ</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding:16px 20px;background:rgba(252,211,77,0.12);border:1px solid rgba(252,211,77,0.3);border-radius:10px;font-size:13px;color:rgba(255,255,255,0.9);">
+        <strong style="color:#FCD34D;">— Kaizer, os números não mentem 💰</strong><br>
+        O FIDC Contourline é viável e gera R$ 931K/ano de valor consolidado no cenário base. O benefício não está na cota júnior isolada (TIR ~13%, abaixo do custo de capital), mas na combinação de custo de funding menor para a empresa + arbitragem tributária PF/PJ. A operação é sólida desde que as 7 condições acima sejam implementadas. Sem elas, o risco de autuação fiscal ou questionamento regulatório supera o ganho econômico.
+      </div>
+    </div>
+
+  </div><!-- /pane4 -->
 
 
 </div><!-- /main -->

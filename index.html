@@ -2090,14 +2090,105 @@ body.en p [data-en] { display: inline; }
           <div class="dre-cell total r"><strong>(R$ 5.990K)</strong></div>
           <div class="dre-cell total r" style="color:#6EE7B7;"><strong>(R$ 4.242K)</strong></div>
           <div class="dre-cell total r" style="color:#6EE7B7;"><strong>+R$ 1.748K/ano</strong></div>
-          <div class="dre-cell total r" style="color:#6EE7B7;"><strong>+R$ 3.678K/ano (2,20%)</strong></div>
+          <div class="dre-cell total r" style="color:#6EE7B7;"><strong>(R$ 3.678K)</strong><br><span style="font-size:10px;font-weight:400;">Δ vs banco: +R$2.312K/ano</span></div>
         </div>
-        <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div style="padding:12px 16px;background:var(--red-bg);border:1px solid rgba(220,38,38,0.2);border-radius:8px;font-size:12px;color:#991B1B;">
-            <strong>⚠️ Empresa (PJ):</strong> O FIDC 1,80% custa R$2,865K/ano a mais que o banco (deságio real R$11,94M vs banco R$9,075M). Após o tax shield de 34% (+R$975K), o custo líquido adicional é <strong>R$1,890K/ano</strong>. O deságio maior gera mais dedução — mas não compensa o custo superior.
+      </div>
+
+      <!-- CASCATA DE CAIXA -->
+      <div class="cfo-card" style="margin-top:16px;border-top:4px solid var(--dark);">
+        <div class="cfo-card-title" style="font-size:15px;">💰 Cascata de Resultado — Custo Bruto → Economia Tributária → Caixa Líquido (base incremental vs banco)</div>
+        <table class="cfo-table" style="margin-bottom:16px;">
+          <thead>
+            <tr>
+              <th style="width:44%;">Componente</th>
+              <th class="r" style="width:16%;">1,80%/mês</th>
+              <th class="r" style="width:16%;">2,20%/mês</th>
+              <th style="width:24%;font-weight:400;color:var(--gray4);">Natureza</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:rgba(220,38,38,0.04);">
+              <td>Custo financeiro bruto — deságio FIDC</td>
+              <td class="r red">(R$ 11.940K/ano)</td>
+              <td class="r red">(R$ 14.910K/ano)</td>
+              <td style="font-size:11px;color:var(--gray4);">Despesa financeira cedente</td>
+            </tr>
+            <tr style="background:rgba(220,38,38,0.04);">
+              <td style="padding-left:24px;color:var(--gray4);font-size:12px;">− Referência banco CDI+5% (evitado)</td>
+              <td class="r green" style="font-size:12px;">+R$ 9.075K</td>
+              <td class="r green" style="font-size:12px;">+R$ 9.075K</td>
+              <td style="font-size:11px;color:var(--gray4);">Custo que deixa de existir</td>
+            </tr>
+            <tr class="total" style="background:rgba(220,38,38,0.08);">
+              <td><strong>① Custo incremental FIDC vs banco</strong></td>
+              <td class="r red"><strong>(R$ 2.865K/ano)</strong></td>
+              <td class="r red"><strong>(R$ 5.835K/ano)</strong></td>
+              <td style="font-size:11px;">Empresa paga mais que no banco</td>
+            </tr>
+            <tr style="background:rgba(5,150,105,0.04);">
+              <td>Economia tributária — tax shield IRPJ+CSLL (34% × deságio incremental)</td>
+              <td class="r green">+R$ 975K/ano</td>
+              <td class="r green">+R$ 1.984K/ano</td>
+              <td style="font-size:11px;color:var(--gray4);">IR menor: deságio maior reduz base tributável</td>
+            </tr>
+            <tr class="total" style="background:rgba(220,38,38,0.12);">
+              <td><strong>② Impacto líquido empresa (PJ) — após tax shield</strong></td>
+              <td class="r red"><strong>(R$ 1.890K/ano)</strong><br><span style="font-size:10px;font-weight:400;color:#991B1B;">= R$ 157K/mês a mais vs banco</span></td>
+              <td class="r red"><strong>(R$ 3.851K/ano)</strong><br><span style="font-size:10px;font-weight:400;color:#991B1B;">= R$ 321K/mês a mais vs banco</span></td>
+              <td style="font-size:11px;color:#991B1B;"><strong>Empresa paga mais — líquido de IR</strong></td>
+            </tr>
+            <tr style="background:rgba(124,58,237,0.04);">
+              <td>Retorno cota júnior PF (bruto) — excess spread sobre pool R$ 50M</td>
+              <td class="r" style="color:var(--purple);">+R$ 4.280K/ano</td>
+              <td class="r" style="color:var(--purple);">+R$ 7.250K/ano</td>
+              <td style="font-size:11px;color:var(--gray4);">Alavancagem 4× (R$40M ext. / R$10M júnior)</td>
+            </tr>
+            <tr style="background:rgba(124,58,237,0.04);">
+              <td style="padding-left:24px;color:var(--gray4);font-size:12px;">− IR PF 15% IRRF retido na fonte (IN RFB 1.585/2015)</td>
+              <td class="r red" style="font-size:12px;">(R$ 642K)</td>
+              <td class="r red" style="font-size:12px;">(R$ 1.088K)</td>
+              <td style="font-size:11px;color:var(--gray4);">IR recolhido na fonte · sem come-cotas</td>
+            </tr>
+            <tr class="total" style="background:rgba(124,58,237,0.08);">
+              <td><strong>③ Retorno líquido PF (sócios)</strong></td>
+              <td class="r mid"><strong>+R$ 3.638K/ano</strong><br><span style="font-size:10px;font-weight:400;color:var(--mid);">= R$ 303K/mês</span></td>
+              <td class="r green"><strong>+R$ 6.163K/ano</strong><br><span style="font-size:10px;font-weight:400;color:var(--green);">= R$ 514K/mês</span></td>
+              <td style="font-size:11px;color:var(--purple);"><strong>Caixa líquido para os sócios</strong></td>
+            </tr>
+            <tr style="background:rgba(5,150,105,0.12);border-top:2px solid var(--green);">
+              <td><strong style="font-size:14px;">④ RESULTADO CONSOLIDADO PJ + PF</strong><br><span style="font-size:11px;color:var(--gray4);">② + ③ · vs captação bancária</span></td>
+              <td class="r green" style="font-size:16px;font-weight:900;vertical-align:middle;"><strong>+R$ 1.748K/ano</strong><br><span style="font-size:11px;font-weight:400;">+R$ 7,0M em 4 anos</span></td>
+              <td class="r green" style="font-size:16px;font-weight:900;vertical-align:middle;"><strong>+R$ 2.312K/ano</strong><br><span style="font-size:11px;font-weight:400;">+R$ 9,2M em 4 anos</span></td>
+              <td style="font-size:11px;color:var(--green);font-weight:700;">Ganho econômico total da estrutura</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- 4 KPI boxes -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+          <div style="padding:14px;background:var(--red-bg);border:1px solid rgba(220,38,38,0.2);border-radius:10px;text-align:center;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#991B1B;margin-bottom:6px;">① Custo extra (bruto)</div>
+            <div style="font-size:11px;color:#991B1B;">1,80%: <strong>(R$ 2.865K/ano)</strong></div>
+            <div style="font-size:11px;color:#991B1B;">2,20%: <strong>(R$ 5.835K/ano)</strong></div>
           </div>
-          <div style="padding:12px 16px;background:var(--green-bg);border:1px solid rgba(5,150,105,0.2);border-radius:8px;font-size:12px;color:#065F46;">
-            <strong>✅ Sócios (PF):</strong> A cota júnior (R$10M) capta o excess spread do pool R$50M — alavancagem 4x. Retorno bruto R$4,28M/ano (1,80%) com IR de <strong>15%</strong> (IN RFB 1.585/2015), líquido <strong>R$3,638K/ano</strong>. Cenário 2,20%: R$7,25M bruto / R$6,163K líquido. Se "entidade de investimento" (≥67% direitos creditórios), <strong>não há come-cotas</strong>. Ganho consolidado: <strong>+R$1,748K/ano (1,80%) | +R$3,678K/ano (2,20%)</strong>.
+          <div style="padding:14px;background:var(--amber-bg);border:1px solid rgba(217,119,6,0.2);border-radius:10px;text-align:center;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#92400E;margin-bottom:6px;">② Economia tributária</div>
+            <div style="font-size:11px;color:#92400E;">1,80%: <strong>+R$ 975K/ano</strong></div>
+            <div style="font-size:11px;color:#92400E;">2,20%: <strong>+R$ 1.984K/ano</strong></div>
+            <div style="font-size:10px;color:#92400E;margin-top:4px;">34% × deságio incremental</div>
+          </div>
+          <div style="padding:14px;background:#F5F3FF;border:1px solid rgba(124,58,237,0.2);border-radius:10px;text-align:center;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#5B21B6;margin-bottom:6px;">③ Caixa líquido PF</div>
+            <div style="font-size:11px;color:#5B21B6;">1,80%: <strong>+R$ 3.638K/ano</strong></div>
+            <div style="font-size:11px;color:#5B21B6;">2,20%: <strong>+R$ 6.163K/ano</strong></div>
+            <div style="font-size:10px;color:#5B21B6;margin-top:4px;">IR 15% · sem come-cotas</div>
+          </div>
+          <div style="padding:14px;background:var(--green-bg);border:1px solid rgba(5,150,105,0.2);border-radius:10px;text-align:center;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#065F46;margin-bottom:6px;">④ Resultado consolidado</div>
+            <div style="font-size:13px;font-weight:800;color:var(--green);">+R$ 1.748K/ano</div>
+            <div style="font-size:10px;color:#065F46;">cenário 1,80%</div>
+            <div style="font-size:13px;font-weight:800;color:var(--green);margin-top:4px;">+R$ 2.312K/ano</div>
+            <div style="font-size:10px;color:#065F46;">cenário 2,20%</div>
           </div>
         </div>
       </div>

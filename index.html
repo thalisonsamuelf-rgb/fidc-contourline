@@ -2817,29 +2817,33 @@ body.en p [data-en] { display: inline; }
           </div>
           <table class="cfo-table">
             <thead>
-              <tr><th>Sócio</th><th class="r">Rendimento/mês</th><th class="r">Rendimento/ano</th><th class="r">Δ vs. dividendo</th></tr>
+              <tr><th>Sócio</th><th class="r">Dividendo atual/mês</th><th class="r">FIDC líq./mês</th><th class="r">FIDC líq./ano</th><th class="r">Δ/mês</th></tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong>Égio</strong></td>
+                <td class="r green">R$ 140K</td>
                 <td class="r">R$ 101K</td>
                 <td class="r">R$ 1.213K</td>
-                <td class="r red"><strong>−R$ 39K/mês</strong></td>
+                <td class="r red"><strong>−R$ 39K</strong></td>
               </tr>
               <tr>
                 <td><strong>Andreia</strong></td>
+                <td class="r green">R$ 120K</td>
                 <td class="r">R$ 101K</td>
                 <td class="r">R$ 1.213K</td>
-                <td class="r red"><strong>−R$ 19K/mês</strong></td>
+                <td class="r red"><strong>−R$ 19K</strong></td>
               </tr>
               <tr>
                 <td><strong>Dulce</strong></td>
+                <td class="r green">R$ 120K</td>
                 <td class="r">R$ 101K</td>
                 <td class="r">R$ 1.213K</td>
-                <td class="r red"><strong>−R$ 19K/mês</strong></td>
+                <td class="r red"><strong>−R$ 19K</strong></td>
               </tr>
               <tr class="total">
                 <td><strong>Total</strong></td>
+                <td class="r green"><strong>R$ 380K/mês</strong></td>
                 <td class="r"><strong>R$ 303K/mês</strong></td>
                 <td class="r"><strong>R$ 3.638K/ano</strong></td>
                 <td class="r red"><strong>−R$ 77K/mês</strong></td>
@@ -2859,29 +2863,33 @@ body.en p [data-en] { display: inline; }
           </div>
           <table class="cfo-table">
             <thead>
-              <tr><th>Sócio</th><th class="r">Rendimento/mês</th><th class="r">Rendimento/ano</th><th class="r">Δ vs. dividendo</th></tr>
+              <tr><th>Sócio</th><th class="r">Dividendo atual/mês</th><th class="r">FIDC líq./mês</th><th class="r">FIDC líq./ano</th><th class="r">Δ/mês</th></tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong>Égio</strong></td>
+                <td class="r green">R$ 140K</td>
                 <td class="r green"><strong>R$ 171K</strong></td>
                 <td class="r green"><strong>R$ 2.054K</strong></td>
-                <td class="r green"><strong>+R$ 31K/mês</strong></td>
+                <td class="r green"><strong>+R$ 31K</strong></td>
               </tr>
               <tr>
                 <td><strong>Andreia</strong></td>
+                <td class="r green">R$ 120K</td>
                 <td class="r green"><strong>R$ 171K</strong></td>
                 <td class="r green"><strong>R$ 2.054K</strong></td>
-                <td class="r green"><strong>+R$ 51K/mês</strong></td>
+                <td class="r green"><strong>+R$ 51K</strong></td>
               </tr>
               <tr>
                 <td><strong>Dulce</strong></td>
+                <td class="r green">R$ 120K</td>
                 <td class="r green"><strong>R$ 171K</strong></td>
                 <td class="r green"><strong>R$ 2.054K</strong></td>
-                <td class="r green"><strong>+R$ 51K/mês</strong></td>
+                <td class="r green"><strong>+R$ 51K</strong></td>
               </tr>
               <tr class="total">
                 <td><strong>Total</strong></td>
+                <td class="r green"><strong>R$ 380K/mês</strong></td>
                 <td class="r green"><strong>R$ 514K/mês</strong></td>
                 <td class="r green"><strong>R$ 6.163K/ano</strong></td>
                 <td class="r green"><strong>+R$ 134K/mês</strong></td>
@@ -2928,35 +2936,63 @@ body.en p [data-en] { display: inline; }
         </div>
 
         <div class="cfo-card">
-          <div class="cfo-card-title">Comparativo Tributário por Sócio — Dividendos vs. Cota FIDC</div>
+          <div class="cfo-card-title">Comparativo Tributário por Sócio — Dividendos vs. Cota FIDC (valores anuais)</div>
           <table class="cfo-table">
             <thead>
-              <tr><th>Modalidade</th><th class="r">Bruto/ano</th><th class="r">IR</th><th class="r">Líquido/ano</th></tr>
+              <tr><th>Sócio / Modalidade</th><th class="r">Bruto/ano</th><th class="r">IR</th><th class="r">Líquido/ano</th><th class="r">Líquido/mês</th></tr>
             </thead>
             <tbody>
+              <tr><td colspan="5" style="font-size:11px;font-weight:700;color:var(--gray4);padding:6px 8px;background:var(--gray);">DIVIDENDOS — regime atual (IR 0%)</td></tr>
               <tr>
-                <td>Dividendos — regime atual (por sócio)</td>
-                <td class="r">R$ 380–467K</td>
+                <td>Égio</td>
+                <td class="r green">R$ 1.680K</td>
                 <td class="r green">0%</td>
-                <td class="r green">R$ 380–467K</td>
+                <td class="r green">R$ 1.680K</td>
+                <td class="r green">R$ 140K</td>
               </tr>
               <tr>
-                <td>Dividendos c/ reforma (por sócio)</td>
-                <td class="r amber">R$ 380–467K</td>
-                <td class="r amber">~15%</td>
-                <td class="r amber">R$ 323–397K</td>
+                <td>Andreia</td>
+                <td class="r green">R$ 1.440K</td>
+                <td class="r green">0%</td>
+                <td class="r green">R$ 1.440K</td>
+                <td class="r green">R$ 120K</td>
               </tr>
+              <tr>
+                <td>Dulce</td>
+                <td class="r green">R$ 1.440K</td>
+                <td class="r green">0%</td>
+                <td class="r green">R$ 1.440K</td>
+                <td class="r green">R$ 120K</td>
+              </tr>
+              <tr><td colspan="5" style="font-size:11px;font-weight:700;color:var(--gray4);padding:6px 8px;background:var(--gray);">DIVIDENDOS c/ reforma tributária (~15% IRRF · PL 1.087/2023)</td></tr>
+              <tr>
+                <td>Égio</td>
+                <td class="r amber">R$ 1.680K</td>
+                <td class="r amber">~15%</td>
+                <td class="r amber">R$ 1.428K</td>
+                <td class="r amber">R$ 119K</td>
+              </tr>
+              <tr>
+                <td>Andreia / Dulce</td>
+                <td class="r amber">R$ 1.440K</td>
+                <td class="r amber">~15%</td>
+                <td class="r amber">R$ 1.224K</td>
+                <td class="r amber">R$ 102K</td>
+              </tr>
+              <tr><td colspan="5" style="font-size:11px;font-weight:700;color:var(--mid);padding:6px 8px;background:#EFF6FF;">FIDC — Cota Júnior · 15% IRRF · IN RFB 1.585/2015 (mesmo por sócio)</td></tr>
               <tr class="highlight">
-                <td><strong>FIDC júnior 1,80% — por sócio</strong></td>
+                <td><strong>Cada sócio — 1,80%/mês</strong></td>
                 <td class="r">R$ 1.427K</td>
                 <td class="r mid"><strong>15% IRRF</strong></td>
                 <td class="r mid"><strong>R$ 1.213K</strong></td>
+                <td class="r mid"><strong>R$ 101K</strong></td>
               </tr>
               <tr class="highlight">
-                <td><strong>FIDC júnior 2,20% — por sócio</strong></td>
+                <td><strong>Cada sócio — 2,20%/mês</strong></td>
                 <td class="r green">R$ 2.416K</td>
                 <td class="r mid"><strong>15% IRRF</strong></td>
                 <td class="r green"><strong>R$ 2.054K</strong></td>
+                <td class="r green"><strong>R$ 171K</strong></td>
               </tr>
             </tbody>
           </table>

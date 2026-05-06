@@ -1755,61 +1755,72 @@ body.en p [data-en] { display: inline; }
         </div>
       </div>
 
+      <!-- FORECAST REAL 2026 STRIP -->
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:14px 20px;background:#F8FAFC;border:1px solid var(--gray2);border-radius:10px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray4);align-self:center;margin-right:4px;">Forecast 2026 Real:</div>
+        <div style="text-align:center;padding:6px 14px;background:#fff;border:1px solid var(--gray2);border-radius:8px;"><div style="font-size:10px;color:var(--gray4);">Receita Líquida</div><div style="font-size:14px;font-weight:800;color:var(--dark);">R$ 144,2M</div></div>
+        <div style="text-align:center;padding:6px 14px;background:#fff;border:1px solid var(--gray2);border-radius:8px;"><div style="font-size:10px;color:var(--gray4);">EBITDA</div><div style="font-size:14px;font-weight:800;color:var(--green);">R$ 47,0M</div></div>
+        <div style="text-align:center;padding:6px 14px;background:#fff;border:1px solid var(--gray2);border-radius:8px;"><div style="font-size:10px;color:var(--gray4);">Desp. Fin. Base</div><div style="font-size:14px;font-weight:800;color:var(--red);">R$ 9,9M</div></div>
+        <div style="text-align:center;padding:6px 14px;background:#fff;border:1px solid var(--gray2);border-radius:8px;"><div style="font-size:10px;color:var(--gray4);">IRPJ+CSLL</div><div style="font-size:14px;font-weight:800;color:var(--red);">R$ 14,6M</div></div>
+        <div style="text-align:center;padding:6px 14px;background:#fff;border:1px solid var(--gray2);border-radius:8px;"><div style="font-size:10px;color:var(--gray4);">Lucro Líquido</div><div style="font-size:14px;font-weight:800;color:var(--mid);">R$ 14,5M</div></div>
+        <div style="text-align:center;padding:6px 14px;background:#fff;border:1px solid var(--gray2);border-radius:8px;"><div style="font-size:10px;color:var(--gray4);">Margem EBITDA</div><div style="font-size:14px;font-weight:800;color:var(--green);">32,6%</div></div>
+      </div>
+
       <div class="cfo-kpi-grid">
         <div class="cfo-kpi green">
-          <div class="cfo-kpi-lbl">Ganho Líquido PJ+PF / Ano</div>
-          <div class="cfo-kpi-val" style="color:var(--green)">R$ 931K</div>
-          <div class="cfo-kpi-note">Benefício anual consolidado vs. banco</div>
+          <div class="cfo-kpi-lbl">Ganho Consolidado PJ+PF / Ano</div>
+          <div class="cfo-kpi-val" style="color:var(--green)">+R$ 530K</div>
+          <div class="cfo-kpi-note">vs. captação bancária CDI+5% — comparação correta</div>
         </div>
         <div class="cfo-kpi">
-          <div class="cfo-kpi-lbl">Custo All-In Líquido</div>
-          <div class="cfo-kpi-val">14,75%</div>
-          <div class="cfo-kpi-note">a.a. · vs banco CDI+5% = 18,15%</div>
+          <div class="cfo-kpi-lbl">Custo All-In Bruto FIDC</div>
+          <div class="cfo-kpi-val">16,19%</div>
+          <div class="cfo-kpi-note">a.a. · vs banco CDI+5% = 18,15% — 1,96 p.p. acima gross</div>
         </div>
-        <div class="cfo-kpi green">
-          <div class="cfo-kpi-lbl">Tax Shield Anual</div>
-          <div class="cfo-kpi-val" style="color:var(--green)">R$ 2,20M</div>
-          <div class="cfo-kpi-note">IRPJ+CSLL 34% sobre deságio</div>
+        <div class="cfo-kpi amber">
+          <div class="cfo-kpi-lbl">Tax Shield Incremental vs Banco</div>
+          <div class="cfo-kpi-val" style="color:var(--amber)">+R$ 284K</div>
+          <div class="cfo-kpi-note">IRPJ+CSLL 34% × delta R$834K — empresa paga mais desp. = deduz mais</div>
         </div>
         <div class="cfo-kpi amber">
           <div class="cfo-kpi-lbl">TIR Cota Júnior (est.)</div>
-          <div class="cfo-kpi-val" style="color:var(--amber)">~13%</div>
-          <div class="cfo-kpi-note">a.a. · pré-IR · excl. spread residual</div>
+          <div class="cfo-kpi-val" style="color:var(--amber)">~12% a.a.</div>
+          <div class="cfo-kpi-note">pré-IR · excess spread + participação residual</div>
         </div>
         <div class="cfo-kpi purple">
           <div class="cfo-kpi-lbl">Tax Arbitrage PF (4 anos)</div>
-          <div class="cfo-kpi-val" style="color:var(--purple)">R$ 548K</div>
-          <div class="cfo-kpi-note">Excess spread a 15% vs 34% corporativo</div>
+          <div class="cfo-kpi-val" style="color:var(--purple)">R$ 1,15M</div>
+          <div class="cfo-kpi-note">IR 10% (FIDC 48m) vs 34% corporativo · R$288K/ano</div>
         </div>
         <div class="cfo-kpi green">
-          <div class="cfo-kpi-lbl">Capital Liberado</div>
+          <div class="cfo-kpi-lbl">Capital Liberado vs SRM</div>
           <div class="cfo-kpi-val" style="color:var(--green)">R$ 6M</div>
-          <div class="cfo-kpi-note">Júnior R$16M → R$10M vs proposta SRM</div>
+          <div class="cfo-kpi-note">Júnior R$16M → R$10M negociado</div>
         </div>
         <div class="cfo-kpi">
           <div class="cfo-kpi-lbl">Spread Líquido do Fundo</div>
           <div class="cfo-kpi-val">7,68%</div>
-          <div class="cfo-kpi-note">a.a. · taxa cessão − all-in bruto</div>
+          <div class="cfo-kpi-note">a.a. · taxa cessão 23,87% − all-in bruto 16,19%</div>
         </div>
         <div class="cfo-kpi amber">
-          <div class="cfo-kpi-lbl">Economia Over Banco (4 anos)</div>
-          <div class="cfo-kpi-val" style="color:var(--amber)">R$ 3,7M</div>
-          <div class="cfo-kpi-note">Ganho total consolidado PJ+PF</div>
+          <div class="cfo-kpi-lbl">Ganho Consolidado (4 anos)</div>
+          <div class="cfo-kpi-val" style="color:var(--amber)">R$ 2,1M</div>
+          <div class="cfo-kpi-note">R$530K × 4 · PJ (−R$550K) + PF (+R$1.080K) × 4</div>
         </div>
         <div class="cfo-kpi red">
           <div class="cfo-kpi-lbl">Risco Principal</div>
           <div class="cfo-kpi-val" style="font-size:13px;color:var(--red)">Triplo Papel</div>
           <div class="cfo-kpi-note">Cedente + Agente + Cotista Júnior</div>
         </div>
-        <div class="cfo-kpi">
-          <div class="cfo-kpi-lbl">Retorno Júnior ao PF</div>
-          <div class="cfo-kpi-val">R$ 612K</div>
-          <div class="cfo-kpi-note">líquido / ano · IR 15% (prazo &gt; 2 anos)</div>
+        <div class="cfo-kpi purple">
+          <div class="cfo-kpi-lbl">Retorno Júnior ao PF (líquido)</div>
+          <div class="cfo-kpi-val" style="color:var(--purple)">R$ 1.080K</div>
+          <div class="cfo-kpi-note">net IR 10% (48m) · bruto R$1.200K/ano</div>
         </div>
       </div>
 
       <div style="margin-top:16px;padding:14px 20px;background:#F0FDF4;border:1px solid rgba(5,150,105,0.3);border-radius:10px;font-size:13px;color:#065F46;">
-        <strong>Veredito CFO:</strong> O FIDC gera eficiência real. O custo de funding cai de 18,15% (banco) para 14,75% a.a. (líquido), o tax shield é robusto (R$ 2,20M/ano) e a estrutura via FIDC entrega ao sócio PF um rendimento de R$ 612K/ano com alíquota de apenas 15% (IR regressivo longo prazo), versus 34% se o mesmo valor ficasse retido na empresa. Ganho consolidado estimado: <strong>R$ 931K/ano · R$ 3,7M em 4 anos</strong>. Condicionado à implementação correta das salvaguardas jurídicas e fiscais.
+        <strong>Veredito CFO — Framework Correto:</strong> A empresa precisa de R$40M — a decisão é FIDC vs banco (CDI+5%). O FIDC custa R$834K/mês a mais que o banco (gross), mas gera R$284K adicional de tax shield, resultando em apenas <strong>−R$550K/ano no LL da empresa</strong>. Em compensação, a cota júnior entrega aos sócios <strong>R$1.080K/ano líquidos (IR 10%)</strong>. Resultado consolidado: <strong>+R$530K/ano · R$2,1M em 4 anos</strong>. A lógica não é "FIDC é mais barato" — é que o valor retorna pelo PF com menor tributação. Condicionado às 7 salvaguardas jurídicas e fiscais.
       </div>
     </div>
 
@@ -1830,18 +1841,18 @@ body.en p [data-en] { display: inline; }
 
         <!-- Custo de Capital Comparativo -->
         <div class="cfo-card">
-          <div class="cfo-card-title">Custo de Capital Comparativo (% a.a.)</div>
+          <div class="cfo-card-title">Custo de Capital Comparativo (% a.a.) — Capital Necessário: R$ 40M externos</div>
           <table class="cfo-table">
-            <thead><tr><th>Fonte de Capital</th><th class="r">Taxa Nominal</th><th class="r">After-Tax 34%</th><th class="r">Custo R$/ano¹</th></tr></thead>
+            <thead><tr><th>Fonte de Capital</th><th class="r">Taxa Nominal</th><th class="r">After-Tax 34%</th><th class="r">Custo R$/ano</th></tr></thead>
             <tbody>
-              <tr><td>Capital Próprio (WACC pré-FIDC)</td><td class="r amber">~22–25%</td><td class="r">n/a</td><td class="r amber">~R$ 8,8M</td></tr>
-              <tr><td>Crédito Bancário (CDI + 5,0%)</td><td class="r">18,15%</td><td class="r">11,98%</td><td class="r">R$ 7,26M</td></tr>
-              <tr class="highlight"><td><strong>FIDC — All-In Bruto</strong></td><td class="r mid"><strong>16,19%</strong></td><td class="r mid"><strong>10,69%</strong></td><td class="r mid"><strong>R$ 6,48M</strong></td></tr>
-              <tr class="highlight"><td><strong>FIDC — All-In Líquido (c/ júnior)</strong></td><td class="r green"><strong>14,75%</strong></td><td class="r green"><strong>9,74%</strong></td><td class="r green"><strong>R$ 5,90M</strong></td></tr>
-              <tr class="total"><td colspan="2">Economia FIDC vs. Banco (after-tax)</td><td class="r">2,25 p.p.</td><td class="r green">R$ 899K/ano</td></tr>
+              <tr><td>Crédito Bancário (CDI + 5,0%) — R$ 40M</td><td class="r">18,15%</td><td class="r">11,98%</td><td class="r">R$ 7.260K</td></tr>
+              <tr class="highlight"><td><strong>FIDC — All-In Bruto (R$ 50M PL total)¹</strong></td><td class="r amber"><strong>16,19%</strong></td><td class="r amber"><strong>10,69%</strong></td><td class="r amber"><strong>R$ 8.094K</strong></td></tr>
+              <tr class="highlight"><td><strong>FIDC — All-In Líquido (deduz retorno júnior)²</strong></td><td class="r mid"><strong>14,75%</strong></td><td class="r mid"><strong>9,74%</strong></td><td class="r mid"><strong>R$ 7.374K</strong></td></tr>
+              <tr class="total"><td colspan="2">FIDC vs. Banco — Delta bruto para empresa</td><td class="r red">+1,96 p.p.</td><td class="r red">+R$ 834K/ano</td></tr>
+              <tr><td colspan="2">FIDC vs. Banco — Consolidado PJ + PF</td><td class="r green" colspan="2">+R$ 530K/ano favorável ao FIDC</td></tr>
             </tbody>
           </table>
-          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ Calculado sobre R$ 40M médio revolvente · CDI = 13,15% a.a.</div>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ FIDC total: R$35M sênior + R$5M mez + R$10M júnior = R$50M PL · All-in 16,19% = R$8.094K/ano · Banco: R$40M × 18,15% = R$7.260K/ano ² All-In Líquido deduz excess spread + residual da cota júnior · R$8.094K − R$720K = R$7.374K</div>
         </div>
 
         <!-- Decomposição do Spread do Fundo -->
@@ -1896,26 +1907,26 @@ body.en p [data-en] { display: inline; }
             <thead><tr><th>Componente</th><th class="r">Valor/Ano</th></tr></thead>
             <tbody>
               <tr><td>Investimento inicial</td><td class="r red">(R$ 10.000K)</td></tr>
-              <tr><td>Excess Spread (0,60%/mês)</td><td class="r">R$ 720K</td></tr>
-              <tr><td>Spread residual estimado</td><td class="r">R$ 480K</td></tr>
+              <tr><td>Excess Spread (0,60%/mês × R$10M)</td><td class="r">R$ 720K</td></tr>
+              <tr><td>Participação residual no fundo (est.)</td><td class="r">R$ 480K</td></tr>
               <tr><td>Retorno de principal (mês 48)</td><td class="r">R$ 10.000K</td></tr>
-              <tr class="total"><td>TIR estimada (pré-IR PF)</td><td class="r amber">~13% a.a.</td></tr>
-              <tr><td>TIR líquida PF (15% IR)</td><td class="r amber">~11,1% a.a.</td></tr>
+              <tr class="total"><td>TIR estimada bruta (pré-IR PF)</td><td class="r amber">~12% a.a.</td></tr>
+              <tr class="highlight"><td><strong>TIR líquida PF (IR 10% — 48 meses)</strong></td><td class="r green"><strong>~10,8% a.a.</strong></td></tr>
+              <tr><td>CDI líquido referência (IR 15%)</td><td class="r">~11,2% a.a.</td></tr>
             </tbody>
           </table>
-          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">Pressupõe spread residual médio R$ 40K/mês e recuperação integral do principal</div>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">Pressupõe participação residual R$40K/mês e recuperação integral do principal no mês 48. TIR 10,8% ≈ CDI líquido — valor está na arbitragem tributária, não na taxa.</div>
         </div>
 
         <div class="cfo-card">
-          <div class="cfo-card-title">Efeito no Resultado Financeiro</div>
+          <div class="cfo-card-title">Efeito no Resultado Financeiro da Empresa</div>
           <table class="cfo-table">
-            <thead><tr><th>Item</th><th class="r">Sem FIDC</th><th class="r">Com FIDC</th></tr></thead>
+            <thead><tr><th>Item</th><th class="r">Banco CDI+5%</th><th class="r">FIDC</th><th class="r">Δ</th></tr></thead>
             <tbody>
-              <tr><td>Desp. Financeira (banco)</td><td class="r red">(R$ 7,26M)</td><td class="r">—</td></tr>
-              <tr><td>Desp. FIDC (all-in bruto)</td><td class="r">—</td><td class="r red">(R$ 6,48M)</td></tr>
-              <tr><td>Receita Financeira</td><td class="r">R$ 1,00M</td><td class="r">R$ 0,50M</td></tr>
-              <tr class="total"><td>Resultado Financeiro</td><td class="r red">(R$ 6,26M)</td><td class="r amber">(R$ 5,98M)</td></tr>
-              <tr class="highlight"><td>Melhora</td><td class="r" colspan="2"><span class="green">+R$ 284K/ano</span></td></tr>
+              <tr><td>Desp. Financeira nova captação</td><td class="r red">(R$ 7.260K)</td><td class="r red">(R$ 8.094K)</td><td class="r red">(R$ 834K)</td></tr>
+              <tr><td>Tax Shield IRPJ+CSLL (34%)</td><td class="r green">+R$ 2.468K</td><td class="r green">+R$ 2.752K</td><td class="r green">+R$ 284K</td></tr>
+              <tr class="total"><td>Impacto líquido no LL PJ</td><td class="r red">(R$ 4.792K)</td><td class="r red">(R$ 5.342K)</td><td class="r red">(R$ 550K)</td></tr>
+              <tr class="highlight"><td colspan="3" style="font-size:11px;color:#065F46;font-weight:700;">FIDC custa R$550K/ano a mais para a empresa (líquido). O ganho consolidado (+R$530K) vem do retorno PF via cota júnior.</td></tr>
             </tbody>
           </table>
         </div>
@@ -1931,94 +1942,134 @@ body.en p [data-en] { display: inline; }
       <div class="cfo-section-header">
         <div class="cfo-section-num">03</div>
         <div>
-          <div class="cfo-section-title">DRE Projetada — Antes × Depois do FIDC</div>
-          <div class="cfo-section-sub">Projeção anual · Faturamento R$ 112M · EBITDA ~20,5% · Lucro Real · CDI 13,15%</div>
+          <div class="cfo-section-title">Impacto no Resultado — FIDC vs. Captação Bancária</div>
+          <div class="cfo-section-sub">Forecast 2026 real · RL R$ 144,2M · EBITDA R$ 47,0M · Capital necessário: R$ 40M externos · CDI 13,15%</div>
         </div>
       </div>
 
-      <div class="cfo-card">
-        <div style="display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:0;border:1px solid var(--gray2);border-radius:10px;overflow:hidden;">
-          <!-- Header -->
+      <!-- PREMISSA CONTEXT BOX -->
+      <div class="cfo-alert blue" style="margin-bottom:16px;">
+        <div class="cfo-alert-icon">💡</div>
+        <div>
+          <strong>Framework correto de análise:</strong> A empresa <em>precisa</em> deste capital — a questão não é "ter ou não ter", mas <strong>qual modalidade</strong>: FIDC (estrutura própria) ou captação bancária (CDI+5%). A análise abaixo compara os dois cenários sobre o Forecast 2026 real, separando o impacto na empresa (PJ) do retorno aos sócios via cota júnior (PF).
+        </div>
+      </div>
+
+      <!-- DRE BASE FORECAST -->
+      <div class="cfo-card" style="margin-bottom:16px;">
+        <div class="cfo-card-title">DRE Forecast 2026 — Base Real (Orçamento Aprovado)</div>
+        <div style="display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr;gap:0;border:1px solid var(--gray2);border-radius:10px;overflow:hidden;">
           <div class="dre-cell header">Demonstração de Resultado</div>
-          <div class="dre-cell header r">Sem FIDC</div>
-          <div class="dre-cell header r">Com FIDC</div>
-          <div class="dre-cell header r">Δ</div>
-          <!-- Receita -->
+          <div class="dre-cell header r">Forecast 2026</div>
+          <div class="dre-cell header r">+ Banco CDI+5%</div>
+          <div class="dre-cell header r">+ FIDC</div>
+          <!-- RL -->
           <div class="dre-cell"><strong>Receita Líquida</strong></div>
-          <div class="dre-cell r">R$ 112,0M</div>
-          <div class="dre-cell r">R$ 112,0M</div>
-          <div class="dre-cell r">—</div>
-          <!-- CMV -->
-          <div class="dre-cell">CMV</div>
-          <div class="dre-cell r red">(R$ 69,4M)</div>
-          <div class="dre-cell r red">(R$ 69,4M)</div>
-          <div class="dre-cell r">—</div>
-          <!-- Lucro Bruto -->
-          <div class="dre-cell subtotal"><strong>Lucro Bruto</strong></div>
-          <div class="dre-cell subtotal r"><strong>R$ 42,6M</strong></div>
-          <div class="dre-cell subtotal r"><strong>R$ 42,6M</strong></div>
-          <div class="dre-cell subtotal r">—</div>
-          <!-- SG&A -->
-          <div class="dre-cell">Despesas SG&amp;A</div>
-          <div class="dre-cell r red">(R$ 19,6M)</div>
-          <div class="dre-cell r red">(R$ 19,6M)</div>
-          <div class="dre-cell r">—</div>
+          <div class="dre-cell r"><strong>R$ 144,2M</strong></div>
+          <div class="dre-cell r">R$ 144,2M</div>
+          <div class="dre-cell r">R$ 144,2M</div>
           <!-- EBITDA -->
           <div class="dre-cell subtotal"><strong>EBITDA</strong></div>
-          <div class="dre-cell subtotal r"><strong>R$ 23,0M</strong></div>
-          <div class="dre-cell subtotal r"><strong>R$ 23,0M</strong></div>
-          <div class="dre-cell subtotal r">—</div>
+          <div class="dre-cell subtotal r"><strong>R$ 47,0M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 47,0M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 47,0M</strong></div>
           <!-- D&A -->
-          <div class="dre-cell">Depreciação &amp; Amortização</div>
-          <div class="dre-cell r red">(R$ 2,8M)</div>
-          <div class="dre-cell r red">(R$ 2,8M)</div>
-          <div class="dre-cell r">—</div>
+          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Depreciação &amp; Amortiz. (est.)</div>
+          <div class="dre-cell r red" style="font-size:12px;">(R$ 8,0M)</div>
+          <div class="dre-cell r red" style="font-size:12px;">(R$ 8,0M)</div>
+          <div class="dre-cell r red" style="font-size:12px;">(R$ 8,0M)</div>
           <!-- EBIT -->
           <div class="dre-cell subtotal"><strong>EBIT</strong></div>
-          <div class="dre-cell subtotal r"><strong>R$ 20,2M</strong></div>
-          <div class="dre-cell subtotal r"><strong>R$ 20,2M</strong></div>
-          <div class="dre-cell subtotal r">—</div>
-          <!-- Fin -->
-          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Receita Financeira</div>
-          <div class="dre-cell r" style="font-size:12px;">R$ 1,00M</div>
-          <div class="dre-cell r" style="font-size:12px;">R$ 0,50M</div>
-          <div class="dre-cell r delta-neg" style="font-size:12px;">(R$ 0,50M)</div>
-          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Desp. Financeira Bancária</div>
-          <div class="dre-cell r red" style="font-size:12px;">(R$ 7,26M)</div>
+          <div class="dre-cell subtotal r"><strong>R$ 39,0M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 39,0M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 39,0M</strong></div>
+          <!-- Desp Fin base -->
+          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Desp. Financeira — base orçada</div>
+          <div class="dre-cell r red" style="font-size:12px;">(R$ 9,9M)</div>
+          <div class="dre-cell r red" style="font-size:12px;">(R$ 9,9M)</div>
+          <div class="dre-cell r red" style="font-size:12px;">(R$ 9,9M)</div>
+          <!-- Nova captacao banco -->
+          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Nova captação banco (R$ 40M × 18,15%)</div>
           <div class="dre-cell r" style="font-size:12px;">—</div>
-          <div class="dre-cell r delta-pos" style="font-size:12px;">+R$ 7,26M</div>
-          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Deságio FIDC (all-in bruto)</div>
+          <div class="dre-cell r red" style="font-size:12px;font-weight:700;">(R$ 7,3M)</div>
           <div class="dre-cell r" style="font-size:12px;">—</div>
-          <div class="dre-cell r red" style="font-size:12px;">(R$ 6,48M)</div>
-          <div class="dre-cell r delta-neg" style="font-size:12px;">(R$ 6,48M)</div>
+          <!-- Custo FIDC -->
+          <div class="dre-cell" style="color:var(--gray4);font-size:12px;">Custo FIDC all-in bruto (16,19% × R$ 50M)</div>
+          <div class="dre-cell r" style="font-size:12px;">—</div>
+          <div class="dre-cell r" style="font-size:12px;">—</div>
+          <div class="dre-cell r red" style="font-size:12px;font-weight:700;">(R$ 8,1M)</div>
           <!-- EBT -->
-          <div class="dre-cell subtotal"><strong>EBT (Lucro antes do IR)</strong></div>
-          <div class="dre-cell subtotal r"><strong>R$ 13,94M</strong></div>
-          <div class="dre-cell subtotal r"><strong>R$ 14,22M</strong></div>
-          <div class="dre-cell subtotal r delta-pos"><strong>+R$ 284K</strong></div>
+          <div class="dre-cell subtotal"><strong>EBT (Lucro antes IR)</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 29,1M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 21,8M</strong></div>
+          <div class="dre-cell subtotal r"><strong>R$ 21,0M</strong></div>
           <!-- IRPJ+CSLL -->
-          <div class="dre-cell">IRPJ + CSLL (34%)</div>
-          <div class="dre-cell r red">(R$ 4,74M)</div>
-          <div class="dre-cell r red">(R$ 4,84M)</div>
-          <div class="dre-cell r delta-neg">(R$ 0,10M)</div>
+          <div class="dre-cell">IRPJ + CSLL (34% incremental)</div>
+          <div class="dre-cell r red">(R$ 14,6M)¹</div>
+          <div class="dre-cell r red">(R$ 12,1M)</div>
+          <div class="dre-cell r red">(R$ 11,9M)</div>
           <!-- LL -->
-          <div class="dre-cell total"><strong>Lucro Líquido</strong></div>
-          <div class="dre-cell total r"><strong>R$ 9,20M</strong></div>
-          <div class="dre-cell total r"><strong>R$ 9,38M</strong></div>
-          <div class="dre-cell total r" style="color:#6EE7B7;"><strong>+R$ 181K</strong></div>
-          <!-- PF -->
-          <div class="dre-cell" style="background:#F0FDF4;"><strong>+ Retorno Júnior PF (net 15% IR)</strong></div>
-          <div class="dre-cell r" style="background:#F0FDF4;">—</div>
-          <div class="dre-cell r" style="background:#F0FDF4;color:var(--green);font-weight:700;">+R$ 612K</div>
-          <div class="dre-cell r" style="background:#F0FDF4;color:var(--green);font-weight:700;">+R$ 612K</div>
-          <!-- Total -->
-          <div class="dre-cell" style="background:#ECFDF5;font-weight:800;color:#065F46;">CAIXA CONSOLIDADO PJ + PF</div>
-          <div class="dre-cell r" style="background:#ECFDF5;font-weight:800;">R$ 9,20M</div>
-          <div class="dre-cell r" style="background:#ECFDF5;font-weight:800;color:var(--green);">R$ 9,99M</div>
-          <div class="dre-cell r" style="background:#ECFDF5;font-weight:800;color:var(--green);">+R$ 793K</div>
+          <div class="dre-cell total"><strong>Lucro Líquido PJ</strong></div>
+          <div class="dre-cell total r"><strong>R$ 14,5M</strong></div>
+          <div class="dre-cell total r"><strong>R$ 9,7M</strong></div>
+          <div class="dre-cell total r"><strong>R$ 9,2M</strong></div>
+          <!-- PF line separada -->
+          <div class="dre-cell" style="background:#F5F3FF;border-top:2px solid var(--purple);"><strong>+ Retorno Júnior PF</strong><br><span style="font-size:10px;color:var(--purple);font-weight:600;">SEPARADO — cota júnior R$10M investida pelos sócios</span></div>
+          <div class="dre-cell r" style="background:#F5F3FF;border-top:2px solid var(--purple);">—</div>
+          <div class="dre-cell r" style="background:#F5F3FF;border-top:2px solid var(--purple);">—</div>
+          <div class="dre-cell r" style="background:#F5F3FF;border-top:2px solid var(--purple);color:var(--purple);font-weight:700;">+R$ 1,08M<br><span style="font-size:10px;font-weight:400;">(bruto R$1,20M, IR 10%)</span></div>
+          <!-- Consolidated -->
+          <div class="dre-cell" style="background:#ECFDF5;font-weight:800;color:#065F46;">Resultado Consolidado (PJ + PF)</div>
+          <div class="dre-cell r" style="background:#ECFDF5;font-weight:800;">R$ 14,5M</div>
+          <div class="dre-cell r" style="background:#ECFDF5;font-weight:800;">R$ 9,7M</div>
+          <div class="dre-cell r" style="background:#ECFDF5;font-weight:800;color:var(--green);">R$ 10,2M</div>
         </div>
-        <div style="font-size:11px;color:var(--gray4);margin-top:10px;line-height:1.6;">
-          <strong>Premissas:</strong> CMV 62% · SG&amp;A 17,5% · D&amp;A R$ 2,8M · CDI 13,15% · Banco CDI+5% sobre R$ 40M · FIDC all-in bruto 16,19% sobre R$ 40M · Retorno júnior PF deduzido de 15% IR na fonte · Dividendos da empresa assumidos isentos (regime atual) · EBITDA inalterado (FIDC é item abaixo do EBIT)
+        <div style="font-size:11px;color:var(--gray4);margin-top:10px;line-height:1.7;">
+          ¹ IRPJ+CSLL base R$14,6M conforme Forecast 2026 aprovado. O impacto incremental de novas captações é calculado à alíquota marginal de 34% sobre a desp. financeira adicional. · CDI = 13,15% · Banco CDI+5% = 18,15% sobre R$40M externos · FIDC all-in bruto = 16,19% sobre R$50M PL total (R$40M externos + R$10M júnior dos sócios) · EBITDA inalterado em ambos os cenários — custo financeiro impacta apenas abaixo do EBIT.
+        </div>
+      </div>
+
+      <!-- DELTA FIDC VS BANCO -->
+      <div class="cfo-card">
+        <div class="cfo-card-title">Δ Comparativo Direto — FIDC vs. Captação Bancária (impacto incremental)</div>
+        <div style="display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr;gap:0;border:1px solid var(--gray2);border-radius:10px;overflow:hidden;">
+          <div class="dre-cell header">Item</div>
+          <div class="dre-cell header r">Banco CDI+5%</div>
+          <div class="dre-cell header r">FIDC</div>
+          <div class="dre-cell header r">Δ FIDC vs Banco</div>
+          <!-- Desp Fin -->
+          <div class="dre-cell">Custo de capital (desp. financeira)</div>
+          <div class="dre-cell r red">(R$ 7.260K)</div>
+          <div class="dre-cell r red">(R$ 8.094K)</div>
+          <div class="dre-cell r delta-neg">(R$ 834K)</div>
+          <!-- Tax Shield -->
+          <div class="dre-cell green">Tax shield IRPJ+CSLL (34%)</div>
+          <div class="dre-cell r green">+R$ 2.468K</div>
+          <div class="dre-cell r green">+R$ 2.752K</div>
+          <div class="dre-cell r delta-pos">+R$ 284K</div>
+          <!-- Net PJ -->
+          <div class="dre-cell subtotal"><strong>Impacto líquido no LL da empresa (PJ)</strong></div>
+          <div class="dre-cell subtotal r red"><strong>(R$ 4.792K)</strong></div>
+          <div class="dre-cell subtotal r red"><strong>(R$ 5.342K)</strong></div>
+          <div class="dre-cell subtotal r delta-neg"><strong>(R$ 550K)</strong></div>
+          <!-- PF -->
+          <div class="dre-cell" style="background:#F5F3FF;color:var(--purple);font-weight:700;">Retorno PF via cota júnior (IR 10%)</div>
+          <div class="dre-cell r" style="background:#F5F3FF;">—</div>
+          <div class="dre-cell r" style="background:#F5F3FF;color:var(--purple);font-weight:700;">+R$ 1.080K</div>
+          <div class="dre-cell r delta-pos" style="background:#F5F3FF;font-weight:700;">+R$ 1.080K</div>
+          <!-- Consolidado -->
+          <div class="dre-cell total"><strong>Resultado consolidado PJ + PF</strong></div>
+          <div class="dre-cell total r"><strong>(R$ 4.792K)</strong></div>
+          <div class="dre-cell total r" style="color:#6EE7B7;"><strong>(R$ 4.262K)</strong></div>
+          <div class="dre-cell total r" style="color:#6EE7B7;"><strong>+R$ 530K / ano</strong></div>
+        </div>
+        <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="padding:12px 16px;background:var(--red-bg);border:1px solid rgba(220,38,38,0.2);border-radius:8px;font-size:12px;color:#991B1B;">
+            <strong>⚠️ Empresa (PJ):</strong> O FIDC custa R$834K/ano a mais que o banco (gross). Após o tax shield de 34%, o custo líquido adicional é <strong>R$550K/ano</strong>. A despesa financeira maior gera mais dedução — mas não compensa o custo maior.
+          </div>
+          <div style="padding:12px 16px;background:var(--green-bg);border:1px solid rgba(5,150,105,0.2);border-radius:8px;font-size:12px;color:#065F46;">
+            <strong>✅ Sócios (PF):</strong> A cota júnior (R$10M) retorna ao PF R$1.200K/ano bruto via excess spread + participação residual. Com IR de <strong>10%</strong> (prazo 48 meses), o sócio recebe <strong>R$1.080K líquido/ano</strong>. Benefício consolidado: <strong>+R$530K/ano</strong>.
+          </div>
         </div>
       </div>
     </div>
@@ -2132,22 +2183,22 @@ body.en p [data-en] { display: inline; }
       <div class="grid-2">
 
         <div class="cfo-card">
-          <div class="cfo-card-title">Tax Shield — IRPJ + CSLL (Lucro Real)</div>
+          <div class="cfo-card-title">Tax Shield — IRPJ + CSLL (Lucro Real) · Forecast 2026</div>
           <table class="cfo-table">
-            <thead><tr><th>Item</th><th class="r">Sem FIDC</th><th class="r">Com FIDC</th></tr></thead>
+            <thead><tr><th>Item</th><th class="r">Banco CDI+5%</th><th class="r">FIDC</th><th class="r">Δ FIDC vs Banco</th></tr></thead>
             <tbody>
-              <tr><td>EBT (Lucro antes do IR)</td><td class="r">R$ 13,94M</td><td class="r">R$ 14,22M</td></tr>
-              <tr><td>Base de Cálculo (Lucro Real)</td><td class="r">R$ 13,94M</td><td class="r">R$ 14,22M</td></tr>
-              <tr><td>IRPJ Base (15%)</td><td class="r red">(R$ 2,09M)</td><td class="r red">(R$ 2,13M)</td></tr>
-              <tr><td>IRPJ Adicional (10% sobre &gt; R$240K)</td><td class="r red">(R$ 1,37M)</td><td class="r red">(R$ 1,40M)</td></tr>
-              <tr><td>CSLL (9%)</td><td class="r red">(R$ 1,25M)</td><td class="r red">(R$ 1,28M)</td></tr>
-              <tr class="total"><td>Total IRPJ+CSLL (34%)</td><td class="r red">(R$ 4,74M)</td><td class="r red">(R$ 4,84M)</td></tr>
-              <tr class="highlight"><td><strong>Tax Shield sobre Desp. Financeira</strong></td><td class="r green"><strong>R$ 2,47M</strong></td><td class="r mid"><strong>R$ 2,20M</strong></td></tr>
+              <tr><td>Desp. Financeira nova captação</td><td class="r red">(R$ 7.260K)</td><td class="r red">(R$ 8.094K)</td><td class="r delta-neg">(R$ 834K)</td></tr>
+              <tr><td>EBT base Forecast 2026</td><td class="r">R$ 29.107K</td><td class="r">R$ 29.107K</td><td class="r">—</td></tr>
+              <tr><td>EBT após nova captação</td><td class="r">R$ 21.847K</td><td class="r">R$ 21.013K</td><td class="r delta-neg">(R$ 834K)</td></tr>
+              <tr><td>IRPJ Base (15%)</td><td class="r red">(R$ 3.277K)</td><td class="r red">(R$ 3.152K)</td><td class="r delta-pos">+R$ 125K</td></tr>
+              <tr><td>IRPJ Adicional (10% sobre &gt; R$240K)</td><td class="r red">(R$ 2.158K)</td><td class="r red">(R$ 2.075K)</td><td class="r delta-pos">+R$ 83K</td></tr>
+              <tr><td>CSLL (9%)</td><td class="r red">(R$ 1.966K)</td><td class="r red">(R$ 1.891K)</td><td class="r delta-pos">+R$ 75K</td></tr>
+              <tr class="total"><td>Tax Shield incremental (34% × desp.fin)</td><td class="r green"><strong>R$ 2.468K</strong></td><td class="r green"><strong>R$ 2.752K</strong></td><td class="r delta-pos"><strong>+R$ 284K</strong></td></tr>
             </tbody>
           </table>
-          <div class="cfo-alert blue" style="margin-top:12px;font-size:12px;padding:10px 14px;">
-            <div class="cfo-alert-icon">ℹ️</div>
-            <div><strong>Nota importante:</strong> O FIDC gera MENOS tax shield que o banco (R$ 2,20M vs R$ 2,47M) porque o custo de funding é menor — isso é POSITIVO. Menor imposto = maior lucro = mais valor para o acionista.</div>
+          <div class="cfo-alert amber" style="margin-top:12px;font-size:12px;padding:10px 14px;">
+            <div class="cfo-alert-icon">⚠️</div>
+            <div><strong>Atenção — framework correto:</strong> O FIDC gera <strong>MAIS</strong> tax shield que o banco (R$2.752K vs R$2.468K = +R$284K) porque custa mais (R$8.094K vs R$7.260K). O EBT da empresa é R$834K menor com FIDC, mas o IR cai R$284K a mais. Net PJ: −R$550K vs banco. O benefício vem pelo PF (+R$1.080K), não pelo menor custo de captação.</div>
           </div>
         </div>
 
@@ -2169,20 +2220,20 @@ body.en p [data-en] { display: inline; }
                 <td class="r red">(R$ 8,51M)</td>
               </tr>
               <tr>
-                <td><strong>Crédito PIS/COFINS sobre deságio</strong></td>
+                <td><strong>Crédito PIS/COFINS sobre deságio FIDC</strong></td>
                 <td style="font-size:11px;">Despesa financeira</td>
                 <td class="r">—</td>
-                <td class="r green">+R$ 597K¹</td>
+                <td class="r green">+R$ 749K¹</td>
               </tr>
               <tr class="highlight">
-                <td><strong>Benefício Líquido PIS/COFINS</strong></td>
+                <td><strong>Benefício Líquido PIS/COFINS (contingente)</strong></td>
                 <td>—</td>
                 <td class="r">—</td>
-                <td class="r green"><strong>+R$ 597K</strong></td>
+                <td class="r green"><strong>+R$ 749K</strong></td>
               </tr>
             </tbody>
           </table>
-          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ PIS 1,65% + COFINS 7,60% = 9,25% sobre deságio R$ 6,48M = R$ 599K · Sujeito a vedações específicas — consultar tributarista</div>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ PIS 1,65% + COFINS 7,60% = 9,25% sobre deságio FIDC R$8.094K = R$749K · Sujeito a vedações específicas — consultar tributarista antes de apropriar. Banco (juros simples) não gera crédito PIS/COFINS equivalente.</div>
 
           <div style="margin-top:14px;padding:12px 16px;background:#FFF7ED;border:1px solid rgba(217,119,6,0.3);border-radius:8px;font-size:12px;color:#92400E;">
             <strong>⚠️ Atenção PIS/COFINS:</strong> O creditamento sobre perdas/deságio em cessão de recebíveis é objeto de contencioso. Recomenda-se consulta formal ao tributarista antes de apropriar créditos.
@@ -2193,16 +2244,19 @@ body.en p [data-en] { display: inline; }
 
       <!-- Comparativo tributário total -->
       <div class="cfo-card" style="margin-top:16px;">
-        <div class="cfo-card-title">Comparativo Tributário Total — Carga Efetiva</div>
+        <div class="cfo-card-title">Comparativo Tributário Total — Carga Efetiva · Forecast 2026 (RL R$ 144,2M)</div>
         <table class="cfo-table">
-          <thead><tr><th>Tributo</th><th class="r">Sem FIDC</th><th class="r">Com FIDC</th><th class="r">Δ</th><th>Observação</th></tr></thead>
+          <thead><tr><th>Tributo</th><th class="r">Com Banco CDI+5%</th><th class="r">Com FIDC</th><th class="r">Δ FIDC vs Banco</th><th>Observação</th></tr></thead>
           <tbody>
-            <tr><td>IRPJ + CSLL</td><td class="r red">(R$ 4,74M)</td><td class="r red">(R$ 4,84M)</td><td class="r delta-neg">−R$ 100K</td><td style="font-size:12px;">Maior EBT = mais IR (sinal positivo)</td></tr>
-            <tr><td>PIS + COFINS</td><td class="r red">(R$ 10,36M)</td><td class="r red">(R$ 9,76M)</td><td class="r delta-pos">+R$ 597K</td><td style="font-size:12px;">Crédito sobre deságio (sujeito a validação)</td></tr>
-            <tr class="total"><td><strong>Carga Tributária Total</strong></td><td class="r"><strong>(R$ 15,10M)</strong></td><td class="r"><strong>(R$ 14,60M)</strong></td><td class="r green"><strong>+R$ 497K</strong></td><td><strong>Economia estimada anual</strong></td></tr>
-            <tr class="highlight"><td colspan="2"><strong>Alíquota Efetiva sobre Receita</strong></td><td class="r green">−0,44 p.p.</td><td colspan="2" style="font-size:12px;">De 13,48% para 13,04% sobre R$ 112M</td></tr>
+            <tr><td>IRPJ + CSLL (incremental nova captação)</td><td class="r red">(R$ 7.428K)</td><td class="r red">(R$ 7.144K)</td><td class="r delta-pos">+R$ 284K</td><td style="font-size:12px;">FIDC deduz mais → IR menor (+R$284K)</td></tr>
+            <tr><td>PIS (1,65% × RL R$144,2M)</td><td class="r red">(R$ 2.379K)</td><td class="r red">(R$ 2.379K)</td><td class="r">—</td><td style="font-size:12px;">Inalterado — base é receita</td></tr>
+            <tr><td>COFINS (7,60% × RL R$144,2M)</td><td class="r red">(R$ 10.959K)</td><td class="r red">(R$ 10.959K)</td><td class="r">—</td><td style="font-size:12px;">Inalterado — base é receita</td></tr>
+            <tr><td>Crédito PIS/COFINS sobre deságio</td><td class="r">—¹</td><td class="r green">+R$ 749K</td><td class="r delta-pos">+R$ 749K</td><td style="font-size:12px;">9,25% × R$8.094K — sujeito a validação</td></tr>
+            <tr class="total"><td><strong>Benefício Tributário Total vs Banco</strong></td><td class="r">—</td><td class="r green">+R$ 284K (IRPJ)</td><td class="r green"><strong>+R$ 1.033K¹</strong></td><td><strong>R$284K certo + R$749K contingente</strong></td></tr>
+            <tr class="highlight"><td colspan="2"><strong>Alíquota Efetiva sobre RL (IRPJ+CSLL)</strong></td><td class="r green">−0,52 p.p. vs banco</td><td colspan="2" style="font-size:12px;">De 5,15% para 4,95% sobre RL R$144,2M (incremental da nova captação)</td></tr>
           </tbody>
         </table>
+        <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ O crédito PIS/COFINS sobre perdas/deságio em cessão de recebíveis é objeto de contencioso. Recomenda-se consulta formal ao tributarista antes de apropriar. Benefício "certo" = apenas R$284K (IRPJ+CSLL).</div>
       </div>
     </div>
 
@@ -2222,73 +2276,74 @@ body.en p [data-en] { display: inline; }
       <div class="grid-2">
 
         <div class="cfo-card">
-          <div class="cfo-card-title">Comparativo de Modalidades de Rendimento PF</div>
+          <div class="cfo-card-title">Comparativo de Modalidades de Rendimento PF — R$ 1.200K bruto/ano</div>
           <table class="cfo-table">
-            <thead><tr><th>Modalidade</th><th class="r">Alíquota IR</th><th class="r">R$ 720K bruto → líquido</th><th>Status</th></tr></thead>
+            <thead><tr><th>Modalidade</th><th class="r">Alíquota IR</th><th class="r">R$ 1.200K bruto → líquido</th><th>Status</th></tr></thead>
             <tbody>
               <tr>
                 <td>Dividendos — regime atual</td>
                 <td class="r green">0%</td>
-                <td class="r green">R$ 720K</td>
+                <td class="r green">R$ 1.200K</td>
                 <td><span class="pill green">Vigente</span></td>
               </tr>
               <tr>
                 <td>JCP (Juros sobre Capital Próprio)</td>
                 <td class="r">15% IRRF</td>
-                <td class="r">R$ 612K</td>
+                <td class="r">R$ 1.020K</td>
                 <td><span class="pill green">Vigente</span></td>
               </tr>
               <tr class="highlight">
-                <td><strong>FIDC — Rendimento Longo Prazo (&gt;720 dias)</strong></td>
-                <td class="r mid"><strong>15% IRRF</strong></td>
-                <td class="r mid"><strong>R$ 612K</strong></td>
-                <td><span class="pill blue">Vigente</span></td>
+                <td><strong>FIDC — Cota Júnior prazo 48 meses</strong></td>
+                <td class="r mid"><strong>10% IRRF</strong></td>
+                <td class="r mid"><strong>R$ 1.080K</strong></td>
+                <td><span class="pill blue">Estrutura 48m</span></td>
               </tr>
               <tr>
                 <td>FIDC — 361–720 dias</td>
                 <td class="r amber">17,5% IRRF</td>
-                <td class="r amber">R$ 594K</td>
+                <td class="r amber">R$ 990K</td>
                 <td><span class="pill amber">Prazo 2 anos</span></td>
               </tr>
               <tr>
-                <td>FIDC — 181–360 dias</td>
-                <td class="r red">20% IRRF</td>
-                <td class="r red">R$ 576K</td>
+                <td>FIDC — &lt; 180 dias</td>
+                <td class="r red">22,5% IRRF</td>
+                <td class="r red">R$ 930K</td>
                 <td><span class="pill red">Curto prazo</span></td>
               </tr>
               <tr>
                 <td>Dividendos — pós reforma (est.)</td>
                 <td class="r amber">15–20% IRRF</td>
-                <td class="r amber">R$ 576K–R$ 612K</td>
+                <td class="r amber">R$ 960K–R$ 1.020K</td>
                 <td><span class="pill red">Risco reforma</span></td>
               </tr>
               <tr>
                 <td>Via empresa (34%) + dividendo isento</td>
                 <td class="r red">34% corporativo</td>
-                <td class="r red">R$ 475K¹</td>
+                <td class="r red">R$ 792K¹</td>
                 <td><span class="pill amber">Indireto</span></td>
               </tr>
             </tbody>
           </table>
-          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ Para gerar R$ 720K de dividendo, a empresa precisa de R$ 1.091K pré-tax (34% = R$ 371K). Via FIDC, o mesmo valor chega ao PF com impacto de apenas R$ 108K (15%). Economia: R$ 263K/ano.</div>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">¹ Para gerar R$ 1.200K de dividendo, a empresa precisa de R$ 1.818K pré-tax (34% = R$ 618K). Via FIDC com IR 10%, o mesmo valor chega ao PF com apenas R$ 120K de IR. Economia: <strong>R$ 498K/ano × 4 = R$ 1,99M.</strong></div>
         </div>
 
         <div class="cfo-card">
-          <div class="cfo-card-title">Fluxo de Caixa Líquido Sócios PF — Anual</div>
+          <div class="cfo-card-title">Fluxo de Caixa Líquido Sócios PF — Comparativo Anual</div>
           <table class="cfo-table">
-            <thead><tr><th>Componente</th><th class="r">Sem FIDC</th><th class="r">Com FIDC</th></tr></thead>
+            <thead><tr><th>Componente</th><th class="r">Cenário Banco</th><th class="r">Cenário FIDC</th></tr></thead>
             <tbody>
-              <tr><td>Lucro Líquido da Empresa</td><td class="r">R$ 9,20M</td><td class="r">R$ 9,38M</td></tr>
-              <tr><td>Dividendos distribuídos (regime atual)</td><td class="r">R$ 9,20M</td><td class="r">R$ 9,38M</td></tr>
-              <tr><td>IR sobre dividendos (atual: 0%)</td><td class="r">—</td><td class="r">—</td></tr>
-              <tr><td><strong>Retorno Cota Júnior (bruto)</strong></td><td class="r">—</td><td class="r">R$ 720K</td></tr>
-              <tr><td>IR sobre retorno FIDC (15%)</td><td class="r">—</td><td class="r red">(R$ 108K)</td></tr>
-              <tr class="highlight"><td><strong>Total Líquido PF</strong></td><td class="r"><strong>R$ 9,20M</strong></td><td class="r green"><strong>R$ 9,99M</strong></td></tr>
-              <tr><td colspan="3" style="font-size:11px;color:var(--gray4);padding-top:8px;border-bottom:none;"><em>Simulação com reforma (15% dividendos):</em></td></tr>
-              <tr><td>Dividendos após reforma (85%)</td><td class="r amber">R$ 7,82M</td><td class="r amber">R$ 7,97M</td></tr>
-              <tr><td>FIDC rendimento (15% IR)</td><td class="r">—</td><td class="r">R$ 612K</td></tr>
-              <tr class="highlight"><td><strong>Total Líquido PF (pós reforma)</strong></td><td class="r"><strong>R$ 7,82M</strong></td><td class="r green"><strong>R$ 8,58M</strong></td></tr>
-              <tr><td>Benefício FIDC pós reforma</td><td class="r" colspan="2" style="color:var(--green);font-weight:700;text-align:right;">+R$ 763K/ano</td></tr>
+              <tr><td>LL da Empresa (Forecast 2026 base)</td><td class="r">R$ 14,5M</td><td class="r">R$ 14,5M</td></tr>
+              <tr><td>Impacto nova captação (after-tax 34%)</td><td class="r red">(R$ 4,8M)</td><td class="r red">(R$ 5,3M)</td></tr>
+              <tr><td>LL ajustado da empresa</td><td class="r">R$ 9,7M</td><td class="r">R$ 9,2M</td></tr>
+              <tr><td>Dividendos distribuídos (regime atual 0%)</td><td class="r">R$ 9,7M</td><td class="r">R$ 9,2M</td></tr>
+              <tr><td><strong>Retorno Cota Júnior (bruto)</strong></td><td class="r">—</td><td class="r purple">R$ 1.200K</td></tr>
+              <tr><td>IR sobre retorno FIDC (10%)</td><td class="r">—</td><td class="r red">(R$ 120K)</td></tr>
+              <tr class="highlight"><td><strong>Total Líquido PF</strong></td><td class="r"><strong>R$ 9,7M</strong></td><td class="r green"><strong>R$ 10,3M</strong></td></tr>
+              <tr><td colspan="3" style="font-size:11px;color:var(--gray4);padding-top:8px;border-bottom:none;"><em>Simulação com reforma tributária (15% dividendos):</em></td></tr>
+              <tr><td>Dividendos após reforma (−15%)</td><td class="r amber">R$ 8,2M</td><td class="r amber">R$ 7,8M</td></tr>
+              <tr><td>FIDC rendimento (10% IR — inalterado)</td><td class="r">—</td><td class="r purple">R$ 1.080K</td></tr>
+              <tr class="highlight"><td><strong>Total Líquido PF (pós reforma)</strong></td><td class="r"><strong>R$ 8,2M</strong></td><td class="r green"><strong>R$ 8,9M</strong></td></tr>
+              <tr><td>Benefício FIDC pós reforma</td><td class="r" colspan="2" style="color:var(--green);font-weight:700;text-align:right;">+R$ 700K/ano (reforma amplifica o benefício do FIDC)</td></tr>
             </tbody>
           </table>
         </div>
@@ -2299,8 +2354,7 @@ body.en p [data-en] { display: inline; }
         <div class="cfo-alert-icon">🎯</div>
         <div>
           <strong>Tax Arbitrage PF — Síntese:</strong>
-          O fundo FIDC (prazo 48 meses) qualifica para a menor alíquota do IR regressivo (15%). O excess spread de R$ 720K/ano chega ao sócio PF com carga fiscal de apenas 15% (R$ 108K de IR), versus 34% se o mesmo valor ficasse tributado na pessoa jurídica antes de ser distribuído como dividendo (R$ 371K de IR). <strong>Ganho tributário do excess spread: R$ 263K/ano · R$ 1,05M em 4 anos.</strong>
-          Esse benefício se torna ainda mais relevante em um cenário de reforma tributária que tribute dividendos a 15-20%.
+          O FIDC Contourline (prazo 48 meses) aplica alíquota de <strong>10% de IR</strong> sobre os rendimentos da cota júnior. O sócio PF recebe R$1.200K/ano bruto (excess spread + participação residual) e paga apenas R$120K de IR, retendo <strong>R$1.080K líquidos/ano</strong>. Se esse mesmo valor fosse gerado dentro da empresa e tributado a 34% antes de ser distribuído, o PF receberia apenas R$792K. Economia de IR: <strong>R$288K/ano · R$1,15M em 4 anos.</strong> Em cenário de reforma tributária de dividendos (15–20%), o benefício do FIDC aumenta, pois o rendimento do fundo continua a 10%.
         </div>
       </div>
     </div>
@@ -2329,12 +2383,13 @@ body.en p [data-en] { display: inline; }
           <div class="scenario-row"><span class="scenario-row-label">Overcollateral</span><span class="scenario-row-value">35% (stress)</span></div>
           <div class="scenario-row"><span class="scenario-row-label">Volume Revolving</span><span class="scenario-row-value">R$ 30M</span></div>
           <div class="scenario-row"><span class="scenario-row-label">Excess Spread retido</span><span class="scenario-row-value" style="color:#DC2626;">0,20%/mês</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">All-In Cost Líquido</span><span class="scenario-row-value">~17,5% a.a.</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">TIR Cota Júnior</span><span class="scenario-row-value" style="color:#DC2626;">6–8% a.a.</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">Tax Shield Anual</span><span class="scenario-row-value">R$ 1,5M</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">Ganho Consolid. PJ+PF</span><span class="scenario-row-value" style="color:#DC2626;">R$ 280K/ano</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">All-In Cost Bruto FIDC</span><span class="scenario-row-value">~19,0% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Banco CDI+5% (CDI 14,5%)</span><span class="scenario-row-value">19,5% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">TIR Cota Júnior</span><span class="scenario-row-value" style="color:#DC2626;">4–6% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Retorno PF Júnior (10% IR)</span><span class="scenario-row-value" style="color:#DC2626;">~R$ 216K/ano</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Ganho Consolid. PJ+PF vs Banco</span><span class="scenario-row-value" style="color:#DC2626;">R$ (120K)/ano</span></div>
           <div style="margin-top:12px;padding:10px;background:rgba(220,38,38,0.08);border-radius:8px;font-size:11px;color:#7F1D1D;">
-            <strong>Risco:</strong> Inadimplência corrói o excess spread. TIR júnior abaixo do CDI. Sênior protegido mas mezanino em risco. Originação insuficiente (R$ 30M) pode acionar covenant.
+            <strong>Risco:</strong> Inadimplência corrói o excess spread — PF recebe menos. Com CDI alto, banco e FIDC têm custo similar, mas FIDC ainda maior. Neste cenário FIDC é levemente pior que banco. Sênior protegido, mezanino em risco.
           </div>
         </div>
 
@@ -2347,12 +2402,13 @@ body.en p [data-en] { display: inline; }
           <div class="scenario-row"><span class="scenario-row-label">Overcollateral</span><span class="scenario-row-value">30% (mínimo)</span></div>
           <div class="scenario-row"><span class="scenario-row-label">Volume Revolving</span><span class="scenario-row-value">R$ 40M</span></div>
           <div class="scenario-row"><span class="scenario-row-label">Excess Spread retido</span><span class="scenario-row-value" style="color:#1D4ED8;">0,60%/mês</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">All-In Cost Líquido</span><span class="scenario-row-value">14,75% a.a.</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">TIR Cota Júnior</span><span class="scenario-row-value" style="color:#1D4ED8;">~13% a.a.</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">Tax Shield Anual</span><span class="scenario-row-value">R$ 2,20M</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">Ganho Consolid. PJ+PF</span><span class="scenario-row-value" style="color:#1D4ED8;">R$ 931K/ano</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">All-In Cost Bruto FIDC</span><span class="scenario-row-value">16,19% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Banco CDI+5% (CDI 13,15%)</span><span class="scenario-row-value">18,15% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">TIR Cota Júnior</span><span class="scenario-row-value" style="color:#1D4ED8;">~10,8% a.a. (net IR 10%)</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Retorno PF Júnior (10% IR)</span><span class="scenario-row-value" style="color:#1D4ED8;">R$ 1.080K/ano</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Ganho Consolid. PJ+PF vs Banco</span><span class="scenario-row-value" style="color:#1D4ED8;">R$ 530K/ano</span></div>
           <div style="margin-top:12px;padding:10px;background:rgba(37,99,235,0.08);border-radius:8px;font-size:11px;color:#1E3A5F;">
-            <strong>Base:</strong> Estrutura viável. Custo FIDC menor que banco após tax shield. PF recebe rendimento com 15% IR. EBITDA inalterado. Ganho consolidado positivo.
+            <strong>Base:</strong> FIDC custa R$834K/ano mais que banco (gross), mas PF recupera R$1.080K via júnior (IR 10%). Net consolidado: +R$530K/ano. EBITDA inalterado. Tax arbitrage PF real.
           </div>
         </div>
 
@@ -2365,12 +2421,13 @@ body.en p [data-en] { display: inline; }
           <div class="scenario-row"><span class="scenario-row-label">Overcollateral</span><span class="scenario-row-value">30%</span></div>
           <div class="scenario-row"><span class="scenario-row-label">Volume Revolving</span><span class="scenario-row-value">R$ 50M (PL total)</span></div>
           <div class="scenario-row"><span class="scenario-row-label">Excess Spread retido</span><span class="scenario-row-value" style="color:#059669;">0,75%/mês</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">All-In Cost Líquido</span><span class="scenario-row-value" style="color:#059669;">~11,5% a.a.</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">TIR Cota Júnior</span><span class="scenario-row-value" style="color:#059669;">18–22% a.a.</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">Tax Shield Anual</span><span class="scenario-row-value">R$ 2,90M</span></div>
-          <div class="scenario-row"><span class="scenario-row-label">Ganho Consolid. PJ+PF</span><span class="scenario-row-value" style="color:#059669;">R$ 1,85M/ano</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">All-In Cost Bruto FIDC</span><span class="scenario-row-value" style="color:#059669;">~14,0% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Banco CDI+5% (CDI 10,5%)</span><span class="scenario-row-value">15,5% a.a.</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">TIR Cota Júnior</span><span class="scenario-row-value" style="color:#059669;">~14% a.a. (net IR 10% ~12,6%)</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Retorno PF Júnior (10% IR)</span><span class="scenario-row-value" style="color:#059669;">R$ 1.350K/ano</span></div>
+          <div class="scenario-row"><span class="scenario-row-label">Ganho Consolid. PJ+PF vs Banco</span><span class="scenario-row-value" style="color:#059669;">R$ 900K/ano</span></div>
           <div style="margin-top:12px;padding:10px;background:rgba(5,150,105,0.08);border-radius:8px;font-size:11px;color:#064E3B;">
-            <strong>Upside:</strong> Queda de CDI amplia spread. Baixa inadimplência maximiza retorno júnior. TIR júnior supera custo de capital próprio. Patrimônio Autorizado de R$ 500M permite scale.
+            <strong>Upside:</strong> Queda de CDI reduz o custo do banco também, mas o excess spread maior (0,75%) amplia o retorno PF. Net consolidado +R$900K/ano. Patrimônio Autorizado R$500M permite scale. Reforma tributária amplifica benefício PF.
           </div>
         </div>
 
@@ -2378,7 +2435,7 @@ body.en p [data-en] { display: inline; }
 
       <!-- Sensibilidade -->
       <div class="cfo-card" style="margin-top:20px;">
-        <div class="cfo-card-title">Sensibilidade — Ganho Consolidado PJ+PF vs Inadimplência e CDI</div>
+        <div class="cfo-card-title">Sensibilidade — Ganho Consolidado PJ+PF vs Inadimplência e CDI (FIDC vs Banco CDI+5%)</div>
         <table class="cfo-table">
           <thead>
             <tr>
@@ -2387,20 +2444,19 @@ body.en p [data-en] { display: inline; }
             </tr>
             <tr>
               <th class="r">10,50%</th>
-              <th class="r">13,15%</th>
+              <th class="r">13,15% (base)</th>
               <th class="r">14,50%</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td><strong>1,5%</strong></td><td class="r green">R$ 1,85M</td><td class="r green">R$ 1,32M</td><td class="r green">R$ 890K</td></tr>
-            <tr><td><strong>3,0%</strong></td><td class="r green">R$ 1,42M</td><td class="r mid">R$ 931K</td><td class="r amber">R$ 490K</td></tr>
-            <tr><td><strong>5,5%</strong></td><td class="r amber">R$ 640K</td><td class="r amber">R$ 280K</td><td class="r red">R$ (120K)</td></tr>
-            <tr><td><strong>7,0% (stress)</strong></td><td class="r red">R$ (80K)</td><td class="r red">R$ (420K)</td><td class="r red">R$ (840K)</td></tr>
+            <tr><td><strong>1,5%</strong></td><td class="r green">R$ 974K</td><td class="r green">R$ 800K</td><td class="r green">R$ 710K</td></tr>
+            <tr><td><strong>3,0% (base)</strong></td><td class="r green">R$ 704K</td><td class="r mid">R$ 530K</td><td class="r amber">R$ 440K</td></tr>
+            <tr><td><strong>5,5%</strong></td><td class="r amber">R$ 50K</td><td class="r red">R$ (150K)</td><td class="r red">R$ (240K)</td></tr>
+            <tr><td><strong>7,0% (stress)</strong></td><td class="r red">R$ (276K)</td><td class="r red">R$ (451K)</td><td class="r red">R$ (540K)</td></tr>
           </tbody>
         </table>
         <div style="font-size:11px;color:var(--gray4);margin-top:8px;">
-          Células vermelhas indicam cenários onde o FIDC é menos vantajoso que manter crédito bancário.
-          A inadimplência de 7% excede o trigger de avaliação (8% over-30 / 4% over-90) — acionaria AGC.
+          Células vermelhas indicam cenários onde o FIDC é <em>pior</em> que captação bancária CDI+5%. O driver principal é o retorno da cota júnior ao PF (IR 10%): inadimplência alta corrói o excess spread, reduzindo o retorno PF e tornando o FIDC desvantajoso. A inadimplência de 7% excede o trigger de AGC.
           Valores em R$ anuais consolidados PJ + PF.
         </div>
       </div>
@@ -2551,52 +2607,51 @@ body.en p [data-en] { display: inline; }
       <div class="grid-3">
 
         <div class="cfo-card">
-          <div class="cfo-card-title">VPL da Estrutura (4 anos)</div>
+          <div class="cfo-card-title">VPL da Cota Júnior (standalone)</div>
           <table class="cfo-table">
             <thead><tr><th>Item</th><th class="r">Valor</th></tr></thead>
             <tbody>
-              <tr><td>Investimento inicial (júnior)</td><td class="r red">(R$ 10.000K)</td></tr>
-              <tr><td>Ganho anual consolidado PJ+PF (4×)</td><td class="r green">R$ 931K × 4 = R$ 3.724K</td></tr>
+              <tr><td>Investimento inicial (cota júnior)</td><td class="r red">(R$ 10.000K)</td></tr>
+              <tr><td>Rendimento líquido anual (IR 10%)</td><td class="r green">R$ 1.080K × 4 = R$ 4.320K</td></tr>
               <tr><td>Retorno do principal (mês 48)</td><td class="r green">R$ 10.000K</td></tr>
-              <tr><td>Taxa de desconto (WACC pré-FIDC)</td><td class="r">21%</td></tr>
-              <tr class="total"><td>VPL estimado</td><td class="r green">R$ 1.920K</td></tr>
-              <tr><td>VPL/Investimento</td><td class="r green">+19,2%</td></tr>
+              <tr><td>Taxa de desconto aplicada (TDR)</td><td class="r">10% a.a.</td></tr>
+              <tr class="total"><td>VPL da cota júnior</td><td class="r green">+R$ 254K</td></tr>
+              <tr class="highlight"><td>Ganho incremental PJ+PF vs banco (4 anos)</td><td class="r green">+R$ 2.120K</td></tr>
             </tbody>
           </table>
-          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">VPL positivo confirma criação de valor acima do custo de capital. Sensível ao WACC e à recuperação do principal.</div>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">VPL positivo indica que a cota júnior remunera acima de 10% a.a. (TDR dos sócios). Sensível à recuperação integral do principal no mês 48 e à taxa de desconto utilizada.</div>
         </div>
 
         <div class="cfo-card">
-          <div class="cfo-card-title">Payback do Investimento</div>
+          <div class="cfo-card-title">Acumulado PJ + PF (vs banco CDI+5%)</div>
           <table class="cfo-table">
-            <thead><tr><th>Ano</th><th class="r">Fluxo Acum. PJ+PF</th><th class="r">Capital Recuperado</th></tr></thead>
+            <thead><tr><th>Ano</th><th class="r">PJ (empresa)</th><th class="r">PF (júnior)</th><th class="r">Consolidado</th></tr></thead>
             <tbody>
-              <tr><td>Ano 1</td><td class="r">R$ 931K</td><td class="r red">9,3%</td></tr>
-              <tr><td>Ano 2</td><td class="r">R$ 1.862K</td><td class="r amber">18,6%</td></tr>
-              <tr><td>Ano 3</td><td class="r">R$ 2.793K</td><td class="r amber">27,9%</td></tr>
-              <tr><td>Ano 4</td><td class="r">R$ 3.724K</td><td class="r amber">37,2%</td></tr>
-              <tr><td>Mês 48 (+ principal)</td><td class="r">R$ 13.724K</td><td class="r green">137,2%</td></tr>
-              <tr class="total"><td>Payback Simples</td><td class="r green" colspan="2">Mês 48 (recuperação integral + ROI 37%)</td></tr>
+              <tr><td>Ano 1</td><td class="r red">(R$ 550K)</td><td class="r green">+R$ 1.080K</td><td class="r green">+R$ 530K</td></tr>
+              <tr><td>Ano 2</td><td class="r red">(R$ 1.100K)</td><td class="r green">+R$ 2.160K</td><td class="r green">+R$ 1.060K</td></tr>
+              <tr><td>Ano 3</td><td class="r red">(R$ 1.650K)</td><td class="r green">+R$ 3.240K</td><td class="r green">+R$ 1.590K</td></tr>
+              <tr><td>Ano 4</td><td class="r red">(R$ 2.200K)</td><td class="r green">+R$ 4.320K</td><td class="r green">+R$ 2.120K</td></tr>
+              <tr class="total"><td>Mês 48 + principal</td><td colspan="2" class="r green">+R$ 10.000K (principal)</td><td class="r green">+R$ 12.120K</td></tr>
             </tbody>
           </table>
-          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">O payback depende da recuperação do principal da cota júnior no mês 48. O ganho incremental PJ+PF de R$ 931K/ano é constante ao longo dos 4 anos.</div>
+          <div style="font-size:10px;color:var(--gray4);margin-top:8px;">PJ: empresa paga R$550K/ano a mais que banco (líquido de tax shield). PF: sócios recebem R$1.080K/ano da cota júnior. O ganho vem pelo PF — não pelo custo de captação da empresa.</div>
         </div>
 
         <div class="cfo-card">
-          <div class="cfo-card-title">TIR Consolidada da Operação</div>
+          <div class="cfo-card-title">TIR — Cota Júnior e Decisão</div>
           <table class="cfo-table">
-            <thead><tr><th>Componente</th><th class="r">TIR a.a.</th></tr></thead>
+            <thead><tr><th>Componente</th><th class="r">TIR / Taxa a.a.</th></tr></thead>
             <tbody>
-              <tr><td>TIR Cota Júnior (excess spread + residual)</td><td class="r amber">~13%</td></tr>
-              <tr><td>TIR after-tax PF (15% IR)</td><td class="r">~11,1%</td></tr>
-              <tr><td>Benefício custo de capital (ganho PJ)</td><td class="r green">+R$ 319K/ano</td></tr>
-              <tr><td>TIR Incremental Total (PJ + cota júnior)</td><td class="r green">~16-18%</td></tr>
-              <tr class="total"><td>vs. WACC pré-FIDC</td><td class="r green">Supera (~21%)</td></tr>
+              <tr><td>TIR bruta da cota júnior</td><td class="r amber">~12%</td></tr>
+              <tr class="highlight"><td><strong>TIR líquida PF (IR 10%)</strong></td><td class="r green"><strong>~10,8%</strong></td></tr>
+              <tr><td>CDI net (IR 15% longo prazo)</td><td class="r">~11,2%</td></tr>
+              <tr><td>TIR incremental (decisão FIDC vs banco)</td><td class="r amber">~5,3%</td></tr>
+              <tr class="total"><td>Break-even da decisão (TDR 5%)</td><td class="r green">VPL ≈ +R$ 100K</td></tr>
             </tbody>
           </table>
-          <div class="cfo-alert green" style="margin-top:10px;font-size:12px;padding:10px 14px;">
-            <div class="cfo-alert-icon">✅</div>
-            <div><strong>TIR incremental ≈ 16–18% supera o WACC</strong> somente quando somamos o benefício de custo de capital da empresa ao retorno da cota júnior. A cota júnior isolada (~13% a.a. pré-IR) é inferior ao CDI — o valor está na estrutura consolidada.</div>
+          <div class="cfo-alert amber" style="margin-top:10px;font-size:12px;padding:10px 14px;">
+            <div class="cfo-alert-icon">⚠️</div>
+            <div><strong>Onde está o valor:</strong> A cota júnior rende 10,8% net (próximo ao CDI líquido). A TIR da <em>decisão</em> (FIDC vs banco) é apenas 5,3% — mas o real benefício é <strong>tributário</strong>: IR 10% vs 34% corporativo, gerando R$1,15M em 4 anos de arbitragem fiscal.</div>
           </div>
         </div>
 
@@ -2609,32 +2664,32 @@ body.en p [data-en] { display: inline; }
     <!-- ═══════════════════════════════════════════════════════════════ -->
     <div class="conclusion-box">
       <div class="conclusion-title">11. Conclusões &amp; Recomendações — CFO Kaizer</div>
-      <div class="conclusion-sub">Análise consolidada PJ + PF · Cenário Base · CDI 13,15% a.a. · Legislação atual</div>
+      <div class="conclusion-sub">Framework correto: FIDC vs captação externa · Forecast 2026 real · CDI 13,15% a.a. · PJ e PF analisados separadamente</div>
 
       <div class="conclusion-grid">
 
         <div class="conclusion-item">
-          <div class="conclusion-item-lbl">O FIDC gera eficiência tributária real?</div>
+          <div class="conclusion-item-lbl">O FIDC é mais barato que o banco?</div>
+          <div class="conclusion-item-val" style="color:#FCA5A5;">⚠️ NÃO</div>
+          <div class="conclusion-item-note">FIDC (16,19% all-in) custa R$834K/ano a MAIS que banco (CDI+5% = 18,15% sobre R$40M). O ganho vem pelo PF, não pelo custo.</div>
+        </div>
+
+        <div class="conclusion-item">
+          <div class="conclusion-item-lbl">A estrutura gera valor consolidado?</div>
           <div class="conclusion-item-val" style="color:#6EE7B7;">✅ SIM</div>
-          <div class="conclusion-item-note">Tax shield de R$ 2,20M/ano + arbitragem PF a 15% vs. 34% corporativo. Benefício total ~R$ 497K/ano em tributos.</div>
+          <div class="conclusion-item-note">PJ paga R$550K/ano a mais (net tax shield). PF recebe R$1.080K/ano (IR 10%). Saldo: +R$530K/ano.</div>
         </div>
 
         <div class="conclusion-item">
-          <div class="conclusion-item-lbl">O ganho econômico supera o custo?</div>
-          <div class="conclusion-item-val" style="color:#6EE7B7;">✅ SIM</div>
-          <div class="conclusion-item-note">Custo FIDC all-in (14,75%) &lt; banco (18,15%). Ganho PJ+PF de R$ 931K/ano. VPL positivo de R$ 1,92M.</div>
+          <div class="conclusion-item-lbl">Ganho consolidado 4 anos</div>
+          <div class="conclusion-item-val" style="color:#FCD34D;">+R$ 2,1M</div>
+          <div class="conclusion-item-note">PJ: −R$2,2M (maior custo líquido). PF: +R$4,3M (júnior 10% IR). Capital liberado vs SRM: R$6M.</div>
         </div>
 
         <div class="conclusion-item">
-          <div class="conclusion-item-lbl">Ganho líquido consolidado 4 anos</div>
-          <div class="conclusion-item-val" style="color:#FCD34D;">R$ 3,7M</div>
-          <div class="conclusion-item-note">PJ: R$ 1,3M (custo menor + tax). PF: R$ 2,4M (júnior + arbitragem). Capital liberado: R$ 6M.</div>
-        </div>
-
-        <div class="conclusion-item">
-          <div class="conclusion-item-lbl">Qual estrutura mais eficiente?</div>
-          <div class="conclusion-item-val" style="font-size:14px;color:#93C5FD;">FIDC + Holding PF</div>
-          <div class="conclusion-item-note">Holding entre sócios e cota júnior otimiza sucessão e reinvestimento. Mais segura que PF direto para aporte de volta à empresa.</div>
+          <div class="conclusion-item-lbl">Onde está o valor real?</div>
+          <div class="conclusion-item-val" style="font-size:14px;color:#93C5FD;">Tax Arbitrage PF</div>
+          <div class="conclusion-item-note">IR 10% (FIDC 48m) vs 34% corporativo = R$1,15M em 4 anos. Amplificado se reforma tributar dividendos.</div>
         </div>
 
       </div>
@@ -2643,13 +2698,13 @@ body.en p [data-en] { display: inline; }
         <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:12px;padding:18px;">
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.6);margin-bottom:10px;">✅ Pontos Favoráveis</div>
           <ul style="font-size:12px;color:rgba(255,255,255,0.85);padding-left:16px;line-height:2;">
-            <li>Custo de funding 3,4 p.p. menor que banco (all-in líquido)</li>
-            <li>Rendimento PF a 15% IR vs. 34% corporativo — tax arbitrage real</li>
-            <li>R$ 6M de capital de giro liberado vs. proposta SRM</li>
+            <li>Capital NECESSÁRIO de qualquer forma — questão é apenas qual modalidade</li>
+            <li>Tax arbitrage real: IR 10% (PF) vs 34% (PJ) — R$1,15M em 4 anos</li>
+            <li>Tax shield incremental: +R$284K/ano vs banco (FIDC deduz mais)</li>
+            <li>R$6M de capital liberado vs. proposta original SRM (júnior R$16M → R$10M)</li>
             <li>Critérios de elegibilidade expandidos (leasing + carências 90d)</li>
-            <li>Proteção via bloqueio remoto + CL proprietária no leasing</li>
-            <li>Patrimônio Autorizado R$ 500M: plataforma de crescimento</li>
-            <li>EBITDA inalterado — melhora indicadores operacionais</li>
+            <li>Patrimônio Autorizado R$500M: plataforma de crescimento</li>
+            <li>Reforma tributária de dividendos amplifica o benefício do FIDC</li>
           </ul>
         </div>
         <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:12px;padding:18px;">
@@ -2658,7 +2713,7 @@ body.en p [data-en] { display: inline; }
             <li><strong>1. Parecer jurídico</strong> de True Sale (CPC 48) antes da 1ª cessão</li>
             <li><strong>2. Laudo arm's length</strong> da taxa de cessão 1,80%/mês</li>
             <li><strong>3. Cláusula de substituição</strong> do Agente de Cobrança no regulamento</li>
-            <li><strong>4. Covenant de originação mínima</strong> R$ 1,5M/mês no contrato</li>
+            <li><strong>4. Covenant de originação mínima</strong> R$1,5M/mês no contrato</li>
             <li><strong>5. Parecer CVM 175</strong> sobre elegibilidade do leasing operacional</li>
             <li><strong>6. Estrutura holding PF</strong> para reinvestimento seguro na empresa</li>
             <li><strong>7. Documentação propósito negocial</strong> de cada aporte PF → PJ</li>
@@ -2667,8 +2722,8 @@ body.en p [data-en] { display: inline; }
       </div>
 
       <div style="margin-top:20px;padding:16px 20px;background:rgba(252,211,77,0.12);border:1px solid rgba(252,211,77,0.3);border-radius:10px;font-size:13px;color:rgba(255,255,255,0.9);">
-        <strong style="color:#FCD34D;">— Kaizer, os números não mentem 💰</strong><br>
-        O FIDC Contourline é viável e gera R$ 931K/ano de valor consolidado no cenário base. O benefício não está na cota júnior isolada (TIR ~13%, abaixo do custo de capital), mas na combinação de custo de funding menor para a empresa + arbitragem tributária PF/PJ. A operação é sólida desde que as 7 condições acima sejam implementadas. Sem elas, o risco de autuação fiscal ou questionamento regulatório supera o ganho econômico.
+        <strong style="color:#FCD34D;">— Kaizer, a lógica mudou e os números são reais 💰</strong><br>
+        A empresa precisa deste capital — a decisão é FIDC vs banco. O FIDC <em>custa mais</em> para a empresa (R$550K/ano líquido a mais que CDI+5%), mas os sócios recuperam R$1.080K/ano via cota júnior com IR de apenas 10%. Resultado consolidado: <strong>+R$530K/ano · +R$2,1M em 4 anos</strong>. O valor não está no custo de captação, está na arbitragem tributária PF/PJ. Forecast 2026: RL R$144,2M, EBITDA R$47,0M (32,6% margem). A estrutura é viável desde que as 7 condições acima sejam implementadas.
       </div>
     </div>
 
